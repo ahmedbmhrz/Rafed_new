@@ -43,7 +43,7 @@
 
     // Header carousel
     $(".header-carousel").owlCarousel({
-        autoplay: false,
+        autoplay: false, rtl: true,
         smartSpeed: 1500,
         loop: true,
         nav: true,
@@ -65,7 +65,7 @@
 
     // Testimonials carousel
     $(".testimonial-carousel").owlCarousel({
-        autoplay: false,
+        autoplay: false, rtl: true,
         smartSpeed: 1000,
         margin: 25,
         loop: true,
