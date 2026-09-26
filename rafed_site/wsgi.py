@@ -1,5 +1,5 @@
 """
-WSGI config for bakery_site project.
+WSGI config for rafed_site project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "bakery_site.settings.dev")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "rafed_site.settings.dev")
 
 application = get_wsgi_application()
