@@ -420,8 +420,19 @@ h6,
 .bg-dark { background-color: #28623F !important; }
 
 /* Navbar text color when at the top (transparent background) */
-.navbar:not(.bg-dark) .navbar-nav .nav-link { color: #28623F !important; font-weight: 600; }
-.navbar:not(.bg-dark) .navbar-nav .nav-link:hover, .navbar:not(.bg-dark) .navbar-nav .nav-link.active { color: var(--primary) !important; }
 
-.navbar:not(.bg-dark) .text-light { color: #28623F !important; }
-.navbar:not(.bg-dark) .border-light { border-color: #28623F !important; }
+
+
+
+
+
+/* Enforce consistent height for carousel images on desktop */
+@media (min-width: 769px) { .header-carousel .owl-carousel-item { height: 700px; } .header-carousel .owl-carousel-item img { height: 100%; width: 100%; object-fit: cover; } }
+
+/* Override default Bootstrap primary blue with Rafed Gold */
+:root { --bs-primary: #B98F3E; --bs-primary-rgb: 185, 143, 62; --primary: #B98F3E; }
+.text-primary { color: #B98F3E !important; }
+.bg-primary { background-color: #B98F3E !important; }
+.btn-primary { background-color: #B98F3E !important; border-color: #B98F3E !important; color: #fff !important; }
+.btn-primary:hover { background-color: #a37d34 !important; border-color: #a37d34 !important; }
+.border-primary { border-color: #B98F3E !important; }
