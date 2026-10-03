@@ -61,7 +61,7 @@
             <div class="row g-4">
                 <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.1s">
                     <div class="fact-item bg-light rounded text-center h-100 p-5">
-                        <i class="fa fa-certificate fa-4x text-primary mb-4"></i>
+                        <i class="fa fa-landmark fa-4x text-primary mb-4"></i>
                         <p class="mb-2">سنوات الخبرة</p>
                         <h1 class="display-5 mb-0" data-toggle="counter-up">{{ page.stats_years }}</h1>
                     </div>
@@ -75,14 +75,14 @@
                 </div>
                 <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.5s">
                     <div class="fact-item bg-light rounded text-center h-100 p-5">
-                        <i class="fa fa-bread-slice fa-4x text-primary mb-4"></i>
+                        <i class="fa fa-building fa-4x text-primary mb-4"></i>
                         <p class="mb-2">المشاريع الوقفية</p>
                         <h1 class="display-5 mb-0" data-toggle="counter-up">{{ page.stats_projects }}</h1>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.7s">
                     <div class="fact-item bg-light rounded text-center h-100 p-5">
-                        <i class="fa fa-cart-plus fa-4x text-primary mb-4"></i>
+                        <i class="fa fa-chart-line fa-4x text-primary mb-4"></i>
                         <p class="mb-2">Order Everyday</p>
                         <h1 class="display-5 mb-0" data-toggle="counter-up">9357</h1>
                     </div>
@@ -107,30 +107,90 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="h-100">
-                        <p class="text-primary text-uppercase mb-2">{{ page.vision_title }}</p>
-                        <h1 class="display-6 mb-4">{{ page.vision_text }}</h1>
-                        <p>{{ page.mission_title }}<br>{{ page.mission_text }}</p>
-                        <p>{{ page.mission_title }}<br>{{ page.mission_text }}</p>
-                        <div class="row g-2 mb-4">
-                            <div class="col-sm-6">
-                                <i class="fa fa-check text-primary me-2"></i>مشاريع نوعية
+                                  <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+                      <div class="h-100">
+                          <p class="text-primary text-uppercase mb-2">تعرف علينا</p>
+                          <h1 class="display-6 mb-4">جمعية رافد للأوقاف</h1>
+                          
+                          <!-- Custom Tabs -->
+                          <ul class="nav nav-pills mb-4 custom-nav-pills" id="pills-tab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                              <button class="nav-link active" id="pills-about-tab" data-bs-toggle="pill" data-bs-target="#pills-about" type="button" role="tab">من نحن</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                              <button class="nav-link" id="pills-vision-tab" data-bs-toggle="pill" data-bs-target="#pills-vision" type="button" role="tab">الرؤية والرسالة</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                              <button class="nav-link" id="pills-values-tab" data-bs-toggle="pill" data-bs-target="#pills-values" type="button" role="tab">القيم</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                              <button class="nav-link" id="pills-goals-tab" data-bs-toggle="pill" data-bs-target="#pills-goals" type="button" role="tab">الأهداف</button>
+                            </li>
+                          </ul>
+
+                          <div class="tab-content" id="pills-tabContent">
+                            <!-- About -->
+                            <div class="tab-pane fade show active" id="pills-about" role="tabpanel">
+                              <p class="fs-5 text-dark mb-4" style="line-height: 1.8;">جمعية تعنى بتأسيس وتطوير واستدامة الكيانات الوقفية وتقديم خدمات متنوعة للراغبين في الوقف ومنسوبي الأوقاف. مرخصة إدارياً من المركز الوطني لتنمية القطاع غير الربحي رقم ١٩٣٧ وبإشراف من الهيئة العامة للأوقاف.</p>
                             </div>
-                            <div class="col-sm-6">
-                                <i class="fa fa-check text-primary me-2"></i>أوقاف مخصصة
+                            
+                            <!-- Vision & Mission -->
+                            <div class="tab-pane fade" id="pills-vision" role="tabpanel">
+                              <div class="row g-4">
+                                  <div class="col-12">
+                                      <div class="d-flex align-items-start p-4 bg-light rounded shadow-sm border" style="background-color: #ffffff !important;">
+                                          <i class="fa fa-eye fa-2x text-primary me-3 ms-3 mt-1"></i>
+                                          <div>
+                                              <h5 class="mb-2">الرؤية</h5>
+                                              <p class="mb-0">أوقاف متنامية ذات أثر مجتمعي بأدوات مبتكرة.</p>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-12">
+                                      <div class="d-flex align-items-start p-4 bg-light rounded shadow-sm border" style="background-color: #ffffff !important;">
+                                          <i class="fa fa-bullseye fa-2x text-primary me-3 ms-3 mt-1"></i>
+                                          <div>
+                                              <h5 class="mb-2">الرسالة</h5>
+                                              <p class="mb-0">حلول إبداعية يقدمها خبراء متخصصون لتأسيس وتمكين الأوقاف سعياً لاستدامتها وتعظيم أثرها بمنطقة مكة المكرمة.</p>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
                             </div>
-                            <div class="col-sm-6">
-                                <i class="fa fa-check text-primary me-2"></i>استشارات وقفية
+                            
+                            <!-- Values -->
+                            <div class="tab-pane fade" id="pills-values" role="tabpanel">
+                              <div class="row g-3">
+                                  <div class="col-sm-6"><div class="p-4 border rounded bg-light text-center fw-bold shadow-sm" style="background-color: #ffffff !important;"><i class="fa fa-star text-primary mb-3 d-block fa-2x"></i>الإتقان</div></div>
+                                  <div class="col-sm-6"><div class="p-4 border rounded bg-light text-center fw-bold shadow-sm" style="background-color: #ffffff !important;"><i class="fa fa-lightbulb text-primary mb-3 d-block fa-2x"></i>الابتكار والتطوير</div></div>
+                                  <div class="col-sm-6"><div class="p-4 border rounded bg-light text-center fw-bold shadow-sm" style="background-color: #ffffff !important;"><i class="fa fa-hand-holding-heart text-primary mb-3 d-block fa-2x"></i>الاحتساب</div></div>
+                                  <div class="col-sm-6"><div class="p-4 border rounded bg-light text-center fw-bold shadow-sm" style="background-color: #ffffff !important;"><i class="fa fa-shield-alt text-primary mb-3 d-block fa-2x"></i>الموثوقية والخصوصية</div></div>
+                              </div>
                             </div>
-                            <div class="col-sm-6">
-                                <i class="fa fa-check text-primary me-2"></i>دراسات جدوى
+                            
+                            <!-- Goals -->
+                            <div class="tab-pane fade" id="pills-goals" role="tabpanel">
+                              <div class="row g-3">
+                                  <div class="col-sm-6 d-flex align-items-start"><i class="fa fa-check-circle text-primary mt-1 ms-2"></i><span>توعية المجتمع بأهمية الوقف وآثاره</span></div>
+                                  <div class="col-sm-6 d-flex align-items-start"><i class="fa fa-check-circle text-primary mt-1 ms-2"></i><span>بناء علاقات وشراكات فاعلة</span></div>
+                                  <div class="col-sm-6 d-flex align-items-start"><i class="fa fa-check-circle text-primary mt-1 ms-2"></i><span>تطوير وتوجيه مصارف الأوقاف</span></div>
+                                  <div class="col-sm-6 d-flex align-items-start"><i class="fa fa-check-circle text-primary mt-1 ms-2"></i><span>تمكين الكيانات الوقفية</span></div>
+                                  <div class="col-sm-6 d-flex align-items-start"><i class="fa fa-check-circle text-primary mt-1 ms-2"></i><span>تحفيز رجال وسيدات الأعمال</span></div>
+                                  <div class="col-sm-6 d-flex align-items-start"><i class="fa fa-check-circle text-primary mt-1 ms-2"></i><span>تأسيس وقف استثماري للجمعية</span></div>
+                                  <div class="col-sm-6 d-flex align-items-start"><i class="fa fa-check-circle text-primary mt-1 ms-2"></i><span>تحقيق الاستقرار المالي</span></div>
+                                  <div class="col-sm-6 d-flex align-items-start"><i class="fa fa-check-circle text-primary mt-1 ms-2"></i><span>ابتكار استشارات وخدمات متنوعة</span></div>
+                                  <div class="col-sm-6 d-flex align-items-start"><i class="fa fa-check-circle text-primary mt-1 ms-2"></i><span>تمتين العلاقة بالأوقاف المؤسسة</span></div>
+                                  <div class="col-sm-6 d-flex align-items-start"><i class="fa fa-check-circle text-primary mt-1 ms-2"></i><span>تفعيل المؤثرين في تحفيز الوقف</span></div>
+                                  <div class="col-sm-6 d-flex align-items-start"><i class="fa fa-check-circle text-primary mt-1 ms-2"></i><span>تعزيز العلاقة مع الهيئة</span></div>
+                                  <div class="col-sm-6 d-flex align-items-start"><i class="fa fa-check-circle text-primary mt-1 ms-2"></i><span>تطوير وتفعيل الموارد المالية</span></div>
+                                  <div class="col-sm-6 d-flex align-items-start"><i class="fa fa-check-circle text-primary mt-1 ms-2"></i><span>استقطاب فريق عمل مميز</span></div>
+                                  <div class="col-sm-6 d-flex align-items-start"><i class="fa fa-check-circle text-primary mt-1 ms-2"></i><span>تطوير العاملين مهنيا ومهاريا</span></div>
+                                  <div class="col-sm-6 d-flex align-items-start"><i class="fa fa-check-circle text-primary mt-1 ms-2"></i><span>استثمار التقنية في الجمعية</span></div>
+                              </div>
                             </div>
-                        </div>
-                        <a class="btn btn-primary rounded-pill py-3 px-5" href="">اقرأ المزيد</a>
-                    </div>
-                </div>
-            </div>
+                          </div>
+                      </div>
+                  </div>
         </div>
     </div>
     <!-- About End -->
@@ -156,7 +216,7 @@
                 </div>
             </div>
             <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <p class="text-primary text-uppercase mb-2">// Bakery Products</p>
+                <p class="text-primary text-uppercase mb-2">Bakery Products</p>
                 <h1 class="display-6 mb-4">Explore The Categories Of Our Bakery Products</h1>
             </div>
             <div class="row g-4">
@@ -216,14 +276,14 @@
         <div class="container">
             <div class="row g-5">
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <p class="text-primary text-uppercase mb-2">// Our Services</p>
+                    <p class="text-primary text-uppercase mb-2">Our Services</p>
                     <h1 class="display-6 mb-4">What Do We Offer For You?</h1>
                     <p class="mb-5">{{ page.mission_title }}<br>{{ page.mission_text }}</p>
                     <div class="row gy-5 gx-4">
                         <div class="col-sm-6 wow fadeIn" data-wow-delay="0.1s">
                             <div class="d-flex align-items-center mb-3">
                                 <div class="flex-shrink-0 btn-square bg-primary rounded-circle me-3">
-                                    <i class="fa fa-bread-slice text-white"></i>
+                                    <i class="fa fa-star text-white"></i>
                                 </div>
                                 <h5 class="mb-0">مشاريع نوعية</h5>
                             </div>
@@ -232,7 +292,7 @@
                         <div class="col-sm-6 wow fadeIn" data-wow-delay="0.2s">
                             <div class="d-flex align-items-center mb-3">
                                 <div class="flex-shrink-0 btn-square bg-primary rounded-circle me-3">
-                                    <i class="fa fa-birthday-cake text-white"></i>
+                                    <i class="fa fa-hand-holding-heart text-white"></i>
                                 </div>
                                 <h5 class="mb-0">أوقاف مخصصة</h5>
                             </div>
@@ -241,7 +301,7 @@
                         <div class="col-sm-6 wow fadeIn" data-wow-delay="0.3s">
                             <div class="d-flex align-items-center mb-3">
                                 <div class="flex-shrink-0 btn-square bg-primary rounded-circle me-3">
-                                    <i class="fa fa-cart-plus text-white"></i>
+                                    <i class="fa fa-comments text-white"></i>
                                 </div>
                                 <h5 class="mb-0">استشارات وقفية</h5>
                             </div>
@@ -250,7 +310,7 @@
                         <div class="col-sm-6 wow fadeIn" data-wow-delay="0.4s">
                             <div class="d-flex align-items-center mb-3">
                                 <div class="flex-shrink-0 btn-square bg-primary rounded-circle me-3">
-                                    <i class="fa fa-truck text-white"></i>
+                                    <i class="fa fa-file-alt text-white"></i>
                                 </div>
                                 <h5 class="mb-0">دراسات جدوى</h5>
                             </div>
@@ -278,7 +338,7 @@
     <div class="container-xxl py-6">
         <div class="container">
             <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <p class="text-primary text-uppercase mb-2">// Our Team</p>
+                <p class="text-primary text-uppercase mb-2">Our Team</p>
                 <h1 class="display-6 mb-4">We're Super Professional At Our Skills</h1>
             </div>
             <div class="row g-4">
@@ -356,7 +416,7 @@
     <div class="container-xxl bg-light my-6 py-6 pb-0">
         <div class="container">
             <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <p class="text-primary text-uppercase mb-2">// Client's Review</p>
+                <p class="text-primary text-uppercase mb-2">Client's Review</p>
                 <h1 class="display-6 mb-4">More Than 20000+ Customers Trusted Us</h1>
             </div>
             <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
