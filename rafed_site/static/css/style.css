@@ -483,11 +483,10 @@ h1, h2, h3, h4, h5, h6, .display-1, .display-2, .display-3, .display-4, .display
 
 /* Editorial Overlapping Images */
 .img-twice { padding: 20px 0; }
-.img-twice .col-6:first-child { z-index: 2; transform: scale(1.1) translateX(-15%); position: relative; }
-.img-twice .col-6:last-child { z-index: 1; transform: translateY(10%) translateX(10%); position: relative; }
-.img-twice img { border: 10px solid #ffffff !important; box-shadow: 0 20px 50px rgba(0,0,0,0.15) !important; border-radius: 16px !important; transition: all 0.5s ease; }
-.img-twice:hover .col-6:first-child img { transform: scale(1.03) rotate(-2deg); }
-.img-twice:hover .col-6:last-child img { transform: scale(1.03) rotate(2deg); }
+.img-twice .col-6:first-child { z-index: 2; transform: scale(1.1) translateX(-25%); position: relative; }
+.img-twice .col-6:last-child { z-index: 1; transform: translateY(15%) translateX(25%); position: relative; }
+.img-twice img { border: 10px solid #ffffff !important; box-shadow: 0 20px 50px rgba(0,0,0,0.15) !important; border-radius: 16px !important; }
+/* Hover animation removed by request */
 
 /* Premium Zakhrafa Background Pattern */
 body, .bg-light { 
