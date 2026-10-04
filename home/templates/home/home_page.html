@@ -3,8 +3,23 @@
 
 {% block content %}
 <!-- Carousel Start -->
-    <div class="container-fluid p-0 pb-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container-fluid p-0 wow fadeIn" data-wow-delay="0.1s">
         <div class="owl-carousel header-carousel position-relative">
+            <div class="owl-carousel-item position-relative">
+                <img class="img-fluid" src="{% static 'img/rafed_image/background/6aa0f543b127d8.21470575.png' %}" alt="">
+                <div class="owl-carousel-inner">
+                    <div class="container">
+                        <div class="row justify-content-start">
+                            <div class="col-lg-8">
+                                <p class="text-primary text-uppercase fw-bold mb-2">{{ page.hero_subheading }}</p>
+                                <h1 class="display-1 text-light mb-4 animated slideInDown">{{ page.hero_heading }}</h1>
+                                <p class="text-light fs-5 mb-4 pb-3">{{ page.hero_text }}</p>
+                                <a href="" class="btn btn-primary rounded-pill py-3 px-5">اقرأ المزيد</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="owl-carousel-item position-relative">
                 <img class="img-fluid" src="{% static 'img/rafed_image/background/4.jpg' %}" alt="">
                 <div class="owl-carousel-inner">
@@ -35,65 +50,12 @@
                     </div>
                 </div>
             </div>
-            <div class="owl-carousel-item position-relative">
-                <img class="img-fluid" src="{% static 'img/rafed_image/background/6aa0f543b127d8.21470575.png' %}" alt="">
-                <div class="owl-carousel-inner">
-                    <div class="container">
-                        <div class="row justify-content-start">
-                            <div class="col-lg-8">
-                                <p class="text-primary text-uppercase fw-bold mb-2">{{ page.hero_subheading }}</p>
-                                <h1 class="display-1 text-light mb-4 animated slideInDown">{{ page.hero_heading }}</h1>
-                                <p class="text-light fs-5 mb-4 pb-3">{{ page.hero_text }}</p>
-                                <a href="" class="btn btn-primary rounded-pill py-3 px-5">اقرأ المزيد</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <!-- Carousel End -->
 
 
-    <!-- Facts Start -->
-    <div class="container-xxl py-6">
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.1s">
-                    <div class="fact-item bg-light rounded text-center h-100 p-5">
-                        <i class="fa fa-landmark fa-4x text-primary mb-4"></i>
-                        <p class="mb-2">سنوات الخبرة</p>
-                        <h1 class="display-5 mb-0" data-toggle="counter-up">{{ page.stats_years }}</h1>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.3s">
-                    <div class="fact-item bg-light rounded text-center h-100 p-5">
-                        <i class="fa fa-users fa-4x text-primary mb-4"></i>
-                        <p class="mb-2">المستفيدين</p>
-                        <h1 class="display-5 mb-0" data-toggle="counter-up">{{ page.stats_beneficiaries }}</h1>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.5s">
-                    <div class="fact-item bg-light rounded text-center h-100 p-5">
-                        <i class="fa fa-building fa-4x text-primary mb-4"></i>
-                        <p class="mb-2">المشاريع الوقفية</p>
-                        <h1 class="display-5 mb-0" data-toggle="counter-up">{{ page.stats_projects }}</h1>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.7s">
-                    <div class="fact-item bg-light rounded text-center h-100 p-5">
-                        <i class="fa fa-chart-line fa-4x text-primary mb-4"></i>
-                        <p class="mb-2">Order Everyday</p>
-                        <h1 class="display-5 mb-0" data-toggle="counter-up">9357</h1>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Facts End -->
-
-
-    <!-- About Start -->
+        <!-- About Start -->
     <div class="container-xxl py-6">
         <div class="container">
             <div class="row g-5">
@@ -194,6 +156,146 @@
         </div>
     </div>
     <!-- About End -->
+
+
+    <!-- Achievements Start -->
+    <div class="container-xxl py-6">
+        <div class="container">
+            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                <p class="text-primary text-uppercase mb-2">تعرف على إنجازات الجمعية</p>
+                <h1 class="display-6 mb-4">إنجازاتنا</h1>
+            </div>
+            <div class="row g-3 justify-content-center">
+                <!-- Row 1 -->
+                <div class="col-lg-2 col-md-4 col-6 wow fadeIn" data-wow-delay="0.1s">
+                    <div class="achievement-card rounded text-center h-100 p-3 shadow-sm" style="background-color: #ffffff !important; border: 1px solid rgba(0,0,0,0.03); position: relative; overflow: hidden; transition: all 0.3s ease;">
+                        <i class="fa fa-chalkboard-teacher fa-4x text-primary" style="opacity: 0.05; position: absolute; left: -10px; bottom: -10px;"></i>
+                        <h6 class="mb-3" style="font-size: 13px; font-weight: 700; color: var(--dark); height: 35px;">اللقاءات التطويرية</h6>
+                        <h3 class="mb-1 text-primary" data-toggle="counter-up">73</h3>
+                        <small class="text-muted" style="font-size: 11px;">لقاء</small>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 wow fadeIn" data-wow-delay="0.1s">
+                    <div class="achievement-card rounded text-center h-100 p-3 shadow-sm" style="background-color: #ffffff !important; border: 1px solid rgba(0,0,0,0.03); position: relative; overflow: hidden; transition: all 0.3s ease;">
+                        <i class="fa fa-chart-line fa-4x text-primary" style="opacity: 0.05; position: absolute; left: -10px; bottom: -10px;"></i>
+                        <h6 class="mb-3" style="font-size: 13px; font-weight: 700; color: var(--dark); height: 35px;">العائد الاقتصادي للتطوع</h6>
+                        <h3 class="mb-1 text-primary" data-toggle="counter-up">290570</h3>
+                        <small class="text-muted" style="font-size: 11px;">ريال</small>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 wow fadeIn" data-wow-delay="0.2s">
+                    <div class="achievement-card rounded text-center h-100 p-3 shadow-sm" style="background-color: #ffffff !important; border: 1px solid rgba(0,0,0,0.03); position: relative; overflow: hidden; transition: all 0.3s ease;">
+                        <i class="fa fa-hands-helping fa-4x text-primary" style="opacity: 0.05; position: absolute; left: -10px; bottom: -10px;"></i>
+                        <h6 class="mb-3" style="font-size: 13px; font-weight: 700; color: var(--dark); height: 35px;">المتطوعين</h6>
+                        <h3 class="mb-1 text-primary" data-toggle="counter-up">324</h3>
+                        <small class="text-muted" style="font-size: 11px;">متطوع</small>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 wow fadeIn" data-wow-delay="0.3s">
+                    <div class="achievement-card rounded text-center h-100 p-3 shadow-sm" style="background-color: #ffffff !important; border: 1px solid rgba(0,0,0,0.03); position: relative; overflow: hidden; transition: all 0.3s ease;">
+                        <i class="fa fa-money-bill-wave fa-4x text-primary" style="opacity: 0.05; position: absolute; left: -10px; bottom: -10px;"></i>
+                        <h6 class="mb-3" style="font-size: 13px; font-weight: 700; color: var(--dark); height: 35px;">قيمة الأصول الوقفية الجديدة</h6>
+                        <h3 class="mb-1 text-primary" data-toggle="counter-up">290570</h3>
+                        <small class="text-muted" style="font-size: 11px;">ريال</small>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 wow fadeIn" data-wow-delay="0.4s">
+                    <div class="achievement-card rounded text-center h-100 p-3 shadow-sm" style="background-color: #ffffff !important; border: 1px solid rgba(0,0,0,0.03); position: relative; overflow: hidden; transition: all 0.3s ease;">
+                        <i class="fa fa-newspaper fa-4x text-primary" style="opacity: 0.05; position: absolute; left: -10px; bottom: -10px;"></i>
+                        <h6 class="mb-3" style="font-size: 13px; font-weight: 700; color: var(--dark); height: 35px;">المنشورات التوعوية</h6>
+                        <h3 class="mb-1 text-primary" data-toggle="counter-up">1013</h3>
+                        <small class="text-muted" style="font-size: 11px;">منشور</small>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 wow fadeIn" data-wow-delay="0.5s">
+                    <div class="achievement-card rounded text-center h-100 p-3 shadow-sm" style="background-color: #ffffff !important; border: 1px solid rgba(0,0,0,0.03); position: relative; overflow: hidden; transition: all 0.3s ease;">
+                        <i class="fa fa-clock fa-4x text-primary" style="opacity: 0.05; position: absolute; left: -10px; bottom: -10px;"></i>
+                        <h6 class="mb-3" style="font-size: 13px; font-weight: 700; color: var(--dark); height: 35px;">الساعات التطوعية</h6>
+                        <h3 class="mb-1 text-primary" data-toggle="counter-up">6264</h3>
+                        <small class="text-muted" style="font-size: 11px;">ساعات</small>
+                    </div>
+                </div>
+                
+                <!-- Row 2 -->
+                <div class="col-lg-2 col-md-4 col-6 wow fadeIn" data-wow-delay="0.1s">
+                    <div class="achievement-card rounded text-center h-100 p-3 shadow-sm" style="background-color: #ffffff !important; border: 1px solid rgba(0,0,0,0.03); position: relative; overflow: hidden; transition: all 0.3s ease;">
+                        <i class="fa fa-user-tie fa-4x text-primary" style="opacity: 0.05; position: absolute; left: -10px; bottom: -10px;"></i>
+                        <h6 class="mb-3" style="font-size: 13px; font-weight: 700; color: var(--dark); height: 35px;">الخبراء المتطوعين</h6>
+                        <h3 class="mb-1 text-primary" data-toggle="counter-up">72</h3>
+                        <small class="text-muted" style="font-size: 11px;">خبير</small>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 wow fadeIn" data-wow-delay="0.2s">
+                    <div class="achievement-card rounded text-center h-100 p-3 shadow-sm" style="background-color: #ffffff !important; border: 1px solid rgba(0,0,0,0.03); position: relative; overflow: hidden; transition: all 0.3s ease;">
+                        <i class="fa fa-handshake fa-4x text-primary" style="opacity: 0.05; position: absolute; left: -10px; bottom: -10px;"></i>
+                        <h6 class="mb-3" style="font-size: 13px; font-weight: 700; color: var(--dark); height: 35px;">الشراكات والزيارات</h6>
+                        <h3 class="mb-1 text-primary" data-toggle="counter-up">36</h3>
+                        <small class="text-muted" style="font-size: 11px;">شراكة وزيارة</small>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 wow fadeIn" data-wow-delay="0.3s">
+                    <div class="achievement-card rounded text-center h-100 p-3 shadow-sm" style="background-color: #ffffff !important; border: 1px solid rgba(0,0,0,0.03); position: relative; overflow: hidden; transition: all 0.3s ease;">
+                        <i class="fa fa-book-open fa-4x text-primary" style="opacity: 0.05; position: absolute; left: -10px; bottom: -10px;"></i>
+                        <h6 class="mb-3" style="font-size: 13px; font-weight: 700; color: var(--dark); height: 35px;">البرامج التثقيفية</h6>
+                        <h3 class="mb-1 text-primary" data-toggle="counter-up">56</h3>
+                        <small class="text-muted" style="font-size: 11px;">برنامج</small>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 wow fadeIn" data-wow-delay="0.4s">
+                    <div class="achievement-card rounded text-center h-100 p-3 shadow-sm" style="background-color: #ffffff !important; border: 1px solid rgba(0,0,0,0.03); position: relative; overflow: hidden; transition: all 0.3s ease;">
+                        <i class="fa fa-hourglass-half fa-4x text-primary" style="opacity: 0.05; position: absolute; left: -10px; bottom: -10px;"></i>
+                        <h6 class="mb-3" style="font-size: 13px; font-weight: 700; color: var(--dark); height: 35px;">ساعة تطويرية</h6>
+                        <h3 class="mb-1 text-primary" data-toggle="counter-up">140</h3>
+                        <small class="text-muted" style="font-size: 11px;">ساعة تطويرية</small>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 wow fadeIn" data-wow-delay="0.5s">
+                    <div class="achievement-card rounded text-center h-100 p-3 shadow-sm" style="background-color: #ffffff !important; border: 1px solid rgba(0,0,0,0.03); position: relative; overflow: hidden; transition: all 0.3s ease;">
+                        <i class="fa fa-comments fa-4x text-primary" style="opacity: 0.05; position: absolute; left: -10px; bottom: -10px;"></i>
+                        <h6 class="mb-3" style="font-size: 13px; font-weight: 700; color: var(--dark); height: 35px;">استشارات وقفية</h6>
+                        <h3 class="mb-1 text-primary" data-toggle="counter-up">285</h3>
+                        <small class="text-muted" style="font-size: 11px;">استشارات وقفية</small>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 wow fadeIn" data-wow-delay="0.6s">
+                    <div class="achievement-card rounded text-center h-100 p-3 shadow-sm" style="background-color: #ffffff !important; border: 1px solid rgba(0,0,0,0.03); position: relative; overflow: hidden; transition: all 0.3s ease;">
+                        <i class="fa fa-users fa-4x text-primary" style="opacity: 0.05; position: absolute; left: -10px; bottom: -10px;"></i>
+                        <h6 class="mb-3" style="font-size: 13px; font-weight: 700; color: var(--dark); height: 35px;">المستفيدين</h6>
+                        <h3 class="mb-1 text-primary" data-toggle="counter-up">81702</h3>
+                        <small class="text-muted" style="font-size: 11px;">مستفيد</small>
+                    </div>
+                </div>
+
+                <!-- Row 3 -->
+                <div class="col-lg-2 col-md-4 col-6 wow fadeIn" data-wow-delay="0.2s">
+                    <div class="achievement-card rounded text-center h-100 p-3 shadow-sm" style="background-color: #ffffff !important; border: 1px solid rgba(0,0,0,0.03); position: relative; overflow: hidden; transition: all 0.3s ease;">
+                        <i class="fa fa-building fa-4x text-primary" style="opacity: 0.05; position: absolute; left: -10px; bottom: -10px;"></i>
+                        <h6 class="mb-3" style="font-size: 13px; font-weight: 700; color: var(--dark); height: 35px;">الأوقاف الجديدة التي تم تأسيسها</h6>
+                        <h3 class="mb-1 text-primary" data-toggle="counter-up">27</h3>
+                        <small class="text-muted" style="font-size: 11px;">وقف</small>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 wow fadeIn" data-wow-delay="0.3s">
+                    <div class="achievement-card rounded text-center h-100 p-3 shadow-sm" style="background-color: #ffffff !important; border: 1px solid rgba(0,0,0,0.03); position: relative; overflow: hidden; transition: all 0.3s ease;">
+                        <i class="fa fa-file-signature fa-4x text-primary" style="opacity: 0.05; position: absolute; left: -10px; bottom: -10px;"></i>
+                        <h6 class="mb-3" style="font-size: 13px; font-weight: 700; color: var(--dark); height: 35px;">استخراج الوثائق الوقفية</h6>
+                        <h3 class="mb-1 text-primary" data-toggle="counter-up">59</h3>
+                        <small class="text-muted" style="font-size: 11px;">وثيقة</small>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 wow fadeIn" data-wow-delay="0.4s">
+                    <div class="achievement-card rounded text-center h-100 p-3 shadow-sm" style="background-color: #ffffff !important; border: 1px solid rgba(0,0,0,0.03); position: relative; overflow: hidden; transition: all 0.3s ease;">
+                        <i class="fa fa-project-diagram fa-4x text-primary" style="opacity: 0.05; position: absolute; left: -10px; bottom: -10px;"></i>
+                        <h6 class="mb-3" style="font-size: 13px; font-weight: 700; color: var(--dark); height: 35px;">البرامج والمشاريع</h6>
+                        <h3 class="mb-1 text-primary" data-toggle="counter-up">50</h3>
+                        <small class="text-muted" style="font-size: 11px;">مشروع</small>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Achievements End -->
 
 
     <!-- Product Start -->
