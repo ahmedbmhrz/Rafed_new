@@ -42,7 +42,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="{% static 'css/style.css' %}?v=4.1" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}?v=10.0" rel="stylesheet">
 
     {% block extra_css %}{% endblock %}
 </head>
@@ -118,49 +118,70 @@
 
     {% block content %}{% endblock %}
 
+    
+    
     <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-light footer my-6 mb-0 py-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container py-5">
-            <div class="row g-5">
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="text-light mb-4">Office Address</h4>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
-                    <div class="d-flex pt-2">
-                        <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="bi bi-twitter"></i></a>
-                        <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="bi bi-facebook"></i></a>
-                        <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="bi bi-youtube"></i></a>
-                        <a class="btn btn-square btn-outline-light rounded-circle me-0" href=""><i class="bi bi-linkedin"></i></a>
+    <div class="py-4 mt-5" style="width: 100vw; position: relative; right: 50%; margin-right: calc(-50vw + 50%); background-color: var(--forest); z-index: 10;">
+        <div class="container text-light">
+            <div class="row g-3">
+                
+                <!-- Contact Us -->
+                <div class="col-lg-4 col-md-6 text-start">
+                    <h4 class="text-white mb-3" style="font-weight: bold; padding-bottom: 5px; font-size: 20px;">إتصل بنا</h4>
+                    <div class="mb-2 d-flex align-items-center justify-content-start" style="font-size: 14px;">
+                        <div style="min-width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 15px;"><i class="fa fa-phone-alt text-white"></i></div>
+                        <span class="me-3" style="font-family: var(--font-mono); direction: ltr;">0552002057</span>
+                    </div>
+                    <div class="mb-2 d-flex align-items-center justify-content-start" style="font-size: 14px;">
+                        <div style="min-width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 15px;"><i class="fa fa-envelope text-white"></i></div>
+                        <span class="me-3" style="font-family: var(--font-mono);">info@rafed.org.sa</span>
+                    </div>
+                    <div class="mb-2 d-flex align-items-center justify-content-start" style="font-size: 14px;">
+                        <div style="min-width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 15px;"><i class="fa fa-map-marker-alt text-white"></i></div>
+                        <span class="me-3">جدة - حي الفيحاء</span>
+                    </div>
+                    
+                    <h5 class="text-white mb-3 mt-4" style="font-size: 15px;">تجدنا على</h5>
+                    <div class="d-flex justify-content-start">
+                        <a class="btn btn-square rounded me-2 d-flex align-items-center justify-content-center" href="#" style="background: #ff0000; color: white; border: none; width: 32px; height: 32px;"><i class="bi bi-youtube"></i></a>
+                        <a class="btn btn-square rounded me-2 d-flex align-items-center justify-content-center" href="#" style="background: #405de6; color: white; border: none; width: 32px; height: 32px;"><i class="bi bi-instagram"></i></a>
+                        <a class="btn btn-square rounded d-flex align-items-center justify-content-center" href="#" style="background: #1da1f2; color: white; border: none; width: 32px; height: 32px;"><i class="bi bi-twitter"></i></a>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="text-light mb-4">Quick Links</h4>
-                    <a class="btn btn-link" href="">من نحن Us</a>
-                    <a class="btn btn-link" href="">اتصل بنا Us</a>
-                    <a class="btn btn-link" href="">Our خدماتنا</a>
-                    <a class="btn btn-link" href="">الشروط & Condition</a>
-                    <a class="btn btn-link" href="">Support</a>
+
+                <!-- Quick Links -->
+                <div class="col-lg-4 col-md-6 text-center">
+                    <h4 class="text-white mb-3" style="font-weight: bold; padding-bottom: 5px; font-size: 20px;">الروابط السريعة</h4>
+                    <div class="d-flex flex-column align-items-center">
+                        <a class="text-light mb-3" href="#" style="text-decoration: none; font-size: 15px; transition: 0.3s;"><i class="bi bi-chevron-left me-2" style="color: var(--forest-pale);"></i>الرئيسية</a>
+                        <a class="text-light mb-3" href="#" style="text-decoration: none; font-size: 15px; transition: 0.3s;"><i class="bi bi-chevron-left me-2" style="color: var(--forest-pale);"></i>نبذة عنا</a>
+                    </div>
                 </div>
+
+                <!-- Vision 2030 -->
+                <div class="col-lg-4 col-md-6 text-end">
+                    <h4 class="text-white mb-3" style="font-weight: bold; padding-bottom: 5px; font-size: 20px;">نبذة عنا</h4>
+                    <br>
+                    <img src="https://www.vision2030.gov.sa/v2030/images/v2030-logo.svg" alt="Vision 2030" style="max-width: 140px; filter: brightness(0) invert(1);">
+                </div>
+
             </div>
         </div>
     </div>
-    <!-- Footer End -->
-
+    
     <!-- Copyright Start -->
-    <div class="container-fluid copyright text-light py-4 wow fadeIn" data-wow-delay="0.1s">
+    <div class="copyright text-light py-3 mb-0" style="margin-bottom: 0 !important; background: var(--forest-3); width: 100vw; position: relative; right: 50%; margin-right: calc(-50vw + 50%); z-index: 10;">
         <div class="container">
             <div class="row">
-                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                <div class="col-md-12 text-center mb-3 mb-md-0" style="color: var(--paper); font-size: 14px;">
                     جميع الحقوق محفوظة لجمعية رافد للأوقاف &copy; 2026
-                </div>
-                <div class="col-md-6 text-center text-md-end">
-                    
                 </div>
             </div>
         </div>
     </div>
     <!-- Copyright End -->
+    
+    
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
@@ -175,7 +196,7 @@
     <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
 
     <!-- Template Javascript -->
-    <script src="{% static 'js/main.js' %}?v=5.6"></script>
+    <script src="{% static 'js/main.js' %}?v=10.0"></script>
 
     {% block extra_js %}{% endblock %}
 </body>

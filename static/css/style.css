@@ -688,7 +688,11 @@ html:root, body {
     justify-content: flex-end !important;
 }
 
-html, body { overflow-x: hidden; }
+body { overflow-x: clip; }
 
 .video-btn-hover:hover { background-color: var(--forest) !important; color: white !important; }
 
+
+.partner-carousel .owl-nav { position: absolute; top: 50%; width: calc(100% + 60px); transform: translateY(-50%); display: flex; justify-content: space-between; left: -30px; padding: 0; pointer-events: none; }
+.partner-carousel .owl-nav .owl-prev, .partner-carousel .owl-nav .owl-next { width: 35px; height: 35px; background: var(--paper) !important; color: var(--forest) !important; border: 2px solid var(--forest) !important; border-radius: 50%; display: flex; align-items: center; justify-content: center; pointer-events: auto; font-size: 16px; transition: 0.3s; }
+.partner-carousel .owl-nav .owl-prev:hover, .partner-carousel .owl-nav .owl-next:hover { background: var(--forest) !important; color: white !important; }
