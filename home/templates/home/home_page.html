@@ -348,12 +348,12 @@
     <!-- News End -->
 
     <!-- Educational Content Start -->
-    <div class="container-xxl py-6 bg-light" style="position: relative; z-index: 10;">
+    <div class="py-6" style="width: 100vw; position: relative; right: 50%; margin-right: -50vw; background: linear-gradient(rgba(12, 59, 46, 0.95), rgba(12, 59, 46, 0.95)), url('{% static 'img/rafed_image/background/3687745542.jpg' %}') center center no-repeat; background-size: cover; background-attachment: fixed; position: relative; z-index: 10; border-top: 4px solid var(--ds-gold); border-bottom: 4px solid var(--ds-gold); box-shadow: inset 0 0 50px rgba(0,0,0,0.5);">
         <div class="container">
             <!-- Title -->
             <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s">
                 <p class="text-primary text-uppercase mb-2 eyebrow" style="font-size: 16px; font-weight: 700; letter-spacing: 2px; color: var(--gold-deep) !important;">المحتوى التوعوي</p>
-                <h2 class="display-6 mb-4" style="color: var(--forest);">تصاميم تثقيفية عن الأوقاف</h2>
+                <h2 class="display-6 mb-4" style="color: #ffffff !important;">تصاميم تثقيفية عن الأوقاف</h2>
             </div>
             
             <!-- Carousel -->
@@ -447,11 +447,112 @@
             </div>
             
             <div class="text-center mt-5">
-                <a href="#" class="btn btn-primary rounded py-3 px-5" style="background-color: var(--forest) !important; border-color: var(--forest) !important; color: white !important;">عرض كافة الألبومات</a>
+                <a href="#" class="btn btn-primary rounded py-3 px-5" style="background-color: var(--ds-gold) !important; border-color: var(--ds-gold) !important; color: white !important; font-weight: bold;">عرض كافة الألبومات</a>
             </div>
         </div>
     </div>
     <!-- Educational Content End -->
+
+    <!-- Video Album Start -->
+    <div class="container-xxl py-6" style="position: relative; z-index: 10;">
+        <div class="container">
+            <!-- Title -->
+            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s">
+                <p class="text-primary text-uppercase mb-2 eyebrow" style="font-size: 16px; font-weight: 700; letter-spacing: 2px; color: var(--gold-deep) !important;">ألبوم الفيديو</p>
+                <h2 class="display-6 mb-4" style="color: var(--forest);">شاهد احدث الفيديوهات</h2>
+            </div>
+            
+            <!-- Carousel -->
+            <div class="owl-carousel video-carousel wow fadeInUp" data-wow-delay="0.3s">
+                
+                <!-- Item 1 -->
+                <div class="video-item text-center" style="height: 100%;">
+                    <div style="position: relative; cursor: pointer; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.15); margin-bottom: 20px;" class="vid-thumb-container">
+                        <img src="{% static 'img/rafed_image/background/4.jpg' %}" alt="" style="width: 100%; height: 200px; object-fit: cover;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.2); transition: 0.3s;"></div>
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: 0.3s;" class="play-btn">
+                            <i class="fa fa-play" style="color: var(--forest); font-size: 20px; margin-left: 4px;"></i>
+                        </div>
+                    </div>
+                    <div class="text-center px-2">
+                        <h5 class="mb-2" style="color: var(--forest); font-family: var(--font-sans); font-weight: 700; font-size: 16px;">الفيلم التعريفي لجمعية رافد</h5>
+                        <span class="d-block" style="font-size: 13px; color: var(--ink-3); font-family: var(--font-mono);">الخميس, 01 أكتوبر 2026</span>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="video-item text-center" style="height: 100%;">
+                    <div style="position: relative; cursor: pointer; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.15); margin-bottom: 20px;" class="vid-thumb-container">
+                        <img src="{% static 'img/rafed_image/people/68ecf550ed5e2.png' %}" alt="" style="width: 100%; height: 200px; object-fit: cover; background: var(--paper);">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.2); transition: 0.3s;"></div>
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: 0.3s;" class="play-btn">
+                            <i class="fa fa-play" style="color: var(--forest); font-size: 20px; margin-left: 4px;"></i>
+                        </div>
+                    </div>
+                    <div class="text-center px-2">
+                        <h5 class="mb-2" style="color: var(--forest); font-family: var(--font-sans); font-weight: 700; font-size: 16px;">دور الذكاء الاصطناعي في تمكين الأوقاف</h5>
+                        <span class="d-block" style="font-size: 13px; color: var(--ink-3); font-family: var(--font-mono);">الخميس, 01 أكتوبر 2026</span>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="video-item text-center" style="height: 100%;">
+                    <div style="position: relative; cursor: pointer; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.15); margin-bottom: 20px;" class="vid-thumb-container">
+                        <img src="{% static 'img/rafed_image/background/3687745542.jpg' %}" alt="" style="width: 100%; height: 200px; object-fit: cover;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.2); transition: 0.3s;"></div>
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: 0.3s;" class="play-btn">
+                            <i class="fa fa-play" style="color: var(--forest); font-size: 20px; margin-left: 4px;"></i>
+                        </div>
+                    </div>
+                    <div class="text-center px-2">
+                        <h5 class="mb-2" style="color: var(--forest); font-family: var(--font-sans); font-weight: 700; font-size: 16px;">صياغة وتوثيق الوصايا والأوقاف</h5>
+                        <span class="d-block" style="font-size: 13px; color: var(--ink-3); font-family: var(--font-mono);">الاثنين, 04 مارس 2024</span>
+                    </div>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="video-item text-center" style="height: 100%;">
+                    <div style="position: relative; cursor: pointer; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.15); margin-bottom: 20px;" class="vid-thumb-container">
+                        <img src="{% static 'img/rafed_image/people/68ecf45e8f69f.png' %}" alt="" style="width: 100%; height: 200px; object-fit: cover; background: var(--paper);">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.2); transition: 0.3s;"></div>
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: 0.3s;" class="play-btn">
+                            <i class="fa fa-play" style="color: var(--forest); font-size: 20px; margin-left: 4px;"></i>
+                        </div>
+                    </div>
+                    <div class="text-center px-2">
+                        <h5 class="mb-2" style="color: var(--forest); font-family: var(--font-sans); font-weight: 700; font-size: 16px;">اللوائح التنظيمية للأوقاف</h5>
+                        <span class="d-block" style="font-size: 13px; color: var(--ink-3); font-family: var(--font-mono);">الاثنين, 04 مارس 2024</span>
+                    </div>
+                </div>
+
+                <!-- Item 5 -->
+                <div class="video-item text-center" style="height: 100%;">
+                    <div style="position: relative; cursor: pointer; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.15); margin-bottom: 20px;" class="vid-thumb-container">
+                        <img src="{% static 'img/rafed_image/background/6aa0f543b127d8.21470575.png' %}" alt="" style="width: 100%; height: 200px; object-fit: cover;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.2); transition: 0.3s;"></div>
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: 0.3s;" class="play-btn">
+                            <i class="fa fa-play" style="color: var(--forest); font-size: 20px; margin-left: 4px;"></i>
+                        </div>
+                    </div>
+                    <div class="text-center px-2">
+                        <h5 class="mb-2" style="color: var(--forest); font-family: var(--font-sans); font-weight: 700; font-size: 16px;">حوكمة الأوقاف</h5>
+                        <span class="d-block" style="font-size: 13px; color: var(--ink-3); font-family: var(--font-mono);">الاثنين, 04 مارس 2024</span>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="text-center mt-5">
+                <a href="#" class="btn rounded py-3 px-5 video-btn-hover" style="background-color: transparent !important; border: 2px solid var(--forest) !important; color: var(--forest) !important; font-weight: bold;">عرض كافة الفيديوهات</a>
+            </div>
+        </div>
+    </div>
+    <style>
+        .video-carousel .content-item:hover .play-btn { transform: translate(-50%, -50%) scale(1.1); background: var(--ds-gold); color: white; }
+        .video-carousel .content-item:hover .play-btn i { color: white !important; }
+    </style>
+    <!-- Video Album End -->
+
 
 
 
@@ -496,34 +597,6 @@
                 </div>
 
                 
-                <!-- Item 5 -->
-                <div class="content-item bg-white rounded shadow-sm" style="border: 1px solid rgba(0,0,0,0.05); overflow: hidden; height: 100%;">
-                    <div style="position: relative;">
-                        <img src="{% static 'img/rafed_image/background/4.jpg' %}" alt="" style="width: 100%; height: 220px; object-fit: cover;">
-                        <div style="position: absolute; top: 15px; left: 15px; background: var(--ds-gold); color: var(--paper); padding: 5px 12px; border-radius: 20px; font-size: 13px; font-weight: 700; font-family: var(--font-mono); box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
-                            <i class="fa fa-images me-1"></i> 8 صور
-                        </div>
-                    </div>
-                    <div class="p-4 text-center">
-                        <h5 class="mb-2" style="color: var(--forest); font-family: var(--font-sans); font-weight: 700;">دليل الهوية البصرية</h5>
-                        <span class="d-block" style="font-size: 13px; color: var(--ink-3); font-family: var(--font-mono);">الإثنين, 15 سبتمبر 2025</span>
-                    </div>
-                </div>
-                
-                <!-- Item 6 -->
-                <div class="content-item bg-white rounded shadow-sm" style="border: 1px solid rgba(0,0,0,0.05); overflow: hidden; height: 100%;">
-                    <div style="position: relative;">
-                        <img src="{% static 'img/rafed_image/background/6aa0f543b127d8.21470575.png' %}" alt="" style="width: 100%; height: 220px; object-fit: cover;">
-                        <div style="position: absolute; top: 15px; left: 15px; background: var(--ds-gold); color: var(--paper); padding: 5px 12px; border-radius: 20px; font-size: 13px; font-weight: 700; font-family: var(--font-mono); box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
-                            <i class="fa fa-images me-1"></i> 3 صور
-                        </div>
-                    </div>
-                    <div class="p-4 text-center">
-                        <h5 class="mb-2" style="color: var(--forest); font-family: var(--font-sans); font-weight: 700;">تقرير الإنجازات السنوي</h5>
-                        <span class="d-block" style="font-size: 13px; color: var(--ink-3); font-family: var(--font-mono);">الخميس, 1 يناير 2026</span>
-                    </div>
-                </div>
-    
                 <!-- Item 4 -->
                 <div class="bg-white rounded p-4 text-center shadow-sm" style="border: 1px solid rgba(0,0,0,0.05); height: 100%;">
                     <img class="rounded-circle mx-auto mb-4" src="{% static 'img/rafed_image/people/68ecf550ed5e2.png' %}" alt="" style="width: 100px !important; height: 100px !important; object-fit: cover; border: 4px solid var(--paper); box-shadow: 0 4px 15px rgba(0,0,0,0.1);">

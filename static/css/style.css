@@ -582,12 +582,12 @@ html:root, body {
 .news-content { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
 .news-content h5 { font-family: var(--font-sans) !important; color: var(--forest); font-size: 16px; font-weight: 700; line-height: 1.5; margin-bottom: 10px; }
 .news-content .date { font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); margin-top: auto; }
-.news-carousel .owl-nav, .content-carousel .owl-nav { position: absolute; top: 50%; width: calc(100% + 100px); transform: translateY(-50%); display: flex; justify-content: space-between; left: -50px; padding: 0; pointer-events: none; }
-.news-carousel .owl-nav, .content-carousel .owl-nav .owl-prev, .news-carousel .owl-nav, .content-carousel .owl-nav .owl-next { width: 40px; height: 40px; background: var(--forest) !important; color: #ffffff !important; border-radius: 50%; display: flex; align-items: center; justify-content: center; pointer-events: auto; font-size: 18px; transition: 0.3s; }
-.news-carousel .owl-nav, .content-carousel .owl-nav .owl-prev:hover, .news-carousel .owl-nav, .content-carousel .owl-nav .owl-next:hover { background: var(--ds-gold) !important; }
+.news-carousel .owl-nav, .content-carousel .owl-nav, .video-carousel .owl-nav { position: absolute; top: 50%; width: calc(100% + 100px); transform: translateY(-50%); display: flex; justify-content: space-between; left: -50px; padding: 0; pointer-events: none; }
+.news-carousel .owl-nav .owl-prev, .content-carousel .owl-nav .owl-prev, .video-carousel .owl-nav .owl-prev, .news-carousel .owl-nav .owl-next, .content-carousel .owl-nav .owl-next, .video-carousel .owl-nav .owl-next { width: 40px; height: 40px; background: var(--forest) !important; color: #ffffff !important; border-radius: 50%; display: flex; align-items: center; justify-content: center; pointer-events: auto; font-size: 18px; transition: 0.3s; }
+.news-carousel .owl-nav .owl-prev:hover, .content-carousel .owl-nav .owl-prev:hover, .video-carousel .owl-nav .owl-prev:hover, .news-carousel .owl-nav .owl-next:hover, .content-carousel .owl-nav .owl-next:hover, .video-carousel .owl-nav .owl-next:hover { background: var(--ds-gold) !important; }
 
 @media (max-width: 992px) {
-    .news-carousel .owl-nav, .content-carousel .owl-nav { width: 100% !important; left: 0 !important; padding: 0 10px !important; }
+    .news-carousel .owl-nav, .content-carousel .owl-nav, .video-carousel .owl-nav { width: 100% !important; left: 0 !important; padding: 0 10px !important; }
 }
 
 /* Custom Testimonial Card */
@@ -673,12 +673,7 @@ html:root, body {
 .testimonial-carousel .owl-nav .owl-next:hover { color: var(--forest) !important; }
 .testimonial-carousel .owl-nav .owl-prev { display: none !important; } /* Only show next arrow as per screenshot */
 
-/* Ensure owl-stage-outer doesn't clip the floating image */
-.testimonial-carousel .owl-stage-outer {
-    overflow: visible !important;
-    padding-left: 60px;
-    margin-left: -60px;
-}
+
 
 .testimonial-carousel .owl-nav .owl-next, .testimonial-carousel .owl-nav .owl-prev {
     background: transparent !important;
@@ -692,3 +687,8 @@ html:root, body {
     width: 100% !important;
     justify-content: flex-end !important;
 }
+
+html, body { overflow-x: hidden; }
+
+.video-btn-hover:hover { background-color: var(--forest) !important; color: white !important; }
+

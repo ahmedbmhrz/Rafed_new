@@ -84,6 +84,28 @@
 
 
     
+    
+    // Video carousel
+    $(".video-carousel").owlCarousel({
+        autoplay: false, rtl: true,
+        smartSpeed: 1000,
+        margin: 25,
+        loop: true,
+        center: false,
+        dots: true,
+        nav: true,
+        navText : [
+            '<i class="bi bi-chevron-right"></i>',
+            '<i class="bi bi-chevron-left"></i>'
+        ],
+        responsive: {
+            0:{ items:1 },
+            768:{ items:2 },
+            992:{ items:3 },
+            1200:{ items:4 }
+        }
+    });
+
     // Content carousel
     $(".content-carousel").owlCarousel({
         autoplay: true, rtl: true,
