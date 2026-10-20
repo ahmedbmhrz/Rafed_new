@@ -1,0 +1,572 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+/* Dedicated Page Header */
+.about-page-header {
+    background-color: var(--forest) !important;
+    padding: 130px 0 70px 0;
+    position: relative;
+    border-bottom: 2px solid var(--primary);
+}
+
+.about-page-header .breadcrumb-item a {
+    color: rgba(255, 255, 255, 0.8);
+    transition: color 0.3s ease;
+}
+.about-page-header .breadcrumb-item a:hover {
+    color: var(--primary);
+}
+.about-page-header .breadcrumb-item.active {
+    color: var(--primary) !important;
+    font-weight: 700;
+}
+.about-page-header .breadcrumb-item + .breadcrumb-item::before {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Single Big Image Styling */
+.about-single-image-wrapper {
+    position: relative;
+    padding: 10px;
+}
+.about-single-img {
+    border-radius: 20px !important;
+    box-shadow: 0 20px 50px rgba(12, 59, 46, 0.16) !important;
+    border: 8px solid #ffffff !important;
+    width: 100%;
+    min-height: 440px;
+    max-height: 520px;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+.about-single-image-wrapper:hover .about-single-img {
+    transform: scale(1.02);
+}
+.about-img-badge {
+    position: absolute;
+    bottom: -15px;
+    left: 30px;
+    background: #ffffff;
+    border: 2px solid var(--primary);
+    border-radius: 16px;
+    padding: 14px 22px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    z-index: 2;
+}
+.about-img-badge .badge-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: rgba(201, 169, 97, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    font-size: 20px;
+    margin-left: 12px;
+}
+.about-img-badge .badge-num {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--forest);
+    line-height: 1;
+}
+.about-img-badge .badge-txt {
+    font-size: 12px;
+    color: #666;
+    font-weight: 600;
+}
+
+/* Custom Brand Action Buttons (No Bootstrap Blue) */
+.btn-gold-pill {
+    background-color: var(--primary) !important;
+    color: #ffffff !important;
+    border: 2px solid var(--primary) !important;
+    border-radius: 50px !important;
+    font-weight: 700 !important;
+    box-shadow: 0 8px 20px rgba(201, 169, 97, 0.35) !important;
+    transition: all 0.3s ease !important;
+}
+.btn-gold-pill:hover {
+    background-color: transparent !important;
+    color: var(--primary) !important;
+    box-shadow: 0 4px 12px rgba(201, 169, 97, 0.2) !important;
+    transform: translateY(-2px);
+}
+
+.btn-forest-outline-pill {
+    background-color: transparent !important;
+    color: var(--forest) !important;
+    border: 2px solid var(--forest) !important;
+    border-radius: 50px !important;
+    font-weight: 700 !important;
+    transition: all 0.3s ease !important;
+}
+.btn-forest-outline-pill:hover {
+    background-color: var(--forest) !important;
+    color: #ffffff !important;
+    box-shadow: 0 8px 20px rgba(12, 59, 46, 0.25) !important;
+    transform: translateY(-2px);
+}
+
+/* Pillar Cards (Vision, Mission, Values, Goals) */
+.pillar-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 35px 30px;
+    border: 1px solid rgba(201, 169, 97, 0.25);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    height: 100%;
+    transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    overflow: hidden;
+}
+.pillar-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), transparent);
+    transition: height 0.3s ease;
+}
+.pillar-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(12, 59, 46, 0.12);
+    border-color: var(--primary);
+}
+.pillar-card:hover::before {
+    height: 6px;
+}
+.pillar-icon-box {
+    width: 68px;
+    height: 68px;
+    border-radius: 14px;
+    background: rgba(201, 169, 97, 0.12);
+    border: 1px solid rgba(201, 169, 97, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--forest);
+    font-size: 26px;
+    margin-bottom: 22px;
+    transition: all 0.3s ease;
+}
+.pillar-card:hover .pillar-icon-box {
+    background: var(--forest);
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+/* License Badges */
+.license-badge {
+    background: rgba(12, 59, 46, 0.04);
+    border: 1px solid rgba(201, 169, 97, 0.35);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+}
+.license-badge i {
+    font-size: 24px;
+    color: var(--primary);
+    margin-left: 15px;
+    flex-shrink: 0;
+}
+
+/* Vision 2030 Feature Block */
+.vision-banner {
+    background: linear-gradient(135deg, var(--forest) 0%, #07241c 100%);
+    border-radius: 20px;
+    padding: 50px 40px;
+    border: 1px solid rgba(201, 169, 97, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+.vision-banner::after {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    left: -50px;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201, 169, 97, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+/* Bullet item styling matching homepage */
+.goal-bullet-item {
+    position: relative;
+    padding-right: 28px;
+    margin-bottom: 12px;
+    line-height: 1.7;
+    color: #444;
+}
+.goal-bullet-item .diamond-bullet {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: var(--primary);
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* --- STATS / IMPACT CARDS (Smooth Working Hover Effect) --- */
+.stat-card-item {
+    background: #ffffff !important;
+    border: 1px solid rgba(201, 169, 97, 0.25) !important;
+    border-radius: 16px !important;
+    padding: 35px 25px !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04) !important;
+    transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+}
+.stat-card-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--primary);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+.stat-card-item:hover {
+    transform: translateY(-10px) !important;
+    box-shadow: 0 20px 40px rgba(12, 59, 46, 0.14) !important;
+    border-color: var(--primary) !important;
+}
+.stat-card-item:hover::after {
+    transform: scaleX(1);
+}
+.stat-card-icon {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: rgba(201, 169, 97, 0.12);
+    border: 1px solid rgba(201, 169, 97, 0.3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--forest);
+    font-size: 28px;
+    margin-bottom: 18px;
+    transition: all 0.35s ease;
+}
+.stat-card-item:hover .stat-card-icon {
+    background: var(--forest);
+    color: var(--primary);
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(12, 59, 46, 0.25);
+}
+.stat-card-num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 2.8rem;
+    color: var(--forest);
+    margin-bottom: 8px;
+    transition: color 0.3s ease;
+    line-height: 1.1;
+}
+.stat-card-item:hover .stat-card-num {
+    color: var(--primary);
+}
+.stat-card-label {
+    font-weight: 700;
+    color: #495057;
+    font-size: 1.1rem;
+    margin: 0;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Dedicated Page Header Start -->
+<div class="container-fluid about-page-header bg-dark text-light wow fadeIn" data-wow-delay="0.1s">
+    <div class="container text-center pt-4 pb-2">
+        <p class="text-primary text-uppercase fw-bold mb-2" style="letter-spacing: 1px;">جمعية رافد للأوقاف</p>
+        <h1 class="display-4 text-white mb-3" style="font-family: var(--font-display); font-weight: 800;">من نحن</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a href="/">الرئيسية</a></li>
+                <li class="breadcrumb-item active" aria-current="page">من نحن</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Dedicated Page Header End -->
+
+
+<!-- About Story Section Start -->
+<div class="container-xxl py-6">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <!-- Single Big Image Column -->
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="about-single-image-wrapper">
+                    <img class="img-fluid about-single-img" src="{% static 'img/rafed_image/background/4.jpg' %}" alt="جمعية رافد للأوقاف">
+                    <!-- Subtle Golden Badge on Image -->
+                    <div class="about-img-badge">
+                        <div class="badge-icon">
+                            <i class="fa fa-award"></i>
+                        </div>
+                        <div>
+                            <span class="badge-num">+10</span>
+                            <span class="badge-txt">سنوات من الريادة الوقفية</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Column -->
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="h-100">
+                    <p class="text-primary text-uppercase fw-bold mb-2">نبذة عن الجمعية</p>
+                    <h2 class="display-6 mb-4" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">
+                        رواد في تأسيس وتطوير واستدامة الكيانات الوقفية
+                    </h2>
+                    <p class="fs-5 mb-4" style="line-height: 1.85; color: #495057;">
+                        <strong>جمعية رافد للأوقاف</strong> هي جمعية أهلية متخصصة ومصرح لها رسمياً، تُعنى بتقديم منظومة استشارية وتطويرية متكاملة لتأسيس وتنمية واستدامة الكيانات الوقفية، وتمكين الراغبين في الوقف ومنسوبي القطاع الوقفي من إدارة أوقافهم بأعلى معايير الحوكمة والامتثال الشرعي والنظامي.
+                    </p>
+
+                    <!-- Accreditations & Licensing Badges -->
+                    <div class="row g-3 pt-2">
+                        <div class="col-sm-6">
+                            <div class="license-badge">
+                                <i class="fa fa-certificate"></i>
+                                <div>
+                                    <h6 class="mb-1" style="font-weight: 700; color: var(--forest);">ترخيص رسمي معتمد</h6>
+                                    <small class="text-muted">المركز الوطني للقطاع غير الربحي (رقم 1937)</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="license-badge">
+                                <i class="fa fa-landmark"></i>
+                                <div>
+                                    <h6 class="mb-1" style="font-weight: 700; color: var(--forest);">إشراف فني متخصص</h6>
+                                    <small class="text-muted">تحت إشراف الهيئة العامة للأوقاف</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4">
+                        <a href="#pillars" class="btn btn-gold-pill py-3 px-4 ms-2">استكشف رؤيتنا ورسالتنا</a>
+                        <a href="/#contact" class="btn btn-forest-outline-pill py-3 px-4">تواصل معنا</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- About Story Section End -->
+
+
+<!-- Core Pillars Section (Vision, Mission, Values, Goals) Start -->
+<div class="container-xxl py-5 bg-light" id="pillars">
+    <div class="container">
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+            <p class="text-primary text-uppercase fw-bold mb-2">ركائزنا المؤسسية</p>
+            <h2 class="display-6 mb-3" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">
+                الرؤية، الرسالة، القيم والأهداف
+            </h2>
+            <div style="width: 60px; height: 3px; background: var(--primary); margin: 0 auto; border-radius: 3px;"></div>
+        </div>
+
+        <div class="row g-4">
+            <!-- 1. Vision Card -->
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="pillar-card">
+                    <div class="pillar-icon-box">
+                        <i class="fa fa-eye"></i>
+                    </div>
+                    <h4 class="mb-3" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">رؤيتنا</h4>
+                    <p class="fs-5" style="line-height: 1.8; color: #495057;">
+                        الريادة والتميز في تأسيس وتطوير واستدامة الأوقاف، لتكون رافداً تنموياً رائداً يسهم في نهضة المجتمع واستقرار أصوله الوقفية.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 2. Mission Card -->
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.2s">
+                <div class="pillar-card">
+                    <div class="pillar-icon-box">
+                        <i class="fa fa-bullseye"></i>
+                    </div>
+                    <h4 class="mb-3" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">رسالتنا</h4>
+                    <p class="fs-5" style="line-height: 1.8; color: #495057;">
+                        تقديم خدمات استشارية ومؤسسية نوعية للمانحين والواقفين والنظار، وتمكينهم من صياغة وتأسيس وإدارة كيانات وقفية نموذجية تحقق أعلى درجات الأثر والاستدامة.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 3. Values Card -->
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="pillar-card">
+                    <div class="pillar-icon-box">
+                        <i class="fa fa-gem"></i>
+                    </div>
+                    <h4 class="mb-3" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">قيمنا الجوهرية</h4>
+                    <div class="row g-3 pt-2">
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center mb-2">
+                                <span style="color: var(--primary); font-size: 18px; margin-left: 10px;">❖</span>
+                                <span class="fw-bold" style="color: var(--forest);">الأمانة والشفافية</span>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <span style="color: var(--primary); font-size: 18px; margin-left: 10px;">❖</span>
+                                <span class="fw-bold" style="color: var(--forest);">الاستدامة والنمو</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center mb-2">
+                                <span style="color: var(--primary); font-size: 18px; margin-left: 10px;">❖</span>
+                                <span class="fw-bold" style="color: var(--forest);">التميز المؤسسي</span>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <span style="color: var(--primary); font-size: 18px; margin-left: 10px;">❖</span>
+                                <span class="fw-bold" style="color: var(--forest);">الأثر المجتمعي</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Strategic Goals Card -->
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.4s">
+                <div class="pillar-card">
+                    <div class="pillar-icon-box">
+                        <i class="fa fa-flag"></i>
+                    </div>
+                    <h4 class="mb-3" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">أهدافنا الاستراتيجية</h4>
+                    <ul class="list-unstyled mb-0">
+                        <li class="goal-bullet-item">
+                            <span class="diamond-bullet">❖</span>
+                            ترسيخ ثقافة الوقف والتوعية بأهميته التنموية في المجتمع.
+                        </li>
+                        <li class="goal-bullet-item">
+                            <span class="diamond-bullet">❖</span>
+                            بناء وتأسيس كيانات وقفية نموذجية ومستدامة وفق أفضل الممارسات.
+                        </li>
+                        <li class="goal-bullet-item">
+                            <span class="diamond-bullet">❖</span>
+                            تأهيل وتطوير قدرات العاملين في نظارة وإدارة الأوقاف.
+                        </li>
+                        <li class="goal-bullet-item">
+                            <span class="diamond-bullet">❖</span>
+                            تعزيز الحوكمة والامتثال ورفع كفاءة الإنفاق الوقفي.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Core Pillars Section End -->
+
+
+<!-- Vision 2030 Alignment Banner Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="vision-banner text-light wow fadeInUp" data-wow-delay="0.2s">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-8">
+                    <span class="badge rounded-pill bg-primary px-3 py-2 mb-3 text-white fw-bold" style="font-size: 14px;">مستهدفات وطنية</span>
+                    <h3 class="text-white mb-3" style="font-family: var(--font-display); font-weight: 700;">
+                        مواءمة استراتيجية مع رؤية المملكة 2030
+                    </h3>
+                    <p class="fs-5 mb-0" style="line-height: 1.8; color: rgba(255, 255, 255, 0.9);">
+                        تضع جمعية رافد مستهدفات رؤية المملكة 2030 في صميم خططها، مساهمةً في رفع مساهمة القطاع غير الربحي في الناتج المحلي الإجمالي من 1% إلى 5%، وتعزيز الأثر الاقتصادي والاجتماعي للأوقاف لضمان استمرار نفعها لأجيال قادمة.
+                    </p>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <img src="{% static 'img/rafed_image/2030.png' %}" alt="رؤية المملكة 2030" style="max-height: 100px; filter: brightness(0) invert(1); opacity: 0.95;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Vision 2030 Alignment Banner End -->
+
+
+<!-- Impact Numbers Section Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+            <p class="text-primary text-uppercase fw-bold mb-2">أرقام وإنجازات</p>
+            <h2 class="display-6 mb-3" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">
+                أثرنا في أرقام
+            </h2>
+            <div style="width: 60px; height: 3px; background: var(--primary); margin: 0 auto; border-radius: 3px;"></div>
+        </div>
+
+        <div class="row g-4 text-center">
+            <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.1s">
+                <div class="stat-card-item h-100">
+                    <div class="stat-card-icon">
+                        <i class="fa fa-certificate"></i>
+                    </div>
+                    <div class="stat-card-num" data-toggle="counter-up">10</div>
+                    <p class="stat-card-label">سنوات خبرة تراكمية</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.3s">
+                <div class="stat-card-item h-100">
+                    <div class="stat-card-icon">
+                        <i class="fa fa-building"></i>
+                    </div>
+                    <div class="stat-card-num" data-toggle="counter-up">50</div>
+                    <p class="stat-card-label">كيان ومشروع وقفي</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.5s">
+                <div class="stat-card-item h-100">
+                    <div class="stat-card-icon">
+                        <i class="fa fa-users"></i>
+                    </div>
+                    <div class="stat-card-num" data-toggle="counter-up">10000</div>
+                    <p class="stat-card-label">مستفيد ومستفيدة</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.7s">
+                <div class="stat-card-item h-100">
+                    <div class="stat-card-icon">
+                        <i class="fa fa-shield-alt"></i>
+                    </div>
+                    <div class="stat-card-num">100%</div>
+                    <p class="stat-card-label">حوكمة وامتثال</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Impact Numbers Section End -->
+
+
+<!-- CTA Section Start -->
+<div class="container-fluid py-5 bg-dark text-light mt-5" style="border-top: 2px solid var(--primary);">
+    <div class="container text-center py-4">
+        <h2 class="display-6 text-white mb-3" style="font-family: var(--font-display); font-weight: 700;">
+            هل ترغب في تأسيس أو تطوير وقفك؟
+        </h2>
+        <p class="fs-5 text-light mb-4 mx-auto" style="max-width: 650px; opacity: 0.9;">
+            فريق مستشاري رافد جاهز لتقديم المشورة الشرعية والنظامية والإدارية لضمان استدامة أوقافكم ونمائها.
+        </p>
+        <a href="/#contact" class="btn btn-gold-pill py-3 px-5 fs-5">تواصل مع مستشارينا الآن</a>
+    </div>
+</div>
+<!-- CTA Section End -->
+{% endblock %}
