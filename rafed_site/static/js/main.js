@@ -169,4 +169,48 @@
         }
     });
 
+    // Services carousel (Dedicated Services Page)
+    var $servicesCarousel = $(".services-carousel");
+    if ($servicesCarousel.length && !$servicesCarousel.hasClass("owl-loaded")) {
+        $servicesCarousel.owlCarousel({
+            autoplay: true,
+            autoplayTimeout: 5000,
+            autoplayHoverPause: true,
+            rtl: true,
+            smartSpeed: 700,
+            loop: true,
+            center: true,
+            dots: true,
+            nav: true,
+            navText : [
+                '<i class="bi bi-chevron-right"></i>',
+                '<i class="bi bi-chevron-left"></i>'
+            ],
+            responsive: {
+                0: { 
+                    items: 1, 
+                    margin: 15 
+                },
+                768: { 
+                    items: 2.2, 
+                    margin: 20 
+                },
+                1100: { 
+                    items: 3, 
+                    margin: 25 
+                }
+            }
+        });
+
+        $(document).on('click', '.services-carousel .owl-item:not(.center)', function() {
+            var $this = $(this);
+            var $center = $('.services-carousel .owl-item.center');
+            if ($this.index() > $center.index()) {
+                $servicesCarousel.trigger('next.owl.carousel');
+            } else {
+                $servicesCarousel.trigger('prev.owl.carousel');
+            }
+        });
+    }
+
 })(jQuery);

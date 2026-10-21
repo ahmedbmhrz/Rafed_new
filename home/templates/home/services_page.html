@@ -1,0 +1,1070 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+/* Dedicated Page Header */
+.services-page-header {
+    background-color: var(--forest) !important;
+    padding: 130px 0 70px 0;
+    position: relative;
+    border-bottom: 2px solid var(--primary);
+}
+
+.services-page-header .breadcrumb-item a {
+    color: rgba(255, 255, 255, 0.8);
+    transition: color 0.3s ease;
+}
+.services-page-header .breadcrumb-item a:hover {
+    color: var(--primary);
+}
+.services-page-header .breadcrumb-item.active {
+    color: var(--primary) !important;
+    font-weight: 700;
+}
+.services-page-header .breadcrumb-item + .breadcrumb-item::before {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Services Carousel Enhancements - Center Spotlight Effect */
+.services-carousel .owl-stage-outer {
+    padding-top: 30px;
+    padding-bottom: 35px;
+    margin-top: -30px;
+    margin-bottom: -35px;
+}
+.services-carousel .owl-stage {
+    display: flex !important;
+    align-items: center;
+}
+.services-carousel .owl-item {
+    display: flex !important;
+    flex: 1 0 auto;
+    height: auto;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.services-carousel .service-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 10px 4px 15px 4px;
+    transition: all 0.45s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transform: scale(0.90);
+    opacity: 0.65;
+}
+
+/* Middle / Center Card - Bigger & Highlighted */
+.services-carousel .owl-item.center {
+    z-index: 10;
+}
+.services-carousel .owl-item.center .service-card-wrapper {
+    transform: scale(1.06);
+    opacity: 1;
+}
+.services-carousel .owl-item.center .service-catalog-card {
+    border-color: var(--primary) !important;
+    box-shadow: 0 25px 50px rgba(12, 59, 46, 0.16) !important;
+    background: #ffffff;
+}
+.services-carousel .owl-item.center .service-catalog-card::before {
+    height: 6px;
+    background: linear-gradient(90deg, var(--primary), var(--forest));
+}
+.services-carousel .owl-item.center .service-icon-box {
+    background: var(--forest);
+    color: var(--primary);
+    transform: scale(1.08);
+}
+.services-carousel .owl-item.center .service-action-btn {
+    color: var(--primary);
+    font-weight: 800;
+}
+
+/* Hover over side cards */
+.services-carousel .owl-item:not(.center) .service-card-wrapper:hover {
+    opacity: 0.9;
+    transform: scale(0.94);
+    cursor: pointer;
+}
+
+@media (max-width: 767px) {
+    .services-carousel .service-card-wrapper {
+        transform: scale(1) !important;
+        opacity: 1 !important;
+    }
+    .services-carousel .owl-item.center .service-card-wrapper {
+        transform: scale(1) !important;
+    }
+}
+
+.services-carousel .owl-nav {
+    position: absolute;
+    top: 50%;
+    width: calc(100% + 70px);
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    left: -35px;
+    padding: 0;
+    pointer-events: none;
+    z-index: 20;
+}
+.services-carousel .owl-nav .owl-prev,
+.services-carousel .owl-nav .owl-next {
+    width: 48px;
+    height: 48px;
+    background: #ffffff !important;
+    color: var(--forest) !important;
+    border: 2px solid var(--forest) !important;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    font-size: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 18px rgba(12, 59, 46, 0.15);
+}
+.services-carousel .owl-nav .owl-prev:hover,
+.services-carousel .owl-nav .owl-next:hover {
+    background: var(--forest) !important;
+    color: var(--primary) !important;
+    border-color: var(--forest) !important;
+    transform: scale(1.1);
+}
+.services-carousel .owl-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 35px;
+    gap: 8px;
+}
+.services-carousel .owl-dot {
+    width: 12px;
+    height: 12px;
+    background: #d8ceb8 !important;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    border: none;
+    padding: 0;
+}
+.services-carousel .owl-dot.active {
+    background: var(--forest) !important;
+    width: 32px;
+    border-radius: 10px;
+}
+@media (max-width: 992px) {
+    .services-carousel .owl-nav {
+        position: static;
+        width: 100% !important;
+        transform: none;
+        left: 0 !important;
+        margin-top: 25px;
+        justify-content: center;
+        gap: 20px;
+    }
+}
+
+/* Service Card Design */
+.service-catalog-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 40px 32px;
+    border: 1px solid rgba(201, 169, 97, 0.25);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-column: column;
+    justify-content: space-between;
+}
+.service-catalog-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), transparent);
+    transition: height 0.3s ease;
+}
+.service-catalog-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 45px rgba(12, 59, 46, 0.12);
+    border-color: var(--primary);
+}
+.service-catalog-card:hover::before {
+    height: 6px;
+}
+.service-icon-box {
+    width: 68px;
+    height: 68px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(201, 169, 97, 0.16) 0%, rgba(12, 59, 46, 0.06) 100%);
+    border: 1px solid rgba(201, 169, 97, 0.35);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--forest);
+    font-size: 26px;
+    margin-bottom: 22px;
+    transition: all 0.35s ease;
+}
+.service-catalog-card:hover .service-icon-box {
+    background: var(--forest);
+    color: var(--primary);
+    transform: scale(1.08);
+}
+.service-card-title {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--forest);
+    margin-bottom: 14px;
+    line-height: 1.4;
+}
+.service-card-desc {
+    color: #555;
+    font-size: 0.98rem;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+.service-features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 25px 0;
+}
+.service-feature-item {
+    position: relative;
+    padding-right: 24px;
+    margin-bottom: 10px;
+    color: #495057;
+    font-size: 0.92rem;
+    line-height: 1.6;
+}
+.service-feature-item .diamond-bullet {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: var(--primary);
+    font-size: 15px;
+    font-weight: bold;
+}
+.service-action-btn {
+    display: inline-flex;
+    align-items: center;
+    color: var(--forest);
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    padding-top: 15px;
+    border-top: 1px dashed rgba(201, 169, 97, 0.4);
+    width: 100%;
+}
+.service-action-btn i {
+    margin-right: 8px;
+    color: var(--primary);
+    transition: transform 0.3s ease;
+}
+.service-catalog-card:hover .service-action-btn {
+    color: var(--primary);
+}
+.service-catalog-card:hover .service-action-btn i {
+    transform: translateX(-5px);
+}
+
+/* ===================================================
+   Service Delivery Roadmap - Connected Path Design
+   =================================================== */
+.process-roadmap-section {
+    position: relative;
+    overflow: hidden;
+}
+.process-path-container {
+    padding: 20px 0 10px;
+}
+/* Horizontal Path Track for Desktop */
+.process-path-track {
+    position: absolute;
+    top: 42px; /* Aligned with the center of the 84px icon waypoint */
+    right: 12.5%;
+    left: 12.5%;
+    height: 4px;
+    z-index: 1;
+}
+.path-track-line {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to left, var(--forest) 0%, var(--primary) 50%, var(--forest) 100%);
+    border-radius: 4px;
+    position: relative;
+    box-shadow: 0 0 10px rgba(201, 169, 97, 0.35);
+}
+@keyframes pathFlowRTL {
+    0% { transform: translateY(-50%) translateX(0); opacity: 0.75; }
+    50% { transform: translateY(-50%) translateX(-4px); opacity: 1; }
+    100% { transform: translateY(-50%) translateX(0); opacity: 0.75; }
+}
+.path-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    background: #ffffff;
+    border: 2px solid var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--forest);
+    font-size: 13px;
+    box-shadow: 0 4px 10px rgba(12, 59, 46, 0.12);
+    z-index: 2;
+    animation: pathFlowRTL 2.2s infinite ease-in-out;
+}
+.path-arrow-1 { right: 16.66%; margin-right: -14px; animation-delay: 0s; }
+.path-arrow-2 { right: 50%; margin-right: -14px; animation-delay: 0.4s; }
+.path-arrow-3 { right: 83.33%; margin-right: -14px; animation-delay: 0.8s; }
+
+/* Milestone Waypoint Hub */
+.process-milestone {
+    display: flex;
+    flex-direction: column;
+}
+.milestone-waypoint {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 3;
+    margin-bottom: 20px;
+}
+.waypoint-ring {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    background: #ffffff;
+    padding: 6px;
+    box-shadow: 0 0 0 4px rgba(201, 169, 97, 0.28), 0 10px 25px rgba(12, 59, 46, 0.1);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.waypoint-icon {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: var(--forest);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    font-size: 28px;
+    transition: all 0.4s ease;
+}
+.process-milestone:hover .waypoint-ring {
+    transform: translateY(-6px) scale(1.08);
+    box-shadow: 0 0 0 7px rgba(201, 169, 97, 0.45), 0 15px 35px rgba(12, 59, 46, 0.2);
+}
+.process-milestone:hover .waypoint-icon {
+    background: var(--primary);
+    color: #ffffff;
+}
+
+/* Stage Pill */
+.milestone-stage-pill {
+    margin-top: 10px;
+    background: rgba(12, 59, 46, 0.08);
+    color: var(--forest);
+    border: 1px solid rgba(201, 169, 97, 0.35);
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 3px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+.process-milestone:hover .milestone-stage-pill {
+    background: var(--forest);
+    color: var(--primary);
+    border-color: var(--forest);
+}
+
+/* Milestone Card */
+.milestone-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 28px 22px;
+    border: 1px solid rgba(201, 169, 97, 0.22);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.03);
+    text-align: center;
+    position: relative;
+    transition: all 0.35s ease;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+.milestone-pointer {
+    position: absolute;
+    top: -9px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+    border-bottom: 9px solid #ffffff;
+    filter: drop-shadow(0 -2px 1px rgba(201, 169, 97, 0.2));
+}
+.process-milestone:hover .milestone-card {
+    border-color: var(--primary);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 36px rgba(12, 59, 46, 0.1);
+}
+.milestone-title {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--forest);
+    margin-bottom: 12px;
+}
+.milestone-desc {
+    color: #555;
+    font-size: 0.93rem;
+    line-height: 1.75;
+    margin: 0;
+}
+
+/* Mobile & Tablet Vertical Winding Path */
+@media (max-width: 991px) {
+    .process-path-container {
+        padding-right: 15px;
+        position: relative;
+    }
+    .process-path-container::before {
+        content: '';
+        position: absolute;
+        top: 45px;
+        bottom: 80px;
+        right: 56px;
+        width: 4px;
+        background: linear-gradient(to bottom, var(--forest) 0%, var(--primary) 50%, var(--forest) 100%);
+        border-radius: 4px;
+        z-index: 1;
+    }
+    .process-milestone {
+        flex-direction: row;
+        align-items: flex-start;
+        margin-bottom: 25px;
+    }
+    .milestone-waypoint {
+        margin-bottom: 0;
+        margin-left: 20px;
+        flex-shrink: 0;
+    }
+    .milestone-card {
+        height: auto;
+        text-align: right;
+        flex-grow: 1;
+        margin-top: 5px;
+    }
+    .milestone-pointer {
+        top: 25px;
+        left: auto;
+        right: -9px;
+        transform: none;
+        border-left: none;
+        border-right: 9px solid #ffffff;
+        border-top: 9px solid transparent;
+        border-bottom: 9px solid transparent;
+        filter: drop-shadow(2px 0 1px rgba(201, 169, 97, 0.2));
+    }
+}
+
+/* Value Props / Why Choose Us */
+.differentiator-item {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 28px 24px;
+    border: 1px solid rgba(201, 169, 97, 0.22);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.02);
+    display: flex;
+    align-items: flex-start;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+.differentiator-item:hover {
+    border-color: var(--primary);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(12, 59, 46, 0.08);
+}
+.diff-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background: rgba(12, 59, 46, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    font-size: 20px;
+    margin-left: 18px;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+.differentiator-item:hover .diff-icon {
+    background: var(--forest);
+    color: var(--primary);
+}
+
+/* Buttons */
+.btn-gold-pill {
+    background-color: var(--primary) !important;
+    color: #ffffff !important;
+    border: 2px solid var(--primary) !important;
+    border-radius: 50px !important;
+    font-weight: 700 !important;
+    box-shadow: 0 8px 20px rgba(201, 169, 97, 0.35) !important;
+    transition: all 0.3s ease !important;
+}
+.btn-gold-pill:hover {
+    background-color: transparent !important;
+    color: var(--primary) !important;
+    box-shadow: 0 4px 12px rgba(201, 169, 97, 0.2) !important;
+    transform: translateY(-2px);
+}
+
+.btn-forest-outline-pill {
+    background-color: transparent !important;
+    color: #ffffff !important;
+    border: 2px solid rgba(255, 255, 255, 0.8) !important;
+    border-radius: 50px !important;
+    font-weight: 700 !important;
+    transition: all 0.3s ease !important;
+}
+.btn-forest-outline-pill:hover {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+    border-color: #ffffff !important;
+    transform: translateY(-2px);
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Dedicated Page Header Start -->
+<div class="container-fluid services-page-header bg-dark text-light wow fadeIn" data-wow-delay="0.1s">
+    <div class="container text-center pt-4 pb-2">
+        <p class="text-primary text-uppercase fw-bold mb-2" style="letter-spacing: 1px;">جمعية رافد للأوقاف</p>
+        <h1 class="display-4 text-white mb-3" style="font-family: var(--font-display); font-weight: 800;">خدماتنا</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a href="/">الرئيسية</a></li>
+                <li class="breadcrumb-item active" aria-current="page">خدماتنا</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Dedicated Page Header End -->
+
+
+<!-- Executive Overview Start -->
+<div class="container-xxl py-6">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-7 wow fadeInUp" data-wow-delay="0.1s">
+                <p class="text-primary text-uppercase fw-bold mb-2">منظومة خدمات متكاملة</p>
+                <h2 class="display-6 mb-4" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">
+                    حلول مؤسسية واستشارية مبتكرة لتأسيس وتنمية واستدامة الأوقاف
+                </h2>
+                <p class="fs-5 mb-4" style="line-height: 1.85; color: #495057;">
+                    تُقدّم <strong>جمعية رافد للأوقاف</strong> حزمة شاملة من الخدمات المتخصصة الموجّهة للواقفين، والنظار، والمنشآت الوقفية القائمة والمستقبلية، بإشراف نخبة من المستشارين الشرعيين والقانونيين والخبراء الإداريين والاستثماريين، لضمان أعلى مستويات الحوكمة والأثر الوقفي المستدام.
+                </p>
+                <div class="d-flex flex-wrap gap-3 pt-2">
+                    <a href="#catalog" class="btn btn-gold-pill py-3 px-4">استكشف باقة الخدمات</a>
+                    <a href="/#contact" class="btn rounded-pill py-3 px-4" style="border: 2px solid var(--forest); color: var(--forest); font-weight: 700; background: transparent;">طلب استشارة وقفية</a>
+                </div>
+            </div>
+
+            <div class="col-lg-5 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="p-4 rounded-4" style="background: linear-gradient(145deg, rgba(12, 59, 46, 0.05) 0%, rgba(201, 169, 97, 0.08) 100%); border: 1px solid rgba(201, 169, 97, 0.35);">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="flex-shrink-0" style="width: 48px; height: 48px; border-radius: 12px; background: var(--forest); display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 22px; margin-left: 15px;">
+                            <i class="fa fa-shield-alt"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-0" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">اعتماد رسمي وأمانة شرعية</h5>
+                            <small class="text-muted">مرخصة من المركز الوطني (1937) وبإشراف هيئة الأوقاف</small>
+                        </div>
+                    </div>
+                    <p class="mb-0 text-muted" style="font-size: 0.95rem; line-height: 1.75;">
+                        كافة استشاراتنا وصكوكنا تخضع لدراسة شرعية ونظامية دقيقة تضمن تحقيق شروط الواقفين وحمايتها وتعظيم منافعها التنموية للأجيال القادمة.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Executive Overview End -->
+
+
+<!-- Core Services Catalog Start -->
+<div class="container-xxl py-6 bg-light" id="catalog">
+    <div class="container">
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 650px;">
+            <p class="text-primary text-uppercase fw-bold mb-2">خدماتنا التخصصية</p>
+            <h2 class="display-6 mb-3" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">
+                باقة الخدمات الوقفية الشاملة
+            </h2>
+            <div style="width: 50px; height: 3px; background: var(--primary); margin: 0 auto; border-radius: 3px;"></div>
+        </div>
+
+        <div class="position-relative px-lg-4">
+            <div class="owl-carousel services-carousel wow fadeInUp" data-wow-delay="0.2s">
+                <!-- Service 01: تأسيس وصياغة صكوك الأوقاف -->
+                <div class="service-card-wrapper">
+                    <div class="service-catalog-card">
+                        <div>
+                            <div class="service-icon-box">
+                                <i class="fa fa-scroll"></i>
+                            </div>
+                            <h4 class="service-card-title">تأسيس وصياغة صكوك الأوقاف</h4>
+                            <p class="service-card-desc">
+                                صياغة حجج وصكوك الأوقاف والوصايا صياغة محكمة تترجم إرادة الواقف وتضمن الحماية الشرعية والقانونية للأصل الوقفي.
+                            </p>
+                            <ul class="service-features-list">
+                                <li class="service-feature-item">
+                                    <span class="diamond-bullet">❖</span>
+                                    صياغة وتوثيق الصكوك والوصايا الوقفية.
+                                </li>
+                                <li class="service-feature-item">
+                                    <span class="diamond-bullet">❖</span>
+                                    ضبط شروط الواقفين ومصارف الوقف بدقة.
+                                </li>
+                                <li class="service-feature-item">
+                                    <span class="diamond-bullet">❖</span>
+                                    إنهاء إجراءات الإثبات والتوثيق لدى المحاكم والدوائر الرسمية.
+                                </li>
+                            </ul>
+                        </div>
+                        <a href="/#contact" class="service-action-btn">
+                            طلب خدمة التأسيس <i class="fa fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 02: الاستشارات الشرعية والنظامية -->
+                <div class="service-card-wrapper">
+                    <div class="service-catalog-card">
+                        <div>
+                            <div class="service-icon-box">
+                                <i class="fa fa-balance-scale"></i>
+                            </div>
+                            <h4 class="service-card-title">الاستشارات الشرعية والنظامية</h4>
+                            <p class="service-card-desc">
+                                تقديم استشارات فقهية وقانونية متخصصة لمعالجة التحديات الوقفية المعاصرة وتحديث الصكوك وحل النزاعات.
+                            </p>
+                            <ul class="service-features-list">
+                                <li class="service-feature-item">
+                                    <span class="diamond-bullet">❖</span>
+                                    إبداء الرأي الشرعي في المسائل والنوازل الوقفية.
+                                </li>
+                                <li class="service-feature-item">
+                                    <span class="diamond-bullet">❖</span>
+                                    تحديث الصكوك القديمة ومواءمتها مع الأنظمة الحديثة.
+                                </li>
+                                <li class="service-feature-item">
+                                    <span class="diamond-bullet">❖</span>
+                                    مراجعة وصياغة العقود والاتفاقيات الاستثمارية.
+                                </li>
+                            </ul>
+                        </div>
+                        <a href="/#contact" class="service-action-btn">
+                            طلب استشارة متخصصة <i class="fa fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 03: الحوكمة والتطوير المؤسسي -->
+                <div class="service-card-wrapper">
+                    <div class="service-catalog-card">
+                        <div>
+                            <div class="service-icon-box">
+                                <i class="fa fa-sitemap"></i>
+                            </div>
+                            <h4 class="service-card-title">الحوكمة والتطوير المؤسسي</h4>
+                            <p class="service-card-desc">
+                                بناء الهياكل الإدارية وإعداد اللوائح والسياسات الداخلية للأوقاف لتحقيق أعلى درجات الشفافية والامتثال المؤسسي.
+                            </p>
+                            <ul class="service-features-list">
+                                <li class="service-feature-item">
+                                    <span class="diamond-bullet">❖</span>
+                                    إعداد لائحة النظارة ومصفوفة الصلاحيات والمسؤوليات.
+                                </li>
+                                <li class="service-feature-item">
+                                    <span class="diamond-bullet">❖</span>
+                                    صياغة السياسات المالية والرقابية وسياسة الإفصاح.
+                                </li>
+                                <li class="service-feature-item">
+                                    <span class="diamond-bullet">❖</span>
+                                    مواءمة الأوقاف مع متطلبات الهيئة العامة للأوقاف.
+                                </li>
+                            </ul>
+                        </div>
+                        <a href="/#contact" class="service-action-btn">
+                            طلب خدمة الحوكمة <i class="fa fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 04: دراسات الجدوى والاستثمار الوقفي -->
+                <div class="service-card-wrapper">
+                    <div class="service-catalog-card">
+                        <div>
+                            <div class="service-icon-box">
+                                <i class="fa fa-chart-line"></i>
+                            </div>
+                            <h4 class="service-card-title">دراسات الجدوى والاستثمار الوقفي</h4>
+                            <p class="service-card-desc">
+                                إعداد دراسات جدوى اقتصادية متكاملة لفرص استثمار وتطوير الأصول الوقفية لتعظيم العائد المالي واستقراره.
+                            </p>
+                            <ul class="service-features-list">
+                                <li class="service-feature-item">
+                                    <span class="diamond-bullet">❖</span>
+                                    إعداد دراسات الجدوى الاقتصادية للمشاريع الوقفية.
+                                </li>
+                                <li class="service-feature-item">
+                                    <span class="diamond-bullet">❖</span>
+                                    وضع استراتيجيات تنويع وتنمية الأصول والمحافظ.
+                                </li>
+                                <li class="service-feature-item">
+                                    <span class="diamond-bullet">❖</span>
+                                    تقييم المخاطر الاستثمارية ورفع كفاءة التشغيل.
+                                </li>
+                            </ul>
+                        </div>
+                        <a href="/#contact" class="service-action-btn">
+                            طلب دراسة استثمارية <i class="fa fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 05: تأهيل وتمكين النظار وإدارات الأوقاف -->
+                <div class="service-card-wrapper">
+                    <div class="service-catalog-card">
+                        <div>
+                            <div class="service-icon-box">
+                                <i class="fa fa-user-graduate"></i>
+                            </div>
+                            <h4 class="service-card-title">تأهيل وتمكين النظار</h4>
+                            <p class="service-card-desc">
+                                برامج تدريبية وتأهيلية نوعية تصقل مهارات مجالس النظارة والقيادات التنفيذية في إدارة وتنمية الأوقاف المعاصرة.
+                            </p>
+                            <ul class="service-features-list">
+                                <li class="service-feature-item">
+                                    <span class="diamond-bullet">❖</span>
+                                    برامج تأهيل النظار في الجوانب الشرعية والنظامية.
+                                </li>
+                                <li class="service-feature-item">
+                                    <span class="diamond-bullet">❖</span>
+                                    ورش عمل متخصصة في إدارة الأصول والاستثمار.
+                                </li>
+                                <li class="service-feature-item">
+                                    <span class="diamond-bullet">❖</span>
+                                    استشارات إدارية وتنفيذية مستمرة لمجالس النظارة.
+                                </li>
+                            </ul>
+                        </div>
+                        <a href="/#contact" class="service-action-btn">
+                            طلب برامج التأهيل <i class="fa fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 06: توجيه المصارف وقياس الأثر -->
+                <div class="service-card-wrapper">
+                    <div class="service-catalog-card">
+                        <div>
+                            <div class="service-icon-box">
+                                <i class="fa fa-hand-holding-heart"></i>
+                            </div>
+                            <h4 class="service-card-title">توجيه المصارف وقياس الأثر</h4>
+                            <p class="service-card-desc">
+                                تصميم برامج صرف ريع الأوقاف بما يحقق شرط الواقف ويعالج الاحتياجات المجتمعية الفعلية مع قياس الأثر التنموي.
+                            </p>
+                            <ul class="service-features-list">
+                                <li class="service-feature-item">
+                                    <span class="diamond-bullet">❖</span>
+                                    تصميم المبادرات والبرامج المصرفية الوقفية.
+                                </li>
+                                <li class="service-feature-item">
+                                    <span class="diamond-bullet">❖</span>
+                                    دراسات الاحتياج المجتمعي وأولويات الصرف.
+                                </li>
+                                <li class="service-feature-item">
+                                    <span class="diamond-bullet">❖</span>
+                                    بناء مؤشرات وتقارير قياس الأثر الاجتماعي والاقتصادي.
+                                </li>
+                            </ul>
+                        </div>
+                        <a href="/#contact" class="service-action-btn">
+                            طلب تصميم المصارف <i class="fa fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Core Services Catalog End -->
+
+
+<!-- Service Delivery Roadmap (Connected Path Design) Start -->
+<div class="container-xxl py-6 process-roadmap-section">
+    <div class="container">
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 650px;">
+            <p class="text-primary text-uppercase fw-bold mb-2">منهجية العمل</p>
+            <h2 class="display-6 mb-3" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">
+                مسار رحلة تقديم الخدمة الوقفية
+            </h2>
+            <div style="width: 50px; height: 3px; background: var(--primary); margin: 0 auto; border-radius: 3px;"></div>
+            <p class="text-muted mt-3 mb-0" style="font-size: 0.95rem;">
+                مسار متكامل ومترابط من الاستكشاف الأولي وحتى إدارة وتنمية الأصل الوقفي
+            </p>
+        </div>
+
+        <div class="process-path-container position-relative">
+            <!-- Connecting Line & Flow Chevrons on Desktop -->
+            <div class="process-path-track d-none d-lg-block">
+                <div class="path-track-line"></div>
+                <div class="path-arrow path-arrow-1" title="التالي"><i class="bi bi-chevron-left"></i></div>
+                <div class="path-arrow path-arrow-2" title="التالي"><i class="bi bi-chevron-left"></i></div>
+                <div class="path-arrow path-arrow-3" title="التالي"><i class="bi bi-chevron-left"></i></div>
+            </div>
+
+            <div class="row g-4 position-relative" style="z-index: 2;">
+                <!-- Milestone 01 -->
+                <div class="col-lg-3 col-md-6 process-milestone wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="milestone-waypoint">
+                        <div class="waypoint-ring">
+                            <div class="waypoint-icon">
+                                <i class="fa fa-compass"></i>
+                            </div>
+                        </div>
+                        <span class="milestone-stage-pill">المحطة 01</span>
+                    </div>
+                    <div class="milestone-card">
+                        <div class="milestone-pointer"></div>
+                        <h5 class="milestone-title">تحليل الاحتياج والاستكشاف</h5>
+                        <p class="milestone-desc">
+                            جلسة استشارية أولية مع الواقف أو مجلس النظارة للتعرف على الأهداف والأصول وحصر المتطلبات بدقة.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Milestone 02 -->
+                <div class="col-lg-3 col-md-6 process-milestone wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="milestone-waypoint">
+                        <div class="waypoint-ring">
+                            <div class="waypoint-icon">
+                                <i class="fa fa-file-signature"></i>
+                            </div>
+                        </div>
+                        <span class="milestone-stage-pill">المحطة 02</span>
+                    </div>
+                    <div class="milestone-card">
+                        <div class="milestone-pointer"></div>
+                        <h5 class="milestone-title">الصياغة والدراسة الفنية</h5>
+                        <p class="milestone-desc">
+                            إعداد الصكوك واللوائح والدراسات الفنية عبر فريق استشاري يجمع الخبرة الشرعية والقانونية والإدارية.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Milestone 03 -->
+                <div class="col-lg-3 col-md-6 process-milestone wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="milestone-waypoint">
+                        <div class="waypoint-ring">
+                            <div class="waypoint-icon">
+                                <i class="fa fa-stamp"></i>
+                            </div>
+                        </div>
+                        <span class="milestone-stage-pill">المحطة 03</span>
+                    </div>
+                    <div class="milestone-card">
+                        <div class="milestone-pointer"></div>
+                        <h5 class="milestone-title">الاعتماد والتوثيق النظامي</h5>
+                        <p class="milestone-desc">
+                            استكمال كافة إجراءات التوثيق والاعتماد لدى المحاكم والجهات التنظيمية الرسمية لضمان الحجية القانونية.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Milestone 04 -->
+                <div class="col-lg-3 col-md-6 process-milestone wow fadeInUp" data-wow-delay="0.4s">
+                    <div class="milestone-waypoint">
+                        <div class="waypoint-ring">
+                            <div class="waypoint-icon">
+                                <i class="fa fa-seedling"></i>
+                            </div>
+                        </div>
+                        <span class="milestone-stage-pill">المحطة 04</span>
+                    </div>
+                    <div class="milestone-card">
+                        <div class="milestone-pointer"></div>
+                        <h5 class="milestone-title">التمكين والدعم المستمر</h5>
+                        <p class="milestone-desc">
+                            متابعة دورية وتقديم استشارات تشغيلية وتدريب للنظار لضمان استدامة الأصول الوقفية وتنمية عوائدها.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Service Delivery Roadmap (Connected Path Design) End -->
+
+
+<!-- Why Choose Us Start -->
+<div class="container-xxl py-6 bg-light">
+    <div class="container">
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+            <p class="text-primary text-uppercase fw-bold mb-2">مميزاتنا التنافسية</p>
+            <h2 class="display-6 mb-3" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">
+                لماذا يختار الواقفون والنظار "رافد"؟
+            </h2>
+            <div style="width: 50px; height: 3px; background: var(--primary); margin: 0 auto; border-radius: 3px;"></div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="differentiator-item">
+                    <div class="diff-icon">
+                        <i class="fa fa-users-cog"></i>
+                    </div>
+                    <div>
+                        <h5 class="mb-2" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">فريق استشاري نخبوي</h5>
+                        <p class="mb-0 text-muted" style="line-height: 1.75;">
+                            يضم خبراء شرعيين وقانونيين وماليين يتمتعون بخبرات نوعية متراكمة في قطاع الأوقاف السعودي.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.2s">
+                <div class="differentiator-item">
+                    <div class="diff-icon">
+                        <i class="fa fa-stamp"></i>
+                    </div>
+                    <div>
+                        <h5 class="mb-2" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">ترخيص رسمي وإشراف معتمد</h5>
+                        <p class="mb-0 text-muted" style="line-height: 1.75;">
+                            مرخصة رسمياً برقم (1937) من المركز الوطني لتنمية القطاع غير الربحي وبإشراف من الهيئة العامة للأوقاف.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="differentiator-item">
+                    <div class="diff-icon">
+                        <i class="fa fa-user-shield"></i>
+                    </div>
+                    <div>
+                        <h5 class="mb-2" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">سرية وأمانة تامة</h5>
+                        <p class="mb-0 text-muted" style="line-height: 1.75;">
+                            نلتزم بأعلى درجات الخصوصية وحماية بيانات الأصول الوقفية وشروط الواقفين بأمانة مؤسسية صارمة.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.4s">
+                <div class="differentiator-item">
+                    <div class="diff-icon">
+                        <i class="fa fa-flag-checkered"></i>
+                    </div>
+                    <div>
+                        <h5 class="mb-2" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">مواكبة لرؤية المملكة 2030</h5>
+                        <p class="mb-0 text-muted" style="line-height: 1.75;">
+                            تصميم وتأسيس كيانات وقفية مؤسسية حديثة تدعم مستهدفات تعظيم مساهمة القطاع الوقفي في الاقتصاد الوطني.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Why Choose Us End -->
+
+
+<!-- CTA Section Start -->
+<div class="container-fluid py-5 bg-dark text-light mt-5" style="border-top: 2px solid var(--primary);">
+    <div class="container text-center py-4">
+        <h2 class="display-6 text-white mb-3" style="font-family: var(--font-display); font-weight: 700;">
+            جاهز لتأسيس وقفك أو تطوير حوكمته؟
+        </h2>
+        <p class="fs-5 text-light mb-4 mx-auto" style="max-width: 650px; opacity: 0.9;">
+            فريق مستشاري رافد جاهز لمساعدتك في بناء كيان وقفي نموذجي يدوم أثره ونفعه.
+        </p>
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <a href="/#contact" class="btn btn-gold-pill py-3 px-5 fs-5">طلب استشارة وقفية الآن</a>
+            <a href="tel:0552002057" class="btn btn-forest-outline-pill py-3 px-5 fs-5">اتصال مباشر: 0552002057</a>
+        </div>
+    </div>
+</div>
+<!-- CTA Section End -->
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function () {
+    var $servicesCarousel = $(".services-carousel");
+    if ($servicesCarousel.length && !$servicesCarousel.hasClass("owl-loaded")) {
+        $servicesCarousel.owlCarousel({
+            autoplay: true,
+            autoplayTimeout: 5000,
+            autoplayHoverPause: true,
+            rtl: true,
+            smartSpeed: 700,
+            loop: true,
+            center: true,
+            dots: true,
+            nav: true,
+            navText: [
+                '<i class="bi bi-chevron-right"></i>',
+                '<i class="bi bi-chevron-left"></i>'
+            ],
+            responsive: {
+                0: { 
+                    items: 1, 
+                    margin: 15 
+                },
+                768: { 
+                    items: 2.2, 
+                    margin: 20 
+                },
+                1100: { 
+                    items: 3, 
+                    margin: 25 
+                }
+            }
+        });
+
+        // Click side card to slide it to center
+        $(document).on('click', '.services-carousel .owl-item:not(.center)', function() {
+            var $this = $(this);
+            var $center = $('.services-carousel .owl-item.center');
+            if ($this.index() > $center.index()) {
+                $servicesCarousel.trigger('next.owl.carousel');
+            } else {
+                $servicesCarousel.trigger('prev.owl.carousel');
+            }
+        });
+    }
+});
+</script>
+{% endblock %}
