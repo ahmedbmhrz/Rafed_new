@@ -93,7 +93,7 @@
                 <a href="/" class="nav-item nav-link {% if request.path == '/' %}active{% endif %}">الرئيسية</a>
                 <a href="{% url 'about' %}" class="nav-item nav-link {% if request.path == '/about/' %}active{% endif %}">من نحن</a>
                 <a href="{% url 'services' %}" class="nav-item nav-link {% if request.path == '/services/' %}active{% endif %}">خدماتنا</a>
-                <a href="#" class="nav-item nav-link">مشاريعنا</a>
+                <a href="{% url 'projects' %}" class="nav-item nav-link {% if request.path == '/projects/' %}active{% endif %}">مشاريعنا</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">صفحات</a>
                     <div class="dropdown-menu m-0">
@@ -153,8 +153,10 @@
                 <div class="col-lg-4 col-md-6 text-center">
                     <h4 class="text-white mb-3" style="font-weight: bold; padding-bottom: 5px; font-size: 20px;">الروابط السريعة</h4>
                     <div class="d-flex flex-column align-items-center">
-                        <a class="text-light mb-3" href="#" style="text-decoration: none; font-size: 15px; transition: 0.3s;"><i class="bi bi-chevron-left me-2" style="color: var(--forest-pale);"></i>الرئيسية</a>
-                        <a class="text-light mb-3" href="#" style="text-decoration: none; font-size: 15px; transition: 0.3s;"><i class="bi bi-chevron-left me-2" style="color: var(--forest-pale);"></i>نبذة عنا</a>
+                        <a class="text-light mb-2" href="/" style="text-decoration: none; font-size: 14px; transition: 0.3s;"><i class="bi bi-chevron-left me-2" style="color: var(--forest-pale);"></i>الرئيسية</a>
+                        <a class="text-light mb-2" href="{% url 'about' %}" style="text-decoration: none; font-size: 14px; transition: 0.3s;"><i class="bi bi-chevron-left me-2" style="color: var(--forest-pale);"></i>من نحن</a>
+                        <a class="text-light mb-2" href="{% url 'services' %}" style="text-decoration: none; font-size: 14px; transition: 0.3s;"><i class="bi bi-chevron-left me-2" style="color: var(--forest-pale);"></i>خدماتنا</a>
+                        <a class="text-light mb-2" href="{% url 'projects' %}" style="text-decoration: none; font-size: 14px; transition: 0.3s;"><i class="bi bi-chevron-left me-2" style="color: var(--forest-pale);"></i>مشاريعنا</a>
                     </div>
                 </div>
 

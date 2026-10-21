@@ -1,0 +1,1022 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+/* Dedicated Page Header */
+.projects-page-header {
+    background-color: var(--forest) !important;
+    padding: 130px 0 70px 0;
+    position: relative;
+    border-bottom: 2px solid var(--primary);
+}
+
+.projects-page-header .breadcrumb-item a {
+    color: rgba(255, 255, 255, 0.8);
+    transition: color 0.3s ease;
+}
+.projects-page-header .breadcrumb-item a:hover {
+    color: var(--primary);
+}
+.projects-page-header .breadcrumb-item.active {
+    color: var(--primary) !important;
+    font-weight: 700;
+}
+.projects-page-header .breadcrumb-item + .breadcrumb-item::before {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Strategic Pillars Ribbon */
+.pillar-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px 20px;
+    border: 1px solid rgba(201, 169, 97, 0.25);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.03);
+    transition: all 0.35s ease;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.pillar-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+    box-shadow: 0 15px 35px rgba(12, 59, 46, 0.1);
+}
+.pillar-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(201, 169, 97, 0.16) 0%, rgba(12, 59, 46, 0.08) 100%);
+    border: 1px solid rgba(201, 169, 97, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--forest);
+    font-size: 22px;
+    margin-left: 16px;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+.pillar-card:hover .pillar-icon {
+    background: var(--forest);
+    color: var(--primary);
+    transform: scale(1.08);
+}
+
+/* Category Filter Tabs */
+.projects-filter-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 45px;
+}
+.filter-btn {
+    background: #ffffff;
+    color: var(--forest);
+    border: 1px solid rgba(12, 59, 46, 0.18);
+    border-radius: 50px;
+    padding: 10px 24px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+.filter-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-2px);
+}
+.filter-btn.active {
+    background: var(--forest);
+    color: var(--primary);
+    border-color: var(--forest);
+    box-shadow: 0 6px 18px rgba(12, 59, 46, 0.18);
+}
+.filter-btn .badge-count {
+    display: inline-block;
+    background: rgba(201, 169, 97, 0.2);
+    color: inherit;
+    font-size: 0.78rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-right: 6px;
+}
+.filter-btn.active .badge-count {
+    background: var(--primary);
+    color: #ffffff;
+}
+
+/* Project Card */
+.project-card {
+    background: #ffffff;
+    border-radius: 20px;
+    border: 1px solid rgba(201, 169, 97, 0.24);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+}
+.project-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--primary);
+    box-shadow: 0 22px 50px rgba(12, 59, 46, 0.14);
+}
+.project-card-img-wrap {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+    background: var(--forest);
+}
+.project-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+.project-card:hover .project-card-img {
+    transform: scale(1.08);
+}
+.project-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(12, 59, 46, 0.2) 0%, rgba(12, 59, 46, 0.8) 100%);
+    pointer-events: none;
+}
+.project-badge-status {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: var(--primary);
+    color: #ffffff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+}
+.project-badge-category {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--forest);
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(201, 169, 97, 0.4);
+    z-index: 2;
+}
+
+.project-card-body {
+    padding: 28px 24px 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+.project-card-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--forest);
+    margin-bottom: 12px;
+    line-height: 1.45;
+}
+.project-card-desc {
+    color: #555555;
+    font-size: 0.92rem;
+    line-height: 1.75;
+    margin-bottom: 18px;
+}
+
+/* Impact Metrics Strip */
+.project-metrics-strip {
+    background: rgba(12, 59, 46, 0.04);
+    border: 1px solid rgba(201, 169, 97, 0.2);
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.project-metric-item {
+    text-align: center;
+    flex: 1;
+}
+.project-metric-item:not(:last-child) {
+    border-left: 1px solid rgba(201, 169, 97, 0.3);
+}
+.metric-val {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--forest);
+    line-height: 1.2;
+}
+.metric-lbl {
+    font-size: 0.74rem;
+    color: #666;
+    font-weight: 600;
+}
+
+/* Project Highlights List */
+.project-highlights-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+.project-highlight-item {
+    position: relative;
+    padding-right: 22px;
+    margin-bottom: 8px;
+    color: #495057;
+    font-size: 0.88rem;
+    line-height: 1.6;
+}
+.project-highlight-item .diamond-bullet {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: var(--primary);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Project Card Footer */
+.project-card-footer {
+    padding: 16px 24px 24px;
+    border-top: 1px dashed rgba(201, 169, 97, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #ffffff;
+}
+.btn-project-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--forest);
+    font-weight: 700;
+    font-size: 0.92rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    width: 100%;
+    padding: 10px 18px;
+    border-radius: 30px;
+    border: 1px solid rgba(12, 59, 46, 0.2);
+    background: rgba(12, 59, 46, 0.03);
+}
+.btn-project-cta:hover {
+    background: var(--forest);
+    color: var(--primary);
+    border-color: var(--forest);
+    box-shadow: 0 4px 15px rgba(12, 59, 46, 0.15);
+}
+.btn-project-cta i {
+    transition: transform 0.3s ease;
+}
+.btn-project-cta:hover i {
+    transform: translateX(-4px);
+}
+
+/* Impact Counter Stats */
+.impact-stat-box {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 32px 24px;
+    border: 1px solid rgba(201, 169, 97, 0.25);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.03);
+    text-align: center;
+    transition: all 0.35s ease;
+    height: 100%;
+}
+.impact-stat-box:hover {
+    transform: translateY(-6px);
+    border-color: var(--primary);
+    box-shadow: 0 16px 40px rgba(12, 59, 46, 0.12);
+}
+.impact-stat-num {
+    font-family: var(--font-display);
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: var(--primary);
+    line-height: 1;
+    margin-bottom: 8px;
+}
+.impact-stat-title {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--forest);
+    margin-bottom: 6px;
+}
+.impact-stat-desc {
+    color: #666;
+    font-size: 0.88rem;
+    margin: 0;
+}
+
+/* Partnership Cards */
+.partnership-pathway-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 32px 26px;
+    border: 1px solid rgba(201, 169, 97, 0.25);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.02);
+    height: 100%;
+    transition: all 0.35s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.partnership-pathway-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--primary);
+    box-shadow: 0 16px 36px rgba(12, 59, 46, 0.1);
+}
+.partner-step-badge {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--forest);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin-bottom: 18px;
+}
+
+/* Custom Gold Button */
+.btn-gold-pill {
+    background-color: var(--primary) !important;
+    color: #ffffff !important;
+    border: 2px solid var(--primary) !important;
+    border-radius: 50px !important;
+    font-weight: 700 !important;
+    box-shadow: 0 8px 20px rgba(201, 169, 97, 0.35) !important;
+    transition: all 0.3s ease !important;
+}
+.btn-gold-pill:hover {
+    background-color: transparent !important;
+    color: var(--primary) !important;
+    box-shadow: 0 4px 12px rgba(201, 169, 97, 0.2) !important;
+    transform: translateY(-2px);
+}
+.btn-forest-outline-pill {
+    background-color: transparent !important;
+    color: #ffffff !important;
+    border: 2px solid rgba(255, 255, 255, 0.8) !important;
+    border-radius: 50px !important;
+    font-weight: 700 !important;
+    transition: all 0.3s ease !important;
+}
+.btn-forest-outline-pill:hover {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+    border-color: #ffffff !important;
+    transform: translateY(-2px);
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Dedicated Page Header Start -->
+<div class="container-fluid projects-page-header bg-dark text-light wow fadeIn" data-wow-delay="0.1s">
+    <div class="container text-center pt-4 pb-2">
+        <p class="text-primary text-uppercase fw-bold mb-2" style="letter-spacing: 1px;">جمعية رافد للأوقاف</p>
+        <h1 class="display-4 text-white mb-3" style="font-family: var(--font-display); font-weight: 800;">مشاريعنا ومبادراتنا الوقفية</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a href="/">الرئيسية</a></li>
+                <li class="breadcrumb-item active" aria-current="page">مشاريعنا</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Dedicated Page Header End -->
+
+
+<!-- Executive Strategic Pillars Start -->
+<div class="container-xxl py-6">
+    <div class="container">
+        <div class="row g-5 align-items-center mb-5">
+            <div class="col-lg-7 wow fadeInUp" data-wow-delay="0.1s">
+                <p class="text-primary text-uppercase fw-bold mb-2">أثر مستدام وأدوات مبتكرة</p>
+                <h2 class="display-6 mb-4" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">
+                    مشاريع نوعية تسهم في تمكين الأوقاف وتطوير حوكمتها في المملكة
+                </h2>
+                <p class="fs-5 mb-4" style="line-height: 1.85; color: #495057;">
+                    تتبنى <strong>جمعية رافد للأوقاف</strong> محفظة متكاملة من المشاريع والمبادرات التي تلبي احتياجات الكيانات الوقفية ومجالس النظارة والواقفين، مرتكزة على منهجية علمية وأطر شرعية وتنظيمية دقيقة ترتقي بقطاع الأوقاف نحو الريادة والتنافسية ومواكبة مستهدفات <strong>رؤية المملكة 2030</strong>.
+                </p>
+                <div class="d-flex flex-wrap gap-3 pt-2">
+                    <a href="#projectsGrid" class="btn btn-gold-pill py-3 px-4">استكشف المشاريع والمبادرات</a>
+                    <a href="/#contact" class="btn rounded-pill py-3 px-4" style="border: 2px solid var(--forest); color: var(--forest); font-weight: 700; background: transparent;">طلب رعاية أو شراكة</a>
+                </div>
+            </div>
+
+            <div class="col-lg-5 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="p-4 rounded-4" style="background: linear-gradient(145deg, rgba(12, 59, 46, 0.05) 0%, rgba(201, 169, 97, 0.08) 100%); border: 1px solid rgba(201, 169, 97, 0.35);">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="flex-shrink-0" style="width: 48px; height: 48px; border-radius: 12px; background: var(--forest); display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 22px; margin-left: 15px;">
+                            <i class="fa fa-handshake"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-0" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">رعاية وشراكات استراتيجية</h5>
+                            <small class="text-muted">نرحب بالشراكة مع الأوقاف والمؤسسات المانحة</small>
+                        </div>
+                    </div>
+                    <p class="mb-0 text-muted" style="font-size: 0.95rem; line-height: 1.75;">
+                        كافة مشاريعنا تفتح آفاق المساهمة والرعاية المؤسسية الموجهة، متيحة للمانحين والواقفين تحقيق أعلى درجات الأثر المجتمعي الموثق بتقارير إنجاز دورية.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4 Pillars Grid -->
+        <div class="row g-4 pt-3">
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="pillar-card">
+                    <div class="pillar-icon">
+                        <i class="fa fa-sitemap"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-1" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">التأسيس والحوكمة</h6>
+                        <small class="text-muted">هياكل ولوائح معتمدة نظامياً</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
+                <div class="pillar-card">
+                    <div class="pillar-icon">
+                        <i class="fa fa-user-graduate"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-1" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">التأهيل والتمكين</h6>
+                        <small class="text-muted">بناء قدرات النظار والقيادات</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="pillar-card">
+                    <div class="pillar-icon">
+                        <i class="fa fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-1" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">الاستثمار والتنمية</h6>
+                        <small class="text-muted">تعظيم واستقرار ريع الأوقاف</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
+                <div class="pillar-card">
+                    <div class="pillar-icon">
+                        <i class="fa fa-heart"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-1" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">توجيه المصارف</h6>
+                        <small class="text-muted">قياس الأثر التنموي الفعلي</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Executive Strategic Pillars End -->
+
+
+<!-- Projects Showcase Section Start -->
+<div class="container-xxl py-6 bg-light" id="projectsGrid">
+    <div class="container">
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 650px;">
+            <p class="text-primary text-uppercase fw-bold mb-2">محفظة المشاريع</p>
+            <h2 class="display-6 mb-3" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">
+                مشاريعنا ومبادراتنا المتخصصة
+            </h2>
+            <div style="width: 50px; height: 3px; background: var(--primary); margin: 0 auto; border-radius: 3px;"></div>
+            <p class="text-muted mt-3 mb-0" style="font-size: 0.95rem;">
+                تصفح باقة المشاريع والمبادرات التي تديرها وتنفذها جمعية رافد لخدمة القطاع الوقفي
+            </p>
+        </div>
+
+        <!-- Filter Nav Tabs -->
+        <div class="projects-filter-nav wow fadeInUp" data-wow-delay="0.15s">
+            <button type="button" class="filter-btn active" data-filter="all">
+                الكل <span class="badge-count">6</span>
+            </button>
+            <button type="button" class="filter-btn" data-filter="governance">
+                التأسيس والحوكمة <span class="badge-count">2</span>
+            </button>
+            <button type="button" class="filter-btn" data-filter="empowerment">
+                التأهيل وبناء القدرات <span class="badge-count">1</span>
+            </button>
+            <button type="button" class="filter-btn" data-filter="investment">
+                الاستثمار وتنمية الأصول <span class="badge-count">1</span>
+            </button>
+            <button type="button" class="filter-btn" data-filter="initiatives">
+                المبادرات والملتقيات <span class="badge-count">2</span>
+            </button>
+        </div>
+
+        <!-- Projects Grid -->
+        <div class="row g-4" id="projectItemsContainer">
+
+            <!-- Project 01: ديوانية رافد للأوقاف -->
+            <div class="col-lg-4 col-md-6 project-item-col" data-category="initiatives">
+                <div class="project-card wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="project-card-img-wrap">
+                        <img src="{% static 'img/rafed_image/background/4.jpg' %}" alt="ديوانية رافد للأوقاف" class="project-card-img">
+                        <div class="project-card-overlay"></div>
+                        <span class="project-badge-status">مبادرة رائدة مستمرة</span>
+                        <span class="project-badge-category">المبادرات والملتقيات</span>
+                    </div>
+
+                    <div class="project-card-body">
+                        <h4 class="project-card-title">ديوانية رافد للأوقاف</h4>
+                        <p class="project-card-desc">
+                            منصة حوارية ومهنية دورية تجمع أصحاب الفضيلة النظار، والخبراء، وممثلي الجهات الإشرافية لمناقشة قضايا الأوقاف المعاصرة وصياغة حلول نوعية للتحديات الميدانية.
+                        </p>
+
+                        <div class="project-metrics-strip">
+                            <div class="project-metric-item">
+                                <span class="metric-val">24+</span>
+                                <span class="metric-lbl">جلسة دورية</span>
+                            </div>
+                            <div class="project-metric-item">
+                                <span class="metric-val">800+</span>
+                                <span class="metric-lbl">ناظر وخبير</span>
+                            </div>
+                            <div class="project-metric-item">
+                                <span class="metric-val">15+</span>
+                                <span class="metric-lbl">شراكة منبثقة</span>
+                            </div>
+                        </div>
+
+                        <ul class="project-highlights-list">
+                            <li class="project-highlight-item">
+                                <span class="diamond-bullet">❖</span>
+                                استضافة قيادات ومسؤولي الهيئة العامة للأوقاف.
+                            </li>
+                            <li class="project-highlight-item">
+                                <span class="diamond-bullet">❖</span>
+                                استعراض تجارب وقفية رائدة ونماذج ملهمة.
+                            </li>
+                            <li class="project-highlight-item">
+                                <span class="diamond-bullet">❖</span>
+                                إصدار أوراق وتوصيات معرفية تخدم العاملين في القطاع.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="project-card-footer">
+                        <a href="/#contact" class="btn-project-cta">
+                            طلب المشاركة أو رعاية الجلسات <i class="fa fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 02: البرنامج الوطني لتأهيل وتمكين النظار -->
+            <div class="col-lg-4 col-md-6 project-item-col" data-category="empowerment">
+                <div class="project-card wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="project-card-img-wrap">
+                        <img src="{% static 'img/rafed_image/background/3687745542.jpg' %}" alt="تأهيل وتمكين النظار" class="project-card-img">
+                        <div class="project-card-overlay"></div>
+                        <span class="project-badge-status">برنامج تدريبي معتمد</span>
+                        <span class="project-badge-category">التأهيل وبناء القدرات</span>
+                    </div>
+
+                    <div class="project-card-body">
+                        <h4 class="project-card-title">برنامج تأهيل وتمكين النظار</h4>
+                        <p class="project-card-desc">
+                            برنامج تدريبي تطبيقي موجه لأعضاء مجالس النظارة والقيادات التنفيذية بالأوقاف، يقدم حقائب تدريبية واستشارات متخصصة في الإدارة الوقفية الشرعية والمالية والاستثمارية.
+                        </p>
+
+                        <div class="project-metrics-strip">
+                            <div class="project-metric-item">
+                                <span class="metric-val">500+</span>
+                                <span class="metric-lbl">ناظر متدرب</span>
+                            </div>
+                            <div class="project-metric-item">
+                                <span class="metric-val">60+</span>
+                                <span class="metric-lbl">ساعة تدريبية</span>
+                            </div>
+                            <div class="project-metric-item">
+                                <span class="metric-val">96%</span>
+                                <span class="metric-lbl">رضا المستفيدين</span>
+                            </div>
+                        </div>
+
+                        <ul class="project-highlights-list">
+                            <li class="project-highlight-item">
+                                <span class="diamond-bullet">❖</span>
+                                حقائب فقهية ونظامية وفق أحدث اللوائح والأنظمة.
+                            </li>
+                            <li class="project-highlight-item">
+                                <span class="diamond-bullet">❖</span>
+                                تطبيقات عملية في صياغة العقود وإدارة النزاعات.
+                            </li>
+                            <li class="project-highlight-item">
+                                <span class="diamond-bullet">❖</span>
+                                شهادات تدريبية وإرشاد إداري مستمر للدارسين.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="project-card-footer">
+                        <a href="/#contact" class="btn-project-cta">
+                            التسجيل في الدفعة القادمة <i class="fa fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 03: مشروع حوكمة ورقمنة الكيانات الوقفية -->
+            <div class="col-lg-4 col-md-6 project-item-col" data-category="governance">
+                <div class="project-card wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="project-card-img-wrap">
+                        <img src="{% static 'img/rafed_image/background/6aa0f543b127d8.21470575.png' %}" alt="حوكمة الكيانات الوقفية" class="project-card-img">
+                        <div class="project-card-overlay"></div>
+                        <span class="project-badge-status">مشروع استشاري تنفيذي</span>
+                        <span class="project-badge-category">التأسيس والحوكمة</span>
+                    </div>
+
+                    <div class="project-card-body">
+                        <h4 class="project-card-title">حوكمة ورقمنة الكيانات الوقفية</h4>
+                        <p class="project-card-desc">
+                            مشروع استشاري متكامل يقوم على فحص وتقييم الوضع المؤسسي للوقف، وصياغة لوائح النظارة، ومصفوفات الصلاحيات، وسياسات الإفصاح والرقابة ومواءمتها مع متطلبات هيئة الأوقاف.
+                        </p>
+
+                        <div class="project-metrics-strip">
+                            <div class="project-metric-item">
+                                <span class="metric-val">35+</span>
+                                <span class="metric-lbl">كياناً محوكماً</span>
+                            </div>
+                            <div class="project-metric-item">
+                                <span class="metric-val">100%</span>
+                                <span class="metric-lbl">امتثال نظامي</span>
+                            </div>
+                            <div class="project-metric-item">
+                                <span class="metric-val">70+</span>
+                                <span class="metric-lbl">لائحة وسياسة</span>
+                            </div>
+                        </div>
+
+                        <ul class="project-highlights-list">
+                            <li class="project-highlight-item">
+                                <span class="diamond-bullet">❖</span>
+                                إعداد دليل الحوكمة الشامل ولائحة مجلس النظارة.
+                            </li>
+                            <li class="project-highlight-item">
+                                <span class="diamond-bullet">❖</span>
+                                تصميم السياسات المالية والمحاسبية وسياسة تعارض المصالح.
+                            </li>
+                            <li class="project-highlight-item">
+                                <span class="diamond-bullet">❖</span>
+                                المساعدة في الحصول على تصنيف وامتثال رسمي متقدم.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="project-card-footer">
+                        <a href="/#contact" class="btn-project-cta">
+                            طلب دراسة حوكمة لوقفك <i class="fa fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 04: وقف رافد الاستثماري (محفظة الأثر المستدام) -->
+            <div class="col-lg-4 col-md-6 project-item-col" data-category="investment">
+                <div class="project-card wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="project-card-img-wrap">
+                        <img src="{% static 'img/rafed_image/background/4.jpg' %}" alt="وقف رافد الاستثماري" class="project-card-img">
+                        <div class="project-card-overlay"></div>
+                        <span class="project-badge-status">محفظة استثمارية وقفية</span>
+                        <span class="project-badge-category">الاستثمار وتنمية الأصول</span>
+                    </div>
+
+                    <div class="project-card-body">
+                        <h4 class="project-card-title">وقف رافد الاستثماري</h4>
+                        <p class="project-card-desc">
+                            محفظة أصول استثمارية وقفية متنوعة ومدروسة المخاطر بإشراف لجنة شرعية واستثمارية متخصصة، يُصرف ريعها لدعم وتمكين الأوقاف وتحقيق الاستدامة المالية للبرامج المجتمعية.
+                        </p>
+
+                        <div class="project-metrics-strip">
+                            <div class="project-metric-item">
+                                <span class="metric-val">مستمر</span>
+                                <span class="metric-lbl">ريع دائم</span>
+                            </div>
+                            <div class="project-metric-item">
+                                <span class="metric-val">100%</span>
+                                <span class="metric-lbl">رقابة شرعية</span>
+                            </div>
+                            <div class="project-metric-item">
+                                <span class="metric-val">متنوع</span>
+                                <span class="metric-lbl">أصول المحفظة</span>
+                            </div>
+                        </div>
+
+                        <ul class="project-highlights-list">
+                            <li class="project-highlight-item">
+                                <span class="diamond-bullet">❖</span>
+                                استثمارات عقارية وصناديق مالية متوافقة مع الشريعة.
+                            </li>
+                            <li class="project-highlight-item">
+                                <span class="diamond-bullet">❖</span>
+                                توجيه الريع لدعم الأوقاف الناشئة ومشاريع النفع العام.
+                            </li>
+                            <li class="project-highlight-item">
+                                <span class="diamond-bullet">❖</span>
+                                نموذج رائد للاستدامة المالية للقطاع غير الربحي.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="project-card-footer">
+                        <a href="/#contact" class="btn-project-cta">
+                            المساهمة في الوقف الاستثماري <i class="fa fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 05: منصة رافد للاستشارات الوقفية الذكية -->
+            <div class="col-lg-4 col-md-6 project-item-col" data-category="initiatives">
+                <div class="project-card wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="project-card-img-wrap">
+                        <img src="{% static 'img/rafed_image/background/6aa0f543b127d8.21470575.png' %}" alt="منصة رافد للاستشارات الوقفية" class="project-card-img">
+                        <div class="project-card-overlay"></div>
+                        <span class="project-badge-status">منصة رقمية ذكية</span>
+                        <span class="project-badge-category">المبادرات والملتقيات</span>
+                    </div>
+
+                    <div class="project-card-body">
+                        <h4 class="project-card-title">منصة رافد للاستشارات الوقفية</h4>
+                        <p class="project-card-desc">
+                            بوابة إلكترونية متطورة تربط الواقفين والنظار بنخبة من كبار المستشارين الشرعيين والقانونيين والماليين، لتقديم استشارات فورية وموثقة تحمي الأصول وتعالج الإشكالات.
+                        </p>
+
+                        <div class="project-metrics-strip">
+                            <div class="project-metric-item">
+                                <span class="metric-val">450+</span>
+                                <span class="metric-lbl">استشارة منجزة</span>
+                            </div>
+                            <div class="project-metric-item">
+                                <span class="metric-val">15+</span>
+                                <span class="metric-lbl">مستشاراً نخبياً</span>
+                            </div>
+                            <div class="project-metric-item">
+                                <span class="metric-val">24/7</span>
+                                <span class="metric-lbl">استقبال الطلبات</span>
+                            </div>
+                        </div>
+
+                        <ul class="project-highlights-list">
+                            <li class="project-highlight-item">
+                                <span class="diamond-bullet">❖</span>
+                                سرية وأمانة مطلقة في حفظ بيانات الأوقاف وصكوكها.
+                            </li>
+                            <li class="project-highlight-item">
+                                <span class="diamond-bullet">❖</span>
+                                رأي شرعي وقانوني معتمد في النوازل والإشكالات الوقفية.
+                            </li>
+                            <li class="project-highlight-item">
+                                <span class="diamond-bullet">❖</span>
+                                جلسات استشارية مرئية وحضورية ميسرة.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="project-card-footer">
+                        <a href="/#contact" class="btn-project-cta">
+                            حجز موعد استشاري فوري <i class="fa fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 06: مبادرة الصياغة والتوثيق النموذجي للصكوك -->
+            <div class="col-lg-4 col-md-6 project-item-col" data-category="governance">
+                <div class="project-card wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="project-card-img-wrap">
+                        <img src="{% static 'img/rafed_image/background/3687745542.jpg' %}" alt="الصياغة والتوثيق النموذجي للصكوك" class="project-card-img">
+                        <div class="project-card-overlay"></div>
+                        <span class="project-badge-status">مبادرة توثيق قضائي</span>
+                        <span class="project-badge-category">التأسيس والحوكمة</span>
+                    </div>
+
+                    <div class="project-card-body">
+                        <h4 class="project-card-title">مبادرة التوثيق والصياغة النموذجية للصكوك</h4>
+                        <p class="project-card-desc">
+                            مبادرة نوعية تهدف إلى صياغة حجج وصكوك الأوقاف والوصايا صياغة محكمة خالية من الثغرات، ومتابعة إجراءات الإثبات والتوثيق لدى المحاكم الرسمية لضمان إنفاذ شرط الواقف.
+                        </p>
+
+                        <div class="project-metrics-strip">
+                            <div class="project-metric-item">
+                                <span class="metric-val">70+</span>
+                                <span class="metric-lbl">صكاً موثقاً</span>
+                            </div>
+                            <div class="project-metric-item">
+                                <span class="metric-val">0</span>
+                                <span class="metric-lbl">نزاعات قضائية</span>
+                            </div>
+                            <div class="project-metric-item">
+                                <span class="metric-val">100%</span>
+                                <span class="metric-lbl">اعتماد رسمي</span>
+                            </div>
+                        </div>
+
+                        <ul class="project-highlights-list">
+                            <li class="project-highlight-item">
+                                <span class="diamond-bullet">❖</span>
+                                ضبط شروط الواقفين وحمايتها من التنازع والاندثار.
+                            </li>
+                            <li class="project-highlight-item">
+                                <span class="diamond-bullet">❖</span>
+                                مواءمة الصكوك القديمة مع الأنظمة واللوائح الحديثة.
+                            </li>
+                            <li class="project-highlight-item">
+                                <span class="diamond-bullet">❖</span>
+                                فريق محامين ومستشارين شرعيين يتابع الإجراءات للنهاية.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="project-card-footer">
+                        <a href="/#contact" class="btn-project-cta">
+                            طلب خدمة الصياغة والتوثيق <i class="fa fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Projects Showcase Section End -->
+
+
+<!-- Project Cumulative Achievements Start -->
+<div class="container-xxl py-6">
+    <div class="container">
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+            <p class="text-primary text-uppercase fw-bold mb-2">أرقام وإنجازات</p>
+            <h2 class="display-6 mb-3" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">
+                حصاد مشاريعنا بالأرقام
+            </h2>
+            <div style="width: 50px; height: 3px; background: var(--primary); margin: 0 auto; border-radius: 3px;"></div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="impact-stat-box">
+                    <div class="impact-stat-num">+50</div>
+                    <h5 class="impact-stat-title">مشروعاً ومبادرة وقفية</h5>
+                    <p class="impact-stat-desc">تم تأسيسها وتطويرها وتشغيلها بنجاح</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
+                <div class="impact-stat-box">
+                    <div class="impact-stat-num">+10,000</div>
+                    <h5 class="impact-stat-title">مستفيد وممارس وقفي</h5>
+                    <p class="impact-stat-desc">من برامج التدريب والتأهيل والاستشارات</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="impact-stat-box">
+                    <div class="impact-stat-num">+35</div>
+                    <h5 class="impact-stat-title">كياناً خضع للحوكمة</h5>
+                    <p class="impact-stat-desc">بناء لوائح وأنظمة إدارية ومالية متكاملة</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
+                <div class="impact-stat-box">
+                    <div class="impact-stat-num">100%</div>
+                    <h5 class="impact-stat-title">نسبة الامتثال المؤسسي</h5>
+                    <p class="impact-stat-desc">متوافقة تماماً مع معايير الجهات الإشرافية</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Project Cumulative Achievements End -->
+
+
+<!-- Partnership Pathways Start -->
+<div class="container-xxl py-6 bg-light">
+    <div class="container">
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+            <p class="text-primary text-uppercase fw-bold mb-2">الشراكة والرعاية</p>
+            <h2 class="display-6 mb-3" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">
+                كيف تشارك في نجاح مشاريعنا؟
+            </h2>
+            <div style="width: 50px; height: 3px; background: var(--primary); margin: 0 auto; border-radius: 3px;"></div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Pathway 1 -->
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="partnership-pathway-card">
+                    <div>
+                        <div class="partner-step-badge">
+                            <i class="fa fa-award"></i>
+                        </div>
+                        <h4 class="mb-3" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">رعاية مشروع نوعي</h4>
+                        <p class="text-muted mb-4" style="line-height: 1.8; font-size: 0.95rem;">
+                            يمكن للمؤسسات المانحة والأوقاف رعاية إحدى مبادرات رافد الاستراتيجية (مثل ديوانية الأوقاف أو برنامج تدريب النظار) مع توثيق الأثر بتقارير دورية متقدمة.
+                        </p>
+                    </div>
+                    <a href="/#contact" class="btn btn-outline-success rounded-pill py-2 px-4" style="border: 2px solid var(--forest); color: var(--forest); font-weight: 700;">طلب رعاية مبادرة</a>
+                </div>
+            </div>
+
+            <!-- Pathway 2 -->
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
+                <div class="partnership-pathway-card">
+                    <div>
+                        <div class="partner-step-badge">
+                            <i class="fa fa-cogs"></i>
+                        </div>
+                        <h4 class="mb-3" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">تنفيذ مشروع لوقفك</h4>
+                        <p class="text-muted mb-4" style="line-height: 1.8; font-size: 0.95rem;">
+                            هل ترغب في تأسيس وقف جديد، صياغة صك، أو تطوير حوكمة وقف عائلي أو استثماري قائم؟ فريق رافد التنفيذي والاستشاري يتولى المهمة من الألف إلى الياء.
+                        </p>
+                    </div>
+                    <a href="/#contact" class="btn btn-outline-success rounded-pill py-2 px-4" style="border: 2px solid var(--forest); color: var(--forest); font-weight: 700;">طلب تنفيذ لوقفك</a>
+                </div>
+            </div>
+
+            <!-- Pathway 3 -->
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="partnership-pathway-card">
+                    <div>
+                        <div class="partner-step-badge">
+                            <i class="fa fa-network-wired"></i>
+                        </div>
+                        <h4 class="mb-3" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">شراكة استراتيجية ومعرفية</h4>
+                        <p class="text-muted mb-4" style="line-height: 1.8; font-size: 0.95rem;">
+                            نرحب بعقد مذكرات تفاهم وشراكات تكاملية مع الجامعات، مراكز البحوث، والبيوت الاستشارية لتطوير حلول وأدوات معرفية ترتقي بالبيئة الوقفية.
+                        </p>
+                    </div>
+                    <a href="/#contact" class="btn btn-outline-success rounded-pill py-2 px-4" style="border: 2px solid var(--forest); color: var(--forest); font-weight: 700;">بناء شراكة استراتيجية</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Partnership Pathways End -->
+
+
+<!-- CTA Section Start -->
+<div class="container-fluid py-5 bg-dark text-light mt-5" style="border-top: 2px solid var(--primary);">
+    <div class="container text-center py-4">
+        <h2 class="display-6 text-white mb-3" style="font-family: var(--font-display); font-weight: 700;">
+            لديك فكرة مشروع وقفي أو ترغب في الاستفادة من مبادراتنا؟
+        </h2>
+        <p class="fs-5 text-light mb-4 mx-auto" style="max-width: 650px; opacity: 0.9;">
+            يسعد فريق جمعية رافد بالتواصل معك لتقديم الدعم والتعاون في إنجاح وتنمية مشاريعك الوقفية.
+        </p>
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <a href="/#contact" class="btn btn-gold-pill py-3 px-5 fs-5">تواصل معنا الآن</a>
+            <a href="tel:0552002057" class="btn btn-forest-outline-pill py-3 px-5 fs-5">اتصال مباشر: 0552002057</a>
+        </div>
+    </div>
+</div>
+<!-- CTA Section End -->
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function () {
+    // Project Category Filtering
+    $('.filter-btn').on('click', function () {
+        $('.filter-btn').removeClass('active');
+        $(this).addClass('active');
+
+        var filterValue = $(this).attr('data-filter');
+
+        if (filterValue === 'all') {
+            $('.project-item-col').fadeIn(350);
+        } else {
+            $('.project-item-col').hide();
+            $('.project-item-col[data-category="' + filterValue + '"]').fadeIn(350);
+        }
+    });
+});
+</script>
+{% endblock %}
