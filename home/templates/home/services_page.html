@@ -77,8 +77,19 @@
     transform: scale(1.08);
 }
 .services-carousel .owl-item.center .service-action-btn {
-    color: var(--primary);
-    font-weight: 800;
+    background: var(--forest) !important;
+    color: var(--primary) !important;
+    border-color: var(--forest) !important;
+    box-shadow: 0 4px 15px rgba(12, 59, 46, 0.15) !important;
+}
+.services-carousel .owl-item.center .service-action-btn:hover {
+    background: var(--primary) !important;
+    color: #ffffff !important;
+    border-color: var(--primary) !important;
+    box-shadow: 0 8px 25px rgba(201, 169, 97, 0.35) !important;
+}
+.services-carousel .owl-item.center .service-action-btn:hover i {
+    color: #ffffff !important;
 }
 
 /* Hover over side cards */
@@ -170,16 +181,16 @@
 .service-catalog-card {
     background: #ffffff;
     border-radius: 20px;
-    padding: 40px 32px;
+    padding: 38px 28px 28px;
     border: 1px solid rgba(201, 169, 97, 0.25);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
     transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
     position: relative;
     overflow: hidden;
     height: 100%;
-    display: flex;
-    flex-column: column;
-    justify-content: space-between;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
 }
 .service-catalog-card::before {
     content: '';
@@ -228,14 +239,14 @@
 }
 .service-card-desc {
     color: #555;
-    font-size: 0.98rem;
+    font-size: 0.96rem;
     line-height: 1.8;
     margin-bottom: 20px;
 }
 .service-features-list {
     list-style: none;
     padding: 0;
-    margin: 0 0 25px 0;
+    margin: 0 0 24px 0;
 }
 .service-feature-item {
     position: relative;
@@ -253,28 +264,42 @@
     font-size: 15px;
     font-weight: bold;
 }
+
+/* Redesigned Button Anchored at the Bottom of Card */
 .service-action-btn {
-    display: inline-flex;
+    display: flex !important;
     align-items: center;
-    color: var(--forest);
-    font-weight: 700;
-    font-size: 0.95rem;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    padding-top: 15px;
-    border-top: 1px dashed rgba(201, 169, 97, 0.4);
+    justify-content: center;
+    gap: 10px;
     width: 100%;
+    padding: 13px 20px;
+    background: rgba(12, 59, 46, 0.05);
+    border: 1.5px solid rgba(12, 59, 46, 0.2) !important;
+    color: var(--forest) !important;
+    font-weight: 700 !important;
+    font-size: 0.96rem;
+    border-radius: 8px !important;
+    text-decoration: none;
+    transition: all 0.3s ease !important;
+    margin-top: auto;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.02);
 }
 .service-action-btn i {
-    margin-right: 8px;
+    margin: 0 6px 0 0;
     color: var(--primary);
+    font-size: 14px;
     transition: transform 0.3s ease;
 }
-.service-catalog-card:hover .service-action-btn {
-    color: var(--primary);
+.service-action-btn:hover {
+    background: var(--forest) !important;
+    color: var(--primary) !important;
+    border-color: var(--forest) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(12, 59, 46, 0.18) !important;
 }
-.service-catalog-card:hover .service-action-btn i {
+.service-action-btn:hover i {
     transform: translateX(-5px);
+    color: var(--primary) !important;
 }
 
 /* ===================================================
@@ -585,7 +610,7 @@
                 </p>
                 <div class="d-flex flex-wrap gap-3 pt-2">
                     <a href="#catalog" class="btn btn-gold-pill py-3 px-4">استكشف باقة الخدمات</a>
-                    <a href="/#contact" class="btn py-3 px-4" style="border-radius: 8px !important;" style="border: 2px solid var(--forest); color: var(--forest); font-weight: 700; background: transparent;">طلب استشارة وقفية</a>
+                    <a href="/#contact" class="btn btn-forest-outline py-3 px-4" style="border: 2px solid var(--forest) !important; color: var(--forest) !important; font-weight: 700; background: transparent !important; border-radius: 8px !important;">طلب استشارة وقفية</a>
                 </div>
             </div>
 

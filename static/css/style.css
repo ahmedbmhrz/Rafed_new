@@ -814,3 +814,77 @@ body { overflow-x: clip; }
 .rounded-pill.btn {
     border-radius: 8px !important;
 }
+
+/* Forest Green Outline Button for Light Backgrounds */
+.btn-forest-outline {
+    background-color: transparent !important;
+    color: var(--forest) !important;
+    border: 2px solid var(--forest) !important;
+    border-radius: 8px !important;
+    font-weight: 700 !important;
+    transition: all 0.3s ease !important;
+}
+.btn-forest-outline:hover {
+    background-color: var(--forest) !important;
+    color: #ffffff !important;
+    border-color: var(--forest) !important;
+    box-shadow: 0 8px 20px rgba(12, 59, 46, 0.25) !important;
+    transform: translateY(-2px);
+}
+
+/* Service Catalog Card & Bottom Action Button */
+.service-catalog-card {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+}
+.service-action-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 13px 20px;
+    background: rgba(12, 59, 46, 0.05);
+    border: 1.5px solid rgba(12, 59, 46, 0.2) !important;
+    color: var(--forest) !important;
+    font-weight: 700 !important;
+    font-size: 0.96rem;
+    border-radius: 8px !important;
+    text-decoration: none;
+    transition: all 0.3s ease !important;
+    margin-top: auto !important;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.02);
+}
+.service-action-btn i {
+    margin: 0 6px 0 0;
+    color: var(--primary);
+    font-size: 14px;
+    transition: transform 0.3s ease;
+}
+.service-action-btn:hover {
+    background: var(--forest) !important;
+    color: var(--primary) !important;
+    border-color: var(--forest) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(12, 59, 46, 0.18) !important;
+}
+.service-action-btn:hover i {
+    transform: translateX(-5px);
+    color: var(--primary) !important;
+}
+.services-carousel .owl-item.center .service-action-btn {
+    background: var(--forest) !important;
+    color: var(--primary) !important;
+    border-color: var(--forest) !important;
+    box-shadow: 0 4px 15px rgba(12, 59, 46, 0.15) !important;
+}
+.services-carousel .owl-item.center .service-action-btn:hover {
+    background: var(--primary) !important;
+    color: #ffffff !important;
+    border-color: var(--primary) !important;
+    box-shadow: 0 8px 25px rgba(201, 169, 97, 0.35) !important;
+}
+.services-carousel .owl-item.center .service-action-btn:hover i {
+    color: #ffffff !important;
+}
