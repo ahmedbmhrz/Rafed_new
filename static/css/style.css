@@ -135,6 +135,28 @@ h6,
     transition: .5s;
 }
 
+.navbar-brand {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.navbar-logo {
+    max-height: 56px;
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.navbar-brand:hover .navbar-logo {
+    transform: scale(1.05);
+}
+
+@media (max-width: 991.98px) {
+    .navbar-logo {
+        max-height: 46px;
+    }
+}
+
 @media (max-width: 991.98px) {
     .navbar .navbar-nav {
         margin-top: 10px;
@@ -773,4 +795,22 @@ body { overflow-x: clip; }
     margin-top: 3px;
     flex-shrink: 0;
     display: inline-block;
+}
+
+/* ===================================================
+   Uniform Button Shape Across All Pages (8px Rounded Rectangle)
+   =================================================== */
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-success,
+.btn-outline-primary,
+.btn-outline-success,
+.btn-gold-pill,
+.btn-forest-outline-pill,
+.btn-project-cta,
+.filter-btn,
+.btn.rounded-pill,
+.rounded-pill.btn {
+    border-radius: 8px !important;
 }
