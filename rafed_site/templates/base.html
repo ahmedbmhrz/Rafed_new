@@ -95,7 +95,7 @@
                 <a href="{% url 'services' %}" class="nav-item nav-link {% if request.path == '/services/' %}active{% endif %}">خدماتنا</a>
                 <a href="{% url 'projects' %}" class="nav-item nav-link {% if request.path == '/projects/' %}active{% endif %}">مشاريعنا</a>
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle {% if request.path == '/team/' or request.path == '/testimonials/' %}active{% endif %}" data-bs-toggle="dropdown">صفحات</a>
+                    <a href="#" class="nav-link dropdown-toggle {% if request.path == '/team/' or request.path == '/testimonials/' or request.path == '/videos/' %}active{% endif %}" data-bs-toggle="dropdown">صفحات</a>
                     <div class="dropdown-menu rafed-dropdown-menu m-0 shadow-lg">
                         <a href="{% url 'team' %}" class="dropdown-item rafed-dropdown-item {% if request.path == '/team/' %}active{% endif %}">
                             <div class="d-flex align-items-center">
@@ -122,6 +122,19 @@
                             </div>
                             <i class="bi bi-chevron-left dropdown-arrow"></i>
                         </a>
+                        <div class="dropdown-divider-custom"></div>
+                        <a href="{% url 'videos' %}" class="dropdown-item rafed-dropdown-item {% if request.path == '/videos/' %}active{% endif %}">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-item-icon">
+                                    <i class="fa fa-play-circle"></i>
+                                </div>
+                                <div class="dropdown-item-text">
+                                    <span class="dropdown-item-title">ألبوم الفيديو</span>
+                                    <small class="dropdown-item-desc">وثائقيات وندوات مرئية</small>
+                                </div>
+                            </div>
+                            <i class="bi bi-chevron-left dropdown-arrow"></i>
+                        </a>
                     </div>
                 </div>
                 <a href="{% url 'contact' %}" class="nav-item nav-link {% if request.path == '/contact/' %}active{% endif %}">تواصل معنا</a>
@@ -132,7 +145,7 @@
                 </div>
                 <div class="ps-3 text-start">
                     <small class="text-primary mb-0 d-block">تواصل معنا</small>
-                    <a href="tel:0552002057" class="text-light fs-5 mb-0 text-decoration-none fw-bold" style="font-family: var(--font-mono); direction: ltr; display: inline-block;">0552002057</a>
+                    <a href="tel:{{ site_settings.phone|default:'0552002057' }}" class="text-light fs-5 mb-0 text-decoration-none fw-bold" style="font-family: var(--font-mono); direction: ltr; display: inline-block;">0552002057</a>
                 </div>
             </div>
         </div>
@@ -182,6 +195,7 @@
                         <a class="text-light mb-2" href="{% url 'projects' %}" style="text-decoration: none; font-size: 14px; transition: 0.3s;"><i class="bi bi-chevron-left me-2" style="color: var(--forest-pale);"></i>مشاريعنا</a>
                         <a class="text-light mb-2" href="{% url 'team' %}" style="text-decoration: none; font-size: 14px; transition: 0.3s;"><i class="bi bi-chevron-left me-2" style="color: var(--forest-pale);"></i>فريقنا</a>
                         <a class="text-light mb-2" href="{% url 'testimonials' %}" style="text-decoration: none; font-size: 14px; transition: 0.3s;"><i class="bi bi-chevron-left me-2" style="color: var(--forest-pale);"></i>قالوا عنا</a>
+                        <a class="text-light mb-2" href="{% url 'videos' %}" style="text-decoration: none; font-size: 14px; transition: 0.3s;"><i class="bi bi-chevron-left me-2" style="color: var(--forest-pale);"></i>ألبوم الفيديو</a>
                         <a class="text-light mb-2" href="{% url 'contact' %}" style="text-decoration: none; font-size: 14px; transition: 0.3s;"><i class="bi bi-chevron-left me-2" style="color: var(--forest-pale);"></i>تواصل معنا</a>
                     </div>
                 </div>

@@ -532,10 +532,10 @@
                             <i class="fa fa-phone-alt"></i>
                         </div>
                         <h4 class="channel-title">الاتصال المباشر</h4>
-                        <a href="tel:0552002057" class="channel-value" style="font-family: var(--font-mono);">0552002057</a>
+                        <a href="tel:{{ site_settings.phone|default:'0552002057' }}" class="channel-value" style="font-family: var(--font-mono);">0552002057</a>
                         <p class="channel-desc">متاح للرد على استفساراتكم الهاتفية خلال أوقات العمل الرسمية.</p>
                     </div>
-                    <a href="tel:0552002057" class="channel-btn btn-forest-square">
+                    <a href="tel:{{ site_settings.phone|default:'0552002057' }}" class="channel-btn btn-forest-square">
                         <i class="fa fa-phone-alt"></i>
                         <span>اتصل بنا الآن</span>
                     </a>
@@ -550,10 +550,10 @@
                             <i class="bi bi-whatsapp"></i>
                         </div>
                         <h4 class="channel-title">محادثة واتساب</h4>
-                        <a href="https://wa.me/966552002057" target="_blank" rel="noopener" class="channel-value" style="font-family: var(--font-mono); color: #20ba5a;">0552002057</a>
+                        <a href="https://wa.me/{{ site_settings.whatsapp|default:'966552002057' }}" target="_blank" rel="noopener" class="channel-value" style="font-family: var(--font-mono); color: #20ba5a;">0552002057</a>
                         <p class="channel-desc">تواصل فوري ومباشر لطلب الاستشارات والمتابعة السريعة.</p>
                     </div>
-                    <a href="https://wa.me/966552002057" target="_blank" rel="noopener" class="channel-btn btn-whatsapp-square">
+                    <a href="https://wa.me/{{ site_settings.whatsapp|default:'966552002057' }}" target="_blank" rel="noopener" class="channel-btn btn-whatsapp-square">
                         <i class="bi bi-whatsapp"></i>
                         <span>محادثة واتساب فورية</span>
                     </a>
@@ -568,10 +568,10 @@
                             <i class="fa fa-envelope-open-text"></i>
                         </div>
                         <h4 class="channel-title">البريد الرسمي</h4>
-                        <a href="mailto:info@rafed.org.sa" class="channel-value" style="font-size: 1rem; font-family: var(--font-mono);">info@rafed.org.sa</a>
+                        <a href="mailto:{{ site_settings.email|default:'info@rafed.org.sa' }}" class="channel-value" style="font-size: 1rem; font-family: var(--font-mono);">info@rafed.org.sa</a>
                         <p class="channel-desc">للشراكات المؤسسية، المقترحات الاستراتيجية، والمراسلات الرسمية.</p>
                     </div>
-                    <a href="mailto:info@rafed.org.sa" class="channel-btn btn-gold-square">
+                    <a href="mailto:{{ site_settings.email|default:'info@rafed.org.sa' }}" class="channel-btn btn-gold-square">
                         <i class="fa fa-paper-plane"></i>
                         <span>أرسل بريداً إلكترونياً</span>
                     </a>
@@ -625,7 +625,7 @@
                         </div>
                         <p class="social-desc">تغطيات حية، مستجدات الملتقيات الوقفية، وتغريدات دورية حول فقه الأوقاف والأنظمة الحديثة.</p>
                     </div>
-                    <a href="https://twitter.com" target="_blank" rel="noopener" class="social-link-btn">
+                    <a href="{{ site_settings.twitter_url|default:'https://twitter.com/rafid_sa' }}" target="_blank" rel="noopener" class="social-link-btn">
                         <span>متابعة على منصة إكس</span>
                         <i class="bi bi-arrow-left"></i>
                     </a>
@@ -647,7 +647,7 @@
                         </div>
                         <p class="social-desc">شبكة الشراكات المهنية، المؤتمرات المؤسسية، والفرص التعاونية للقطاع الوقفي وغير الربحي.</p>
                     </div>
-                    <a href="https://linkedin.com" target="_blank" rel="noopener" class="social-link-btn">
+                    <a href="{{ site_settings.linkedin_url|default:'https://linkedin.com' }}" target="_blank" rel="noopener" class="social-link-btn">
                         <span>تواصل مهني عبر لينكد إن</span>
                         <i class="bi bi-arrow-left"></i>
                     </a>
@@ -669,7 +669,7 @@
                         </div>
                         <p class="social-desc">معارض الصور، إنفوجرافيك تعريفي بالمشاريع الوقفية، ومقتطفات مرئية من مبادرات الجمعية.</p>
                     </div>
-                    <a href="https://instagram.com" target="_blank" rel="noopener" class="social-link-btn">
+                    <a href="{{ site_settings.instagram_url|default:'https://instagram.com/rafid_sa' }}" target="_blank" rel="noopener" class="social-link-btn">
                         <span>مشاهدة منشورات إنستغرام</span>
                         <i class="bi bi-arrow-left"></i>
                     </a>
@@ -691,7 +691,7 @@
                         </div>
                         <p class="social-desc">تسجيلات كاملة للمحاضرات، الندوات الحوارية، ووثائقيات المشاريع والتقارير الإنجازية الوقفية.</p>
                     </div>
-                    <a href="https://youtube.com" target="_blank" rel="noopener" class="social-link-btn">
+                    <a href="{{ site_settings.youtube_url|default:'https://youtube.com' }}" target="_blank" rel="noopener" class="social-link-btn">
                         <span>اشتراك في قناة يوتيوب</span>
                         <i class="bi bi-arrow-left"></i>
                     </a>
@@ -713,7 +713,7 @@
                         </div>
                         <p class="social-desc">مستودع الأدلة الوقفية الاسترشادية، حقائب التدريب، وملفات الأبحاث واللوائح بصيغة PDF.</p>
                     </div>
-                    <a href="https://telegram.org" target="_blank" rel="noopener" class="social-link-btn">
+                    <a href="{{ site_settings.telegram_url|default:'https://t.me/rafid_sa' }}" target="_blank" rel="noopener" class="social-link-btn">
                         <span>انضمام لقناة تيليجرام</span>
                         <i class="bi bi-arrow-left"></i>
                     </a>
@@ -735,7 +735,7 @@
                         </div>
                         <p class="social-desc">تنبيهات فورية بأهم البرامج التدريبية وفرص الرعاية والشراكات الوقفية المتاحة.</p>
                     </div>
-                    <a href="https://wa.me/966552002057" target="_blank" rel="noopener" class="social-link-btn">
+                    <a href="https://wa.me/{{ site_settings.whatsapp|default:'966552002057' }}" target="_blank" rel="noopener" class="social-link-btn">
                         <span>انضمام لمجتمع واتساب</span>
                         <i class="bi bi-arrow-left"></i>
                     </a>
@@ -849,7 +849,7 @@
                             <div class="sidebar-info-content">
                                 <h6 style="color: #ffd875 !important;">الهاتف الموحد</h6>
                                 <p style="font-family: var(--font-mono); direction: ltr; text-align: right; color: #ffffff !important;">
-                                    <a href="tel:0552002057" style="color: #ffffff !important; text-decoration: none; font-weight: 700; font-size: 1.1rem;">0552002057</a>
+                                    <a href="tel:{{ site_settings.phone|default:'0552002057' }}" style="color: #ffffff !important; text-decoration: none; font-weight: 700; font-size: 1.1rem;">0552002057</a>
                                 </p>
                             </div>
                         </div>
@@ -862,7 +862,7 @@
                             <div class="sidebar-info-content">
                                 <h6 style="color: #ffd875 !important;">البريد الإلكتروني</h6>
                                 <p style="font-family: var(--font-mono); color: #ffffff !important;">
-                                    <a href="mailto:info@rafed.org.sa" style="color: #ffffff !important; text-decoration: none; font-weight: 600;">info@rafed.org.sa</a>
+                                    <a href="mailto:{{ site_settings.email|default:'info@rafed.org.sa' }}" style="color: #ffffff !important; text-decoration: none; font-weight: 600;">info@rafed.org.sa</a>
                                 </p>
                             </div>
                         </div>
@@ -889,7 +889,7 @@
                                     <small style="color: rgba(255, 255, 255, 0.88) !important;">مستشار وقفي جاهز للرد</small>
                                 </div>
                             </div>
-                            <a href="https://wa.me/966552002057" target="_blank" rel="noopener" class="btn-sidebar-chat">
+                            <a href="https://wa.me/{{ site_settings.whatsapp|default:'966552002057' }}" target="_blank" rel="noopener" class="btn-sidebar-chat">
                                 بدء المحادثة
                             </a>
                         </div>
@@ -909,7 +909,7 @@
                 <h2 class="display-6 mb-3" style="font-family: var(--font-display); font-weight: 800; color: #ffffff !important;">هل تود تأسيس وقف مبارك أو تطوير حوكمة وقفك؟</h2>
                 <p class="mb-4" style="color: rgba(255, 255, 255, 0.95) !important;">جمعية رافد للأوقاف تقدم لك خبرات نخبة من المستشارين والخبراء الشرعيين والقانونيين والماليين في مكان واحد.</p>
                 <div class="d-flex flex-wrap justify-content-center gap-3">
-                    <a href="https://wa.me/966552002057" target="_blank" rel="noopener" class="btn btn-gold-square px-4 py-3" style="background: var(--primary) !important; color: #ffffff !important; border: 2px solid var(--primary) !important; border-radius: 8px !important; font-weight: 700 !important;">
+                    <a href="https://wa.me/{{ site_settings.whatsapp|default:'966552002057' }}" target="_blank" rel="noopener" class="btn btn-gold-square px-4 py-3" style="background: var(--primary) !important; color: #ffffff !important; border: 2px solid var(--primary) !important; border-radius: 8px !important; font-weight: 700 !important;">
                         <i class="bi bi-whatsapp me-2" style="color: #ffffff !important;"></i>
                         <span style="color: #ffffff !important;">تواصل مباشرة عبر واتساب</span>
                     </a>

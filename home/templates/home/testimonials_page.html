@@ -378,32 +378,39 @@
 
         <!-- Testimonial Cards Grid -->
         <div class="row g-4" id="testiItemsContainer">
-
-            <!-- Testimonial 01: د. خالد عبدالله السريحي -->
-            <div class="col-lg-6 testi-item-col" data-category="scholars">
-                <div class="testimonial-box-card wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="quote-watermark"><i class="fa fa-quote-right"></i></div>
-                    <div>
-                        <div class="testi-header-info">
-                            <img src="{% static 'img/rafed_image/people/68ecf41bf2f63.png' %}" alt="د. خالد عبدالله السريحي" class="testi-person-img">
-                            <div>
-                                <h4 class="testi-person-name">د. خالد عبدالله السريحي</h4>
-                                <div class="testi-person-role">المدير العام للمركز الدولي للأبحاث والدراسات (مداد)</div>
-                                <span class="testi-tag-badge">مشاركة في ديوانية الأوقاف</span>
+            {% if testimonials %}
+                {% for item in testimonials %}
+                <div class="col-lg-6 testi-item-col" data-category="scholars">
+                    <div class="testimonial-box-card wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="quote-watermark"><i class="fa fa-quote-right"></i></div>
+                        <div>
+                            <div class="testi-header-info">
+                                <div class="testi-person-placeholder">
+                                    <i class="fa fa-user-tie"></i>
+                                </div>
+                                <div>
+                                    <h4 class="testi-person-name">{{ item.author_name }}</h4>
+                                    <div class="testi-person-role">{{ item.author_title }}</div>
+                                    {% if item.organization %}
+                                    <span class="testi-tag-badge">{{ item.organization }}</span>
+                                    {% endif %}
+                                </div>
                             </div>
+                            <p class="testi-quote-text">
+                                "{{ item.quote }}"
+                            </p>
                         </div>
-
-                        <p class="testi-quote-text">
-                            "بسم الله الرحمن الرحيم الحمد لله رب العالمين والصلاة والسلام على أشرف المرسلين وبعد، شرفت بالمشاركة في ديوانية رافد للأوقاف من خلال تقديم موضوع استشراف مستقبل الأوقاف خلال عشر سنوات قادمة وما شاهدته من التفاعل والمشاركات والمبادرات النوعية التي خرجت أثناء اللقاء، وعليه فإنني أدعو جميع الفضلاء من أهل العلم وأهل التجارة بالمساهمة مع الإخوة في جمعية رافد لمساعدتهم ومشاركتهم في تنفيذ مثل هذه البرامج والفعاليات والحمد لله الذي تتم بنعمته الصالحات."
-                        </p>
-                    </div>
-
-                    <div class="testi-card-footer">
-                        <span class="testi-stars">★★★★★ تزكية معتمدة</span>
-                        <span>ديوانية رافد للأوقاف</span>
+                        <div class="testi-card-footer">
+                            <span class="testi-stars">★★★★★ تزكية معتمدة</span>
+                            <span>{{ item.organization|default:'تزكية رسمية' }}</span>
+                        </div>
                     </div>
                 </div>
-            </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
 
             <!-- Testimonial 02: د. أنس بن عبدالوهاب -->
             <div class="col-lg-6 testi-item-col" data-category="scholars">

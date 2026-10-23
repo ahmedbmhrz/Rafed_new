@@ -531,61 +531,65 @@
 
         <!-- Projects Grid -->
         <div class="row g-4" id="projectItemsContainer">
+            {% if projects %}
+                {% for item in projects %}
+                <div class="col-lg-4 col-md-6 project-item-col" data-category="{{ item.category }}">
+                    <div class="project-card wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="project-card-img-wrap">
+                            {% if item.image %}
+                                <img src="{{ item.image.url }}" alt="{{ item.title }}" class="project-card-img">
+                            {% elif item.image_static_fallback %}
+                                <img src="{% static item.image_static_fallback %}" alt="{{ item.title }}" class="project-card-img">
+                            {% else %}
+                                <img src="{% static 'img/rafed_image/background/4.jpg' %}" alt="{{ item.title }}" class="project-card-img">
+                            {% endif %}
+                            <div class="project-card-overlay"></div>
+                            <span class="project-badge-status">{{ item.get_status_display }}</span>
+                            <span class="project-badge-category">{{ item.get_category_display }}</span>
+                        </div>
 
-            <!-- Project 01: ديوانية رافد للأوقاف -->
-            <div class="col-lg-4 col-md-6 project-item-col" data-category="initiatives">
-                <div class="project-card wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="project-card-img-wrap">
-                        <img src="{% static 'img/rafed_image/background/4.jpg' %}" alt="ديوانية رافد للأوقاف" class="project-card-img">
-                        <div class="project-card-overlay"></div>
-                        <span class="project-badge-status">مبادرة رائدة مستمرة</span>
-                        <span class="project-badge-category">المبادرات والملتقيات</span>
-                    </div>
+                        <div class="project-card-body">
+                            <h4 class="project-card-title">{{ item.title }}</h4>
+                            <p class="project-card-desc">
+                                {{ item.description }}
+                            </p>
 
-                    <div class="project-card-body">
-                        <h4 class="project-card-title">ديوانية رافد للأوقاف</h4>
-                        <p class="project-card-desc">
-                            منصة حوارية ومهنية دورية تجمع أصحاب الفضيلة النظار، والخبراء، وممثلي الجهات الإشرافية لمناقشة قضايا الأوقاف المعاصرة وصياغة حلول نوعية للتحديات الميدانية.
-                        </p>
-
-                        <div class="project-metrics-strip">
-                            <div class="project-metric-item">
-                                <span class="metric-val">24+</span>
-                                <span class="metric-lbl">جلسة دورية</span>
+                            <div class="project-metrics-strip">
+                                <div class="project-metric-item">
+                                    <span class="metric-val">{{ item.progress_percentage }}%</span>
+                                    <span class="metric-lbl">نسبة الإنجاز</span>
+                                </div>
+                                {% if item.target_amount %}
+                                <div class="project-metric-item">
+                                    <span class="metric-val" style="font-size: 0.95rem;">{{ item.target_amount }}</span>
+                                    <span class="metric-lbl">المستهدف</span>
+                                </div>
+                                {% endif %}
                             </div>
-                            <div class="project-metric-item">
-                                <span class="metric-val">800+</span>
-                                <span class="metric-lbl">ناظر وخبير</span>
-                            </div>
-                            <div class="project-metric-item">
-                                <span class="metric-val">15+</span>
-                                <span class="metric-lbl">شراكة منبثقة</span>
+
+                            <div class="project-progress-wrap">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span class="progress-title">تقدم تنفيذ المشروع</span>
+                                    <span class="progress-pct">{{ item.progress_percentage }}%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: {{ item.progress_percentage }}%;" aria-valuenow="{{ item.progress_percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
                             </div>
                         </div>
 
-                        <ul class="project-highlights-list">
-                            <li class="project-highlight-item">
-                                <span class="diamond-bullet">❖</span>
-                                استضافة قيادات ومسؤولي الهيئة العامة للأوقاف.
-                            </li>
-                            <li class="project-highlight-item">
-                                <span class="diamond-bullet">❖</span>
-                                استعراض تجارب وقفية رائدة ونماذج ملهمة.
-                            </li>
-                            <li class="project-highlight-item">
-                                <span class="diamond-bullet">❖</span>
-                                إصدار أوراق وتوصيات معرفية تخدم العاملين في القطاع.
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="project-card-footer">
-                        <a href="/#contact" class="btn-project-cta">
-                            طلب المشاركة أو رعاية الجلسات <i class="fa fa-arrow-left"></i>
-                        </a>
+                        <div class="project-card-footer">
+                            <a href="{% url 'contact' %}" class="btn-project-cta">
+                                طلب رعاية أو مساهمة <i class="fa fa-arrow-left"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
 
             <!-- Project 02: البرنامج الوطني لتأهيل وتمكين النظار -->
             <div class="col-lg-4 col-md-6 project-item-col" data-category="empowerment">

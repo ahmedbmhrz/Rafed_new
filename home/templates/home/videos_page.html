@@ -1,0 +1,294 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+/* Dedicated Videos Page Header */
+.videos-page-header {
+    background-color: var(--forest) !important;
+    padding: 130px 0 70px 0;
+    position: relative;
+    border-bottom: 2px solid var(--primary);
+}
+.videos-page-header h1,
+.videos-page-header .display-4 {
+    color: #ffffff !important;
+    font-weight: 800 !important;
+}
+.videos-page-header .breadcrumb-item a {
+    color: rgba(255, 255, 255, 0.85);
+    transition: color 0.3s ease;
+}
+.videos-page-header .breadcrumb-item a:hover {
+    color: var(--primary);
+}
+.videos-page-header .breadcrumb-item.active {
+    color: var(--primary) !important;
+    font-weight: 700;
+}
+.videos-page-header .breadcrumb-item + .breadcrumb-item::before {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Video Gallery Cards */
+.video-gallery-card {
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid rgba(201, 169, 97, 0.25);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+}
+.video-gallery-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--primary);
+    box-shadow: 0 18px 40px rgba(12, 59, 46, 0.12);
+}
+
+.video-thumb-wrap {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+    background: var(--forest);
+    cursor: pointer;
+}
+.video-thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+.video-gallery-card:hover .video-thumb-img {
+    transform: scale(1.08);
+}
+.video-thumb-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(12, 59, 46, 0.7) 100%);
+    transition: background 0.3s ease;
+}
+.video-gallery-card:hover .video-thumb-overlay {
+    background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(12, 59, 46, 0.85) 100%);
+}
+
+.video-duration-pill {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: rgba(12, 59, 46, 0.9);
+    color: #ffffff;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-family: var(--font-mono);
+    direction: ltr;
+    border: 1px solid rgba(201, 169, 97, 0.4);
+    z-index: 2;
+}
+
+.video-play-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 64px;
+    height: 64px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--forest);
+    font-size: 22px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+.video-gallery-card:hover .video-play-center {
+    transform: translate(-50%, -50%) scale(1.15);
+    background: var(--primary);
+    color: #ffffff;
+}
+
+.video-card-body {
+    padding: 22px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+.video-card-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.12rem;
+    color: var(--forest);
+    line-height: 1.5;
+    margin-bottom: 12px;
+    transition: color 0.3s ease;
+}
+.video-gallery-card:hover .video-card-title {
+    color: var(--primary);
+}
+
+.video-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 14px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    font-size: 12px;
+    color: #777;
+    font-family: var(--font-mono);
+}
+.btn-watch-now {
+    color: var(--forest);
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.25s ease;
+}
+.btn-watch-now:hover {
+    color: var(--primary);
+    transform: translateX(-3px);
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Dedicated Page Header Start -->
+<div class="container-fluid videos-page-header bg-dark text-light wow fadeIn" data-wow-delay="0.1s">
+    <div class="container text-center pt-4 pb-2">
+        <p class="text-primary text-uppercase fw-bold mb-2" style="letter-spacing: 1px;">جمعية رافد للأوقاف</p>
+        <h1 class="display-4 mb-3" style="font-family: var(--font-display); font-weight: 800; color: #ffffff !important;">ألبوم الفيديو</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a href="/">الرئيسية</a></li>
+                <li class="breadcrumb-item text-white-50">صفحات</li>
+                <li class="breadcrumb-item active" aria-current="page">ألبوم الفيديو</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Dedicated Page Header End -->
+
+<!-- Videos Gallery Section Start -->
+<div class="container-xxl py-6 bg-light" id="videoGallery">
+    <div class="container">
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 650px;">
+            <p class="text-primary text-uppercase fw-bold mb-2" style="letter-spacing: 1px;">المكتبة المرئية</p>
+            <h2 class="display-6 mb-3" style="font-family: var(--font-display); font-weight: 800; color: var(--forest);">
+                شاهد وتعرف على وثائقيات ومبادرات رافد للأوقاف
+            </h2>
+            <div style="width: 50px; height: 3px; background: var(--primary); margin: 0 auto; border-radius: 3px;"></div>
+            <p class="text-muted mt-3 mb-0">مجموعة مختارة من المواد المرئية التثقيفية، المحاضرات العلمية، ووثائقيات إنجازات المشاريع الوقفية.</p>
+        </div>
+
+        <!-- Video Grid -->
+        <div class="row g-4">
+            {% if videos %}
+                {% for vid in videos %}
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="video-gallery-card">
+                        <div class="video-thumb-wrap" data-bs-toggle="modal" data-bs-target="#videoPageModal" data-src="{{ vid.embed_url }}" data-title="{{ vid.title }}">
+                            {% if vid.thumbnail %}
+                                <img src="{{ vid.thumbnail.url }}" alt="{{ vid.title }}" class="video-thumb-img">
+                            {% elif vid.image_static_fallback %}
+                                <img src="{% static vid.image_static_fallback %}" alt="{{ vid.title }}" class="video-thumb-img">
+                            {% else %}
+                                <img src="{% static 'img/rafed_image/background/4.jpg' %}" alt="{{ vid.title }}" class="video-thumb-img">
+                            {% endif %}
+                            <div class="video-thumb-overlay"></div>
+                            {% if vid.duration %}
+                            <span class="video-duration-pill">
+                                <i class="fa fa-clock me-1 text-primary"></i> {{ vid.duration }}
+                            </span>
+                            {% endif %}
+                            <div class="video-play-center">
+                                <i class="fa fa-play" style="margin-left: 3px;"></i>
+                            </div>
+                        </div>
+
+                        <div class="video-card-body">
+                            <h4 class="video-card-title">{{ vid.title }}</h4>
+                            <div class="video-card-footer">
+                                <span><i class="fa fa-calendar-alt me-1 text-muted"></i> {{ vid.date_text }}</span>
+                                <a href="javascript:void(0)" class="btn-watch-now" data-bs-toggle="modal" data-bs-target="#videoPageModal" data-src="{{ vid.embed_url }}" data-title="{{ vid.title }}">
+                                    <span>مشاهدة</span>
+                                    <i class="fa fa-arrow-left"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+<!-- Videos Gallery Section End -->
+
+<!-- Video Modal Player -->
+<div class="modal fade" id="videoPageModal" tabindex="-1" aria-labelledby="videoPageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content" style="background: #081d17; border: 1px solid var(--primary); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
+            <div class="modal-header border-0 py-3 px-4 d-flex justify-content-between align-items-center" style="background: var(--forest);">
+                <h5 class="modal-title text-white mb-0" id="videoPageModalLabel" style="font-size: 1.05rem; font-family: var(--font-display);">مشاهدة الفيديو</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="filter: brightness(0) invert(1);"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="ratio ratio-16x9">
+                    <iframe id="videoPageIframe" src="" title="Video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border: 0;"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<div class="container-fluid py-5" style="background: linear-gradient(135deg, var(--forest) 0%, #062b21 100%); border-top: 2px solid var(--primary);">
+    <div class="container text-center py-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width: 70px; height: 70px; background: rgba(255, 0, 0, 0.15); border: 1px solid rgba(255, 0, 0, 0.4);">
+                    <i class="bi bi-youtube text-danger fs-2"></i>
+                </div>
+                <h3 class="text-white mb-2" style="font-family: var(--font-display); font-weight: 800;">اشترك في قناة رافد للأوقاف على يوتيوب</h3>
+                <p class="text-white-50 mb-4 fs-6">انضم إلى مجتمعنا لمتابعة كافة الندوات، اللقاءات الوقفية الدورية، والأدلة التدريبية المصورة أولاً بأول.</p>
+                <a href="{{ site_settings.youtube_url|default:'https://youtube.com' }}" target="_blank" rel="noopener" class="btn px-4 py-3" style="background-color: #ff0000 !important; color: #ffffff !important; border: none; font-weight: 700; border-radius: 8px !important; box-shadow: 0 6px 20px rgba(255, 0, 0, 0.35);">
+                    <i class="bi bi-youtube me-2"></i>
+                    <span>الانتقال إلى قناة يوتيوب الرسمية</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var modal = document.getElementById('videoPageModal');
+    if (modal) {
+        modal.addEventListener('show.bs.modal', function(event) {
+            var trigger = event.relatedTarget;
+            var src = trigger.getAttribute('data-src');
+            var title = trigger.getAttribute('data-title');
+            var iframe = document.getElementById('videoPageIframe');
+            var label = document.getElementById('videoPageModalLabel');
+            if (iframe) iframe.src = src;
+            if (label && title) label.textContent = title;
+        });
+        modal.addEventListener('hidden.bs.modal', function() {
+            var iframe = document.getElementById('videoPageIframe');
+            if (iframe) iframe.src = '';
+        });
+    }
+});
+</script>
+{% endblock %}
