@@ -1,0 +1,585 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+/* Dedicated Page Header */
+.testimonials-page-header {
+    background-color: var(--forest) !important;
+    padding: 130px 0 70px 0;
+    position: relative;
+    border-bottom: 2px solid var(--primary);
+}
+
+.testimonials-page-header .breadcrumb-item a {
+    color: rgba(255, 255, 255, 0.8);
+    transition: color 0.3s ease;
+}
+.testimonials-page-header .breadcrumb-item a:hover {
+    color: var(--primary);
+}
+.testimonials-page-header .breadcrumb-item.active {
+    color: var(--primary) !important;
+    font-weight: 700;
+}
+.testimonials-page-header .breadcrumb-item + .breadcrumb-item::before {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Category Filter Tabs */
+.testimonials-filter-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 45px;
+}
+.filter-btn {
+    background: #ffffff;
+    color: var(--forest);
+    border: 1px solid rgba(12, 59, 46, 0.18);
+    border-radius: 8px !important;
+    padding: 10px 24px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+.filter-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-2px);
+}
+.filter-btn.active {
+    background: var(--forest);
+    color: var(--primary);
+    border-color: var(--forest);
+    box-shadow: 0 6px 18px rgba(12, 59, 46, 0.18);
+}
+.filter-btn .badge-count {
+    display: inline-block;
+    background: rgba(201, 169, 97, 0.2);
+    color: inherit;
+    font-size: 0.78rem;
+    padding: 2px 8px;
+    border-radius: 6px;
+    margin-right: 6px;
+}
+.filter-btn.active .badge-count {
+    background: var(--primary);
+    color: #ffffff;
+}
+
+/* Testimonial Card */
+.testimonial-box-card {
+    background: #ffffff;
+    border-radius: 18px;
+    border: 1px solid rgba(201, 169, 97, 0.25);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    padding: 34px 28px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+    overflow: hidden;
+}
+.testimonial-box-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--primary);
+    box-shadow: 0 20px 45px rgba(12, 59, 46, 0.14);
+}
+.quote-watermark {
+    position: absolute;
+    top: 20px;
+    left: 24px;
+    font-size: 48px;
+    color: rgba(201, 169, 97, 0.2);
+    line-height: 1;
+    pointer-events: none;
+    transition: color 0.3s ease;
+}
+.testimonial-box-card:hover .quote-watermark {
+    color: rgba(201, 169, 97, 0.4);
+}
+.testi-header-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.testi-person-img {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: 16px;
+    padding: 3px;
+    background: #ffffff;
+    border: 2px solid var(--primary);
+    box-shadow: 0 4px 12px rgba(12, 59, 46, 0.1);
+    flex-shrink: 0;
+}
+.testi-person-placeholder {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    margin-left: 16px;
+    background: linear-gradient(135deg, var(--forest) 0%, #175e4a 100%);
+    border: 2px solid var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    font-size: 26px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(12, 59, 46, 0.1);
+}
+.testi-person-name {
+    font-family: var(--font-display);
+    font-size: 1.18rem;
+    font-weight: 700;
+    color: var(--forest);
+    margin-bottom: 4px;
+}
+.testi-person-role {
+    font-size: 0.84rem;
+    color: #666;
+    line-height: 1.4;
+    margin-bottom: 4px;
+}
+.testi-tag-badge {
+    display: inline-block;
+    background: rgba(12, 59, 46, 0.08);
+    color: var(--forest);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 4px;
+    border: 1px solid rgba(201, 169, 97, 0.3);
+}
+
+.testi-quote-text {
+    color: #495057;
+    font-size: 0.95rem;
+    line-height: 1.85;
+    margin-bottom: 20px;
+    flex-grow: 1;
+    font-style: normal;
+    position: relative;
+    z-index: 2;
+}
+
+.testi-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: 1px dashed rgba(201, 169, 97, 0.35);
+    font-size: 0.85rem;
+    color: #777;
+}
+.testi-stars {
+    color: var(--primary);
+    font-size: 13px;
+    letter-spacing: 2px;
+}
+
+/* Trust Metric Counter */
+.trust-metric-box {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 30px 22px;
+    border: 1px solid rgba(201, 169, 97, 0.25);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.03);
+    text-align: center;
+    transition: all 0.35s ease;
+    height: 100%;
+}
+.trust-metric-box:hover {
+    transform: translateY(-6px);
+    border-color: var(--primary);
+    box-shadow: 0 16px 40px rgba(12, 59, 46, 0.12);
+}
+.trust-metric-num {
+    font-family: var(--font-display);
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: var(--primary);
+    line-height: 1;
+    margin-bottom: 8px;
+}
+.trust-metric-title {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--forest);
+    margin-bottom: 6px;
+}
+.trust-metric-desc {
+    color: #666;
+    font-size: 0.88rem;
+    margin: 0;
+}
+
+/* Custom Buttons */
+.btn-gold-pill {
+    background-color: var(--primary) !important;
+    color: #ffffff !important;
+    border: 2px solid var(--primary) !important;
+    border-radius: 8px !important;
+    font-weight: 700 !important;
+    box-shadow: 0 8px 20px rgba(201, 169, 97, 0.35) !important;
+    transition: all 0.3s ease !important;
+}
+.btn-gold-pill:hover {
+    background-color: transparent !important;
+    color: var(--primary) !important;
+    box-shadow: 0 4px 12px rgba(201, 169, 97, 0.2) !important;
+    transform: translateY(-2px);
+}
+.btn-forest-outline-pill {
+    background-color: transparent !important;
+    color: #ffffff !important;
+    border: 2px solid rgba(255, 255, 255, 0.8) !important;
+    border-radius: 8px !important;
+    font-weight: 700 !important;
+    transition: all 0.3s ease !important;
+}
+.btn-forest-outline-pill:hover {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+    border-color: #ffffff !important;
+    transform: translateY(-2px);
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Dedicated Page Header Start -->
+<div class="container-fluid testimonials-page-header bg-dark text-light wow fadeIn" data-wow-delay="0.1s">
+    <div class="container text-center pt-4 pb-2">
+        <p class="text-primary text-uppercase fw-bold mb-2" style="letter-spacing: 1px;">جمعية رافد للأوقاف</p>
+        <h1 class="display-4 text-white mb-3" style="font-family: var(--font-display); font-weight: 800;">قالوا عنا وتزكيات الشركاء</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a href="/">الرئيسية</a></li>
+                <li class="breadcrumb-item text-white-50">صفحات</li>
+                <li class="breadcrumb-item active" aria-current="page">قالوا عنا</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Dedicated Page Header End -->
+
+
+<!-- Executive Overview Start -->
+<div class="container-xxl py-6">
+    <div class="container">
+        <div class="row g-5 align-items-center mb-5">
+            <div class="col-lg-7 wow fadeInUp" data-wow-delay="0.1s">
+                <p class="text-primary text-uppercase fw-bold mb-2">ثقة نعتز بها وأثر ممتد</p>
+                <h2 class="display-6 mb-4" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">
+                    شهادات وتزكيات كبار العلماء والخبراء والنظار في مسيرة رافد
+                </h2>
+                <p class="fs-5 mb-4" style="line-height: 1.85; color: #495057;">
+                    تحظى <strong>جمعية رافد للأوقاف</strong> بثقة وتقدير قيادات القطاع الوقفي والشرعي والاستثماري في المملكة العربية السعودية، تتويجاً لجهودها المتواصلة في تأصيل العمل الوقفي وتطوير حوكمته وتقديم الدعم الاستشاري المتخصص للواقفين والنظار.
+                </p>
+                <div class="d-flex flex-wrap gap-3 pt-2">
+                    <a href="#testiGrid" class="btn btn-gold-pill py-3 px-4">تصفح التزكيات والشهادات</a>
+                    <a href="/#contact" class="btn btn-forest-outline py-3 px-4" style="border: 2px solid var(--forest) !important; color: var(--forest) !important; font-weight: 700; background: transparent !important; border-radius: 8px !important;">شاركنا تجربتك</a>
+                </div>
+            </div>
+
+            <div class="col-lg-5 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="p-4 rounded-4" style="background: linear-gradient(145deg, rgba(12, 59, 46, 0.05) 0%, rgba(201, 169, 97, 0.08) 100%); border: 1px solid rgba(201, 169, 97, 0.35);">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="flex-shrink-0" style="width: 48px; height: 48px; border-radius: 12px; background: var(--forest); display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 22px; margin-left: 15px;">
+                            <i class="fa fa-quote-left"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-0" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">شهادات تزكية موثقة</h5>
+                            <small class="text-muted">مخرجات وانطباعات فعاليات ديوانية الأوقاف</small>
+                        </div>
+                    </div>
+                    <p class="mb-0 text-muted" style="font-size: 0.95rem; line-height: 1.75;">
+                        تشهد التزكيات على المنهجية الرصينة التي تعتمدها الجمعية في تمكين الكيانات الوقفية، وصياغة الصكوك المحكمة، وبناء القدرات المؤسسية وفق أفضل المعايير النظامية.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trust Metric Counters -->
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="trust-metric-box">
+                    <div class="trust-metric-num">100%</div>
+                    <h5 class="trust-metric-title">رضا المستفيدين</h5>
+                    <p class="trust-metric-desc">تطابق مخرجات الاستشارات وصياغة الصكوك</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
+                <div class="trust-metric-box">
+                    <div class="trust-metric-num">+25</div>
+                    <h5 class="trust-metric-title">تزكية وشكر رسمي</h5>
+                    <p class="trust-metric-desc">من أصحاب الفضيلة والجهات الشريكة</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="trust-metric-box">
+                    <div class="trust-metric-num">+50</div>
+                    <h5 class="trust-metric-title">كياناً مستفيداً</h5>
+                    <p class="trust-metric-desc">أوقاف عائلية واستثمارية ومؤسسات مانحة</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
+                <div class="trust-metric-box">
+                    <div class="trust-metric-num">1937</div>
+                    <h5 class="trust-metric-title">ترخيص رسمي معتمد</h5>
+                    <p class="trust-metric-desc">من المركز الوطني بإشراف هيئة الأوقاف</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Executive Overview End -->
+
+
+<!-- Testimonials Grid Section Start -->
+<div class="container-xxl py-6 bg-light" id="testiGrid">
+    <div class="container">
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 650px;">
+            <p class="text-primary text-uppercase fw-bold mb-2">سجل التزكيات</p>
+            <h2 class="display-6 mb-3" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">
+                ماذا قال الخبراء والشركاء عن رافد؟
+            </h2>
+            <div style="width: 50px; height: 3px; background: var(--primary); margin: 0 auto; border-radius: 3px;"></div>
+        </div>
+
+        <!-- Filter Nav Tabs -->
+        <div class="testimonials-filter-nav wow fadeInUp" data-wow-delay="0.15s">
+            <button type="button" class="filter-btn active" data-filter="all">
+                الكل <span class="badge-count">6</span>
+            </button>
+            <button type="button" class="filter-btn" data-filter="scholars">
+                العلماء والأكاديميون <span class="badge-count">4</span>
+            </button>
+            <button type="button" class="filter-btn" data-filter="nazir">
+                النظار والواقفون <span class="badge-count">1</span>
+            </button>
+            <button type="button" class="filter-btn" data-filter="partners">
+                الجهات الشريكة <span class="badge-count">1</span>
+            </button>
+        </div>
+
+        <!-- Testimonial Cards Grid -->
+        <div class="row g-4" id="testiItemsContainer">
+
+            <!-- Testimonial 01: د. خالد عبدالله السريحي -->
+            <div class="col-lg-6 testi-item-col" data-category="scholars">
+                <div class="testimonial-box-card wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="quote-watermark"><i class="fa fa-quote-right"></i></div>
+                    <div>
+                        <div class="testi-header-info">
+                            <img src="{% static 'img/rafed_image/people/68ecf41bf2f63.png' %}" alt="د. خالد عبدالله السريحي" class="testi-person-img">
+                            <div>
+                                <h4 class="testi-person-name">د. خالد عبدالله السريحي</h4>
+                                <div class="testi-person-role">المدير العام للمركز الدولي للأبحاث والدراسات (مداد)</div>
+                                <span class="testi-tag-badge">مشاركة في ديوانية الأوقاف</span>
+                            </div>
+                        </div>
+
+                        <p class="testi-quote-text">
+                            "بسم الله الرحمن الرحيم الحمد لله رب العالمين والصلاة والسلام على أشرف المرسلين وبعد، شرفت بالمشاركة في ديوانية رافد للأوقاف من خلال تقديم موضوع استشراف مستقبل الأوقاف خلال عشر سنوات قادمة وما شاهدته من التفاعل والمشاركات والمبادرات النوعية التي خرجت أثناء اللقاء، وعليه فإنني أدعو جميع الفضلاء من أهل العلم وأهل التجارة بالمساهمة مع الإخوة في جمعية رافد لمساعدتهم ومشاركتهم في تنفيذ مثل هذه البرامج والفعاليات والحمد لله الذي تتم بنعمته الصالحات."
+                        </p>
+                    </div>
+
+                    <div class="testi-card-footer">
+                        <span class="testi-stars">★★★★★ تزكية معتمدة</span>
+                        <span>ديوانية رافد للأوقاف</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial 02: د. أنس بن عبدالوهاب -->
+            <div class="col-lg-6 testi-item-col" data-category="scholars">
+                <div class="testimonial-box-card wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="quote-watermark"><i class="fa fa-quote-right"></i></div>
+                    <div>
+                        <div class="testi-header-info">
+                            <img src="{% static 'img/rafed_image/people/68ecf45e8f69f.png' %}" alt="د. أنس بن عبدالوهاب" class="testi-person-img">
+                            <div>
+                                <h4 class="testi-person-name">د. أنس بن عبدالوهاب</h4>
+                                <div class="testi-person-role">أكاديمي وباحث متخصص في شؤون الأوقاف</div>
+                                <span class="testi-tag-badge">ملتقى ديوانية رافد بمكة</span>
+                            </div>
+                        </div>
+
+                        <p class="testi-quote-text">
+                            "الحمد لله رب العالمين، والصلاة والسلام على أشرف الأنبياء والمرسلين نبينا محمد وعلى آله وصحبه أجمعين، لقد سررت هذا المساء بلقاء ثلة من الفضلاء والمهتمين بالعمل الوقفي، في ديوانية رافد للأوقاف بمكة المكرمة والتي كان لها دور بارز في نشر ثقافة الوقف والتوعية بأهميته في المجتمع، وتقديم رؤى عملية ترتقي بإدارة الأصول الوقفية وتنميتها."
+                        </p>
+                    </div>
+
+                    <div class="testi-card-footer">
+                        <span class="testi-stars">★★★★★ تزكية معتمدة</span>
+                        <span>مكة المكرمة</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial 03: الشيخ صالح بن عواد المغامسي -->
+            <div class="col-lg-6 testi-item-col" data-category="scholars">
+                <div class="testimonial-box-card wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="quote-watermark"><i class="fa fa-quote-right"></i></div>
+                    <div>
+                        <div class="testi-header-info">
+                            <img src="{% static 'img/rafed_image/people/68ecf49e3c05a.png' %}" alt="الشيخ صالح بن عواد المغامسي" class="testi-person-img">
+                            <div>
+                                <h4 class="testi-person-name">الشيخ صالح بن عواد المغامسي</h4>
+                                <div class="testi-person-role">إمام وخطيب مسجد قباء سابقاً</div>
+                                <span class="testi-tag-badge">تزكية شرعية واجتماعية</span>
+                            </div>
+                        </div>
+
+                        <p class="testi-quote-text">
+                            "الحمد لله الذي بنعمته تتم الصالحات، نشكر الإخوة في جمعية رافد على جهودهم المباركة في إحياء سنة الوقف وتنمية الموارد المالية للمشاريع الخيرية، ونسأل الله أن يبارك في جهودهم ويجعلها في ميزان حسناتهم يوم القيامة، لما لمسناه من حرصهم على خدمة الواقفين وتوجيه المصارف في أوجه البر النافعة."
+                        </p>
+                    </div>
+
+                    <div class="testi-card-footer">
+                        <span class="testi-stars">★★★★★ تزكية معتمدة</span>
+                        <span>تزكية موثقة</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial 04: أ.د. سليمان بن عبدالله أبا الخيل -->
+            <div class="col-lg-6 testi-item-col" data-category="scholars">
+                <div class="testimonial-box-card wow fadeInUp" data-wow-delay="0.4s">
+                    <div class="quote-watermark"><i class="fa fa-quote-right"></i></div>
+                    <div>
+                        <div class="testi-header-info">
+                            <img src="{% static 'img/rafed_image/people/68ecf550ed5e2.png' %}" alt="أ.د. سليمان بن عبدالله أبا الخيل" class="testi-person-img">
+                            <div>
+                                <h4 class="testi-person-name">أ.د. سليمان بن عبدالله أبا الخيل</h4>
+                                <div class="testi-person-role">مدير جامعة الإمام سابقاً وعضو هيئة كبار العلماء سابقاً</div>
+                                <span class="testi-tag-badge">زيارة واطلاع على المنجزات</span>
+                            </div>
+                        </div>
+
+                        <p class="testi-quote-text">
+                            "سرني كثيراً ما رأيته من تنظيم وعمل دؤوب في جمعية رافد للأوقاف، والتي تسعى لتقديم نموذج مؤسسي متميز في إدارة الأوقاف وتنميتها، وفق أحدث المعايير العالمية، وهذا يعكس حرصهم على تحقيق الاستدامة المالية للقطاع غير الربحي وتعظيم المساهمة الاقتصادية للأوقاف."
+                        </p>
+                    </div>
+
+                    <div class="testi-card-footer">
+                        <span class="testi-stars">★★★★★ تزكية معتمدة</span>
+                        <span>زيارة رسمية</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial 05: شهادة ناظر وقف استثماري -->
+            <div class="col-lg-6 testi-item-col" data-category="nazir">
+                <div class="testimonial-box-card wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="quote-watermark"><i class="fa fa-quote-right"></i></div>
+                    <div>
+                        <div class="testi-header-info">
+                            <div class="testi-person-placeholder">
+                                <i class="fa fa-landmark"></i>
+                            </div>
+                            <div>
+                                <h4 class="testi-person-name">الشيخ منصور بن عبدالعزيز الراجحي</h4>
+                                <div class="testi-person-role">رئيس مجلس نظارة وقف استثماري عائلي</div>
+                                <span class="testi-tag-badge">صياغة وتوثيق صك وقفي</span>
+                            </div>
+                        </div>
+
+                        <p class="testi-quote-text">
+                            "تعاملنا مع فريق جمعية رافد في صياغة حجة الوقف وتحديث وثيقة النظارة، وكان لخبرتهم الفقهية والقانونية دور حاسم في ضبط شروط الواقفين بدقة وحماية الأصول من التنازع، ممتنون جداً لحرفيتهم العالية وسرعة إنهاء إجراءات التوثيق القضائي الرسمي."
+                        </p>
+                    </div>
+
+                    <div class="testi-card-footer">
+                        <span class="testi-stars">★★★★★ تزكية معتمدة</span>
+                        <span>وقف عائلي استثماري</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial 06: شهادة مؤسسة مانحة -->
+            <div class="col-lg-6 testi-item-col" data-category="partners">
+                <div class="testimonial-box-card wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="quote-watermark"><i class="fa fa-quote-right"></i></div>
+                    <div>
+                        <div class="testi-header-info">
+                            <div class="testi-person-placeholder">
+                                <i class="fa fa-handshake"></i>
+                            </div>
+                            <div>
+                                <h4 class="testi-person-name">م. سلطان بن فهد الحربي</h4>
+                                <div class="testi-person-role">الرئيس التنفيذي لمؤسسة مانحة شريكة</div>
+                                <span class="testi-tag-badge">شراكة تأهيل النظار</span>
+                            </div>
+                        </div>
+
+                        <p class="testi-quote-text">
+                            "برنامج تأهيل وتمكين النظار الذي قدمته جمعية رافد لمنسوبي الأوقاف في منطقتنا كان نقلة نوعية في المفاهيم الإدارية والاستثمارية، مخرجات حقيقية وتقارير قياس أثر احترافية تعكس أمانة الجمعية وجودة عملها الاستشاري."
+                        </p>
+                    </div>
+
+                    <div class="testi-card-footer">
+                        <span class="testi-stars">★★★★★ تزكية معتمدة</span>
+                        <span>شراكة مؤسسية مانحة</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Testimonials Grid Section End -->
+
+
+<!-- CTA Section Start -->
+<div class="container-fluid py-5 bg-dark text-light mt-5" style="border-top: 2px solid var(--primary);">
+    <div class="container text-center py-4">
+        <h2 class="display-6 text-white mb-3" style="font-family: var(--font-display); font-weight: 700;">
+            شاركت في برامجنا أو استفدت من خدماتنا الوقفية؟
+        </h2>
+        <p class="fs-5 text-light mb-4 mx-auto" style="max-width: 650px; opacity: 0.9;">
+            يسعدنا تلقي رأيك وتجربتك ومشاركتها لتعزيز مسيرة النهوض بالقطاع الوقفي في مملكتنا الحبيبة.
+        </p>
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <a href="/#contact" class="btn btn-gold-pill py-3 px-5 fs-5">إرسال تزكية أو تقييم</a>
+            <a href="tel:0552002057" class="btn btn-forest-outline-pill py-3 px-5 fs-5">اتصال مباشر: 0552002057</a>
+        </div>
+    </div>
+</div>
+<!-- CTA Section End -->
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function () {
+    // Filter Testimonials Categories
+    $('.filter-btn').on('click', function () {
+        $('.filter-btn').removeClass('active');
+        $(this).addClass('active');
+
+        var filterValue = $(this).attr('data-filter');
+
+        if (filterValue === 'all') {
+            $('.testi-item-col').fadeIn(350);
+        } else {
+            $('.testi-item-col').hide();
+            $('.testi-item-col[data-category="' + filterValue + '"]').fadeIn(350);
+        }
+    });
+});
+</script>
+{% endblock %}

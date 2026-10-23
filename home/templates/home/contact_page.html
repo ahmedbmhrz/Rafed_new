@@ -1,0 +1,925 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+/* Dedicated Contact Page Header */
+.contact-page-header {
+    background-color: var(--forest) !important;
+    padding: 130px 0 70px 0;
+    position: relative;
+    border-bottom: 2px solid var(--primary);
+}
+.contact-page-header h1,
+.contact-page-header .display-4 {
+    color: #ffffff !important;
+    font-weight: 800 !important;
+}
+.contact-page-header .breadcrumb-item a {
+    color: rgba(255, 255, 255, 0.85);
+    transition: color 0.3s ease;
+}
+.contact-page-header .breadcrumb-item a:hover {
+    color: var(--primary);
+}
+.contact-page-header .breadcrumb-item.active {
+    color: var(--primary) !important;
+    font-weight: 700;
+}
+.contact-page-header .breadcrumb-item + .breadcrumb-item::before {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Luxury Gold Badge */
+.luxury-badge-gold {
+    display: inline-block;
+    background: rgba(201, 169, 97, 0.22) !important;
+    color: #ffd875 !important;
+    border: 1px solid rgba(201, 169, 97, 0.55) !important;
+    padding: 6px 16px !important;
+    border-radius: 6px !important;
+    font-weight: 700 !important;
+    font-size: 0.86rem !important;
+    letter-spacing: 0.3px;
+}
+
+/* Contact Channel Cards */
+.contact-channel-card {
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid rgba(201, 169, 97, 0.28);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.03);
+    padding: 32px 24px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    overflow: hidden;
+}
+.contact-channel-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.contact-channel-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--primary);
+    box-shadow: 0 16px 36px rgba(12, 59, 46, 0.1);
+}
+.contact-channel-card:hover::before {
+    opacity: 1;
+}
+
+.channel-icon-wrapper {
+    width: 68px;
+    height: 68px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+    transition: all 0.35s ease;
+}
+.icon-forest {
+    background: rgba(12, 59, 46, 0.08);
+    color: var(--forest);
+    border: 1px solid rgba(12, 59, 46, 0.15);
+}
+.icon-whatsapp {
+    background: rgba(37, 211, 102, 0.12);
+    color: #20ba5a;
+    border: 1px solid rgba(37, 211, 102, 0.3);
+}
+.icon-email {
+    background: rgba(201, 169, 97, 0.14);
+    color: var(--primary);
+    border: 1px solid rgba(201, 169, 97, 0.3);
+}
+.icon-location {
+    background: rgba(12, 59, 46, 0.08);
+    color: var(--forest);
+    border: 1px solid rgba(12, 59, 46, 0.15);
+}
+
+.contact-channel-card:hover .icon-forest {
+    background: var(--forest);
+    color: var(--primary);
+    transform: scale(1.08);
+}
+.contact-channel-card:hover .icon-whatsapp {
+    background: #25d366;
+    color: #ffffff;
+    transform: scale(1.08);
+}
+.contact-channel-card:hover .icon-email {
+    background: var(--primary);
+    color: #ffffff;
+    transform: scale(1.08);
+}
+.contact-channel-card:hover .icon-location {
+    background: var(--forest);
+    color: var(--primary);
+    transform: scale(1.08);
+}
+
+.channel-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--forest);
+    margin-bottom: 8px;
+}
+.channel-value {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 8px;
+    direction: ltr;
+    display: inline-block;
+}
+.channel-desc {
+    color: #555555;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+.channel-btn {
+    border-radius: 8px !important;
+    padding: 10px 20px;
+    font-weight: 700;
+    font-size: 0.92rem;
+    width: 100%;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* Social Media Hub Section */
+.social-hub-section {
+    background: linear-gradient(180deg, #fbfaf7 0%, #f4f1ea 100%);
+    border-top: 1px solid rgba(201, 169, 97, 0.2);
+    border-bottom: 1px solid rgba(201, 169, 97, 0.2);
+    padding: 70px 0;
+}
+.social-card {
+    background: #ffffff;
+    border-radius: 14px;
+    border: 1px solid rgba(201, 169, 97, 0.22);
+    padding: 24px 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    overflow: hidden;
+}
+.social-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
+}
+
+.social-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+.social-icon-box {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: #ffffff;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+.social-card:hover .social-icon-box {
+    transform: scale(1.1);
+}
+
+.social-x { background: #000000; }
+.social-linkedin { background: #0077b5; }
+.social-instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%); }
+.social-youtube { background: #ff0000; }
+.social-telegram { background: #0088cc; }
+.social-whatsapp { background: #25d366; }
+
+.social-info {
+    text-align: right;
+}
+.social-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--forest);
+    margin: 0;
+}
+.social-handle {
+    font-size: 0.85rem;
+    color: #666666;
+    direction: ltr;
+    display: inline-block;
+    margin-top: 2px;
+}
+.social-desc {
+    color: #444444;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    margin-bottom: 18px;
+}
+.social-link-btn {
+    border-radius: 8px !important;
+    padding: 8px 16px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    border: 1px solid rgba(12, 59, 46, 0.15);
+    background: #fbfaf7;
+    color: var(--forest) !important;
+}
+.social-card:hover .social-link-btn {
+    background: var(--forest) !important;
+    color: var(--primary) !important;
+    border-color: var(--forest);
+}
+
+/* Contact Form Section */
+.contact-form-container {
+    background: #ffffff;
+    border-radius: 18px;
+    border: 1px solid rgba(201, 169, 97, 0.28);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.04);
+    padding: 42px 36px;
+}
+.form-label {
+    font-weight: 700;
+    color: var(--forest);
+    font-size: 0.94rem;
+    margin-bottom: 8px;
+}
+.form-control, .form-select {
+    border-radius: 8px !important;
+    border: 1px solid rgba(12, 59, 46, 0.2);
+    padding: 12px 16px;
+    font-size: 0.95rem;
+    background-color: #fcfcfc;
+    transition: all 0.25s ease;
+}
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary);
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(201, 169, 97, 0.18);
+    outline: none;
+}
+
+/* Sidebar Info Card (High Contrast Luxury Styling) */
+.contact-sidebar-card {
+    background: linear-gradient(145deg, #0b382c 0%, #052119 100%) !important;
+    border-radius: 18px;
+    border: 1px solid rgba(201, 169, 97, 0.45) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25) !important;
+    color: #ffffff !important;
+    padding: 38px 30px;
+    height: 100%;
+}
+.contact-sidebar-card h3 {
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    font-family: var(--font-display) !important;
+    margin-top: 10px;
+    margin-bottom: 8px;
+}
+.contact-sidebar-card .sidebar-subhead {
+    color: rgba(255, 255, 255, 0.92) !important;
+    font-size: 0.94rem;
+    line-height: 1.6;
+}
+
+.sidebar-info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+.sidebar-info-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: rgba(201, 169, 97, 0.22) !important;
+    border: 1px solid rgba(201, 169, 97, 0.5) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffd875 !important;
+    font-size: 19px;
+    flex-shrink: 0;
+}
+.sidebar-info-content h6 {
+    color: #ffd875 !important;
+    font-family: var(--font-display) !important;
+    font-weight: 800 !important;
+    margin-bottom: 4px;
+    font-size: 1.05rem !important;
+    letter-spacing: 0.2px;
+}
+.sidebar-info-content p {
+    color: #ffffff !important;
+    font-size: 0.95rem !important;
+    line-height: 1.6;
+    margin: 0;
+    font-weight: 500;
+}
+.sidebar-info-content small {
+    color: rgba(255, 255, 255, 0.85) !important;
+    font-size: 0.84rem;
+    display: inline-block;
+    margin-top: 2px;
+}
+
+/* WhatsApp Box in Sidebar */
+.sidebar-whatsapp-card {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-radius: 12px !important;
+    border: 1px dashed rgba(201, 169, 97, 0.5) !important;
+    padding: 16px 18px !important;
+}
+.sidebar-whatsapp-card h6 {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    font-size: 0.98rem !important;
+    margin-bottom: 2px;
+}
+.sidebar-whatsapp-card small {
+    color: rgba(255, 255, 255, 0.88) !important;
+}
+.btn-sidebar-chat {
+    background: var(--primary) !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    border: 1px solid var(--primary) !important;
+    border-radius: 8px !important;
+    padding: 7px 18px !important;
+    box-shadow: 0 4px 14px rgba(201, 169, 97, 0.35) !important;
+    transition: all 0.25s ease !important;
+    text-decoration: none;
+    white-space: nowrap;
+}
+.btn-sidebar-chat:hover {
+    background: #ffffff !important;
+    color: var(--forest) !important;
+    border-color: #ffffff !important;
+}
+
+/* Unified Buttons */
+.btn-gold-square {
+    background-color: var(--primary) !important;
+    color: #ffffff !important;
+    border: 2px solid var(--primary) !important;
+    border-radius: 8px !important;
+    font-weight: 700 !important;
+    box-shadow: 0 6px 18px rgba(201, 169, 97, 0.3) !important;
+    transition: all 0.3s ease !important;
+}
+.btn-gold-square * {
+    color: #ffffff !important;
+}
+.btn-gold-square:hover {
+    background-color: transparent !important;
+    color: var(--primary) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(201, 169, 97, 0.4) !important;
+}
+.btn-gold-square:hover * {
+    color: var(--primary) !important;
+}
+
+.btn-forest-square {
+    background-color: var(--forest) !important;
+    color: #ffffff !important;
+    border: 2px solid var(--forest) !important;
+    border-radius: 8px !important;
+    font-weight: 700 !important;
+    box-shadow: 0 6px 18px rgba(12, 59, 46, 0.25) !important;
+    transition: all 0.3s ease !important;
+}
+.btn-forest-square * {
+    color: #ffffff !important;
+}
+.btn-forest-square:hover {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+}
+
+.btn-whatsapp-square {
+    background-color: #25d366 !important;
+    color: #ffffff !important;
+    border: 2px solid #25d366 !important;
+    border-radius: 8px !important;
+    font-weight: 700 !important;
+    box-shadow: 0 6px 18px rgba(37, 211, 102, 0.3) !important;
+    transition: all 0.3s ease !important;
+}
+.btn-whatsapp-square * {
+    color: #ffffff !important;
+}
+.btn-whatsapp-square:hover {
+    background-color: transparent !important;
+    color: #20ba5a !important;
+    transform: translateY(-2px);
+}
+.btn-whatsapp-square:hover * {
+    color: #20ba5a !important;
+}
+
+/* Bottom CTA Banner (High Contrast) */
+.contact-cta-banner {
+    background: linear-gradient(135deg, #0c3b2e 0%, #06261d 100%) !important;
+    border-top: 2px solid var(--primary) !important;
+}
+.contact-cta-banner h2 {
+    color: #ffffff !important;
+    font-family: var(--font-display) !important;
+    font-weight: 800 !important;
+}
+.contact-cta-banner p {
+    color: rgba(255, 255, 255, 0.95) !important;
+    font-size: 1.15rem;
+    line-height: 1.7;
+}
+.btn-white-outline {
+    background-color: transparent !important;
+    color: #ffffff !important;
+    border: 2px solid #ffffff !important;
+    border-radius: 8px !important;
+    font-weight: 700 !important;
+    transition: all 0.3s ease !important;
+    text-decoration: none;
+}
+.btn-white-outline * {
+    color: #ffffff !important;
+    transition: color 0.3s ease;
+}
+.btn-white-outline:hover {
+    background-color: #ffffff !important;
+    color: var(--forest) !important;
+    border-color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(255, 255, 255, 0.25) !important;
+}
+.btn-white-outline:hover * {
+    color: var(--forest) !important;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Dedicated Page Header Start -->
+<div class="container-fluid contact-page-header bg-dark text-light wow fadeIn" data-wow-delay="0.1s">
+    <div class="container text-center pt-4 pb-2">
+        <p class="text-primary text-uppercase fw-bold mb-2" style="letter-spacing: 1px;">جمعية رافد للأوقاف</p>
+        <h1 class="display-4 mb-3" style="font-family: var(--font-display); font-weight: 800; color: #ffffff !important;">تواصل معنا</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a href="/">الرئيسية</a></li>
+                <li class="breadcrumb-item active" aria-current="page">تواصل معنا</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Dedicated Page Header End -->
+
+<!-- Section 1: Main Contact Channels -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 650px;">
+            <p class="text-primary text-uppercase fw-bold mb-2" style="letter-spacing: 1px;">قنوات الاتصال المباشر</p>
+            <h2 class="display-6 mb-3" style="font-family: var(--font-display); font-weight: 800; color: var(--forest);">نسعد بخدمتكم وتلقي استفساراتكم</h2>
+            <div class="divider mx-auto mb-3" style="width: 60px; height: 3px; background: var(--primary);"></div>
+            <p class="text-muted">فريقنا المتخصص في خدمة الواقفين والمستفيدين والشركاء مستعد دائماً لتقديم الدعم والمشورة الوقفية الموثوقة.</p>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            <!-- Channel 1: Phone -->
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="contact-channel-card">
+                    <div>
+                        <div class="channel-icon-wrapper icon-forest mx-auto">
+                            <i class="fa fa-phone-alt"></i>
+                        </div>
+                        <h4 class="channel-title">الاتصال المباشر</h4>
+                        <a href="tel:0552002057" class="channel-value" style="font-family: var(--font-mono);">0552002057</a>
+                        <p class="channel-desc">متاح للرد على استفساراتكم الهاتفية خلال أوقات العمل الرسمية.</p>
+                    </div>
+                    <a href="tel:0552002057" class="channel-btn btn-forest-square">
+                        <i class="fa fa-phone-alt"></i>
+                        <span>اتصل بنا الآن</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Channel 2: WhatsApp -->
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
+                <div class="contact-channel-card">
+                    <div>
+                        <div class="channel-icon-wrapper icon-whatsapp mx-auto">
+                            <i class="bi bi-whatsapp"></i>
+                        </div>
+                        <h4 class="channel-title">محادثة واتساب</h4>
+                        <a href="https://wa.me/966552002057" target="_blank" rel="noopener" class="channel-value" style="font-family: var(--font-mono); color: #20ba5a;">0552002057</a>
+                        <p class="channel-desc">تواصل فوري ومباشر لطلب الاستشارات والمتابعة السريعة.</p>
+                    </div>
+                    <a href="https://wa.me/966552002057" target="_blank" rel="noopener" class="channel-btn btn-whatsapp-square">
+                        <i class="bi bi-whatsapp"></i>
+                        <span>محادثة واتساب فورية</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Channel 3: Email -->
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="contact-channel-card">
+                    <div>
+                        <div class="channel-icon-wrapper icon-email mx-auto">
+                            <i class="fa fa-envelope-open-text"></i>
+                        </div>
+                        <h4 class="channel-title">البريد الرسمي</h4>
+                        <a href="mailto:info@rafed.org.sa" class="channel-value" style="font-size: 1rem; font-family: var(--font-mono);">info@rafed.org.sa</a>
+                        <p class="channel-desc">للشراكات المؤسسية، المقترحات الاستراتيجية، والمراسلات الرسمية.</p>
+                    </div>
+                    <a href="mailto:info@rafed.org.sa" class="channel-btn btn-gold-square">
+                        <i class="fa fa-paper-plane"></i>
+                        <span>أرسل بريداً إلكترونياً</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Channel 4: Location -->
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
+                <div class="contact-channel-card">
+                    <div>
+                        <div class="channel-icon-wrapper icon-location mx-auto">
+                            <i class="fa fa-map-marked-alt"></i>
+                        </div>
+                        <h4 class="channel-title">المقر الرئيسي</h4>
+                        <div class="channel-value" style="font-size: 1.05rem; direction: rtl;">جدة - حي الفيحاء</div>
+                        <p class="channel-desc">المملكة العربية السعودية، نتشرف باستقبالكم بمقر الجمعية بموعد مسبق.</p>
+                    </div>
+                    <a href="#location-map" class="channel-btn btn-forest-square">
+                        <i class="fa fa-location-arrow"></i>
+                        <span>عرض الموقع الجغرافي</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Section 2: Social Media Hub (حسابات التواصل الاجتماعي) -->
+<div class="container-fluid social-hub-section wow fadeIn" data-wow-delay="0.1s">
+    <div class="container">
+        <div class="text-center mx-auto mb-5" style="max-width: 650px;">
+            <p class="text-primary text-uppercase fw-bold mb-2" style="letter-spacing: 1px;">مجتمعنا الرقمي</p>
+            <h2 class="display-6 mb-3" style="font-family: var(--font-display); font-weight: 800; color: var(--forest);">حسابات التواصل الاجتماعي الرسمية</h2>
+            <div class="divider mx-auto mb-3" style="width: 60px; height: 3px; background: var(--primary);"></div>
+            <p class="text-muted">تابعوا منصات جمعية رافد للأوقاف للاطلاع على جديد الفعاليات، المقالات الوقفية، والتغطيات الحصرية.</p>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            <!-- Social Card 1: X (Twitter) -->
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="social-card">
+                    <div>
+                        <div class="social-top">
+                            <div class="social-icon-box social-x">
+                                <i class="bi bi-twitter"></i>
+                            </div>
+                            <div class="social-info">
+                                <h5 class="social-name">منصة إكس (تويتر)</h5>
+                                <span class="social-handle">@rafid_sa</span>
+                            </div>
+                        </div>
+                        <p class="social-desc">تغطيات حية، مستجدات الملتقيات الوقفية، وتغريدات دورية حول فقه الأوقاف والأنظمة الحديثة.</p>
+                    </div>
+                    <a href="https://twitter.com" target="_blank" rel="noopener" class="social-link-btn">
+                        <span>متابعة على منصة إكس</span>
+                        <i class="bi bi-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Social Card 2: LinkedIn -->
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
+                <div class="social-card">
+                    <div>
+                        <div class="social-top">
+                            <div class="social-icon-box social-linkedin">
+                                <i class="bi bi-linkedin"></i>
+                            </div>
+                            <div class="social-info">
+                                <h5 class="social-name">لينكد إن (LinkedIn)</h5>
+                                <span class="social-handle">Rafed Endowment Society</span>
+                            </div>
+                        </div>
+                        <p class="social-desc">شبكة الشراكات المهنية، المؤتمرات المؤسسية، والفرص التعاونية للقطاع الوقفي وغير الربحي.</p>
+                    </div>
+                    <a href="https://linkedin.com" target="_blank" rel="noopener" class="social-link-btn">
+                        <span>تواصل مهني عبر لينكد إن</span>
+                        <i class="bi bi-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Social Card 3: Instagram -->
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="social-card">
+                    <div>
+                        <div class="social-top">
+                            <div class="social-icon-box social-instagram">
+                                <i class="bi bi-instagram"></i>
+                            </div>
+                            <div class="social-info">
+                                <h5 class="social-name">إنستغرام (Instagram)</h5>
+                                <span class="social-handle">@rafid_sa</span>
+                            </div>
+                        </div>
+                        <p class="social-desc">معارض الصور، إنفوجرافيك تعريفي بالمشاريع الوقفية، ومقتطفات مرئية من مبادرات الجمعية.</p>
+                    </div>
+                    <a href="https://instagram.com" target="_blank" rel="noopener" class="social-link-btn">
+                        <span>مشاهدة منشورات إنستغرام</span>
+                        <i class="bi bi-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Social Card 4: YouTube -->
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
+                <div class="social-card">
+                    <div>
+                        <div class="social-top">
+                            <div class="social-icon-box social-youtube">
+                                <i class="bi bi-youtube"></i>
+                            </div>
+                            <div class="social-info">
+                                <h5 class="social-name">يوتيوب (YouTube)</h5>
+                                <span class="social-handle">قناة جمعية رافد للأوقاف</span>
+                            </div>
+                        </div>
+                        <p class="social-desc">تسجيلات كاملة للمحاضرات، الندوات الحوارية، ووثائقيات المشاريع والتقارير الإنجازية الوقفية.</p>
+                    </div>
+                    <a href="https://youtube.com" target="_blank" rel="noopener" class="social-link-btn">
+                        <span>اشتراك في قناة يوتيوب</span>
+                        <i class="bi bi-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Social Card 5: Telegram -->
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="social-card">
+                    <div>
+                        <div class="social-top">
+                            <div class="social-icon-box social-telegram">
+                                <i class="bi bi-telegram"></i>
+                            </div>
+                            <div class="social-info">
+                                <h5 class="social-name">قناة تيليجرام (Telegram)</h5>
+                                <span class="social-handle">t.me/rafid_sa</span>
+                            </div>
+                        </div>
+                        <p class="social-desc">مستودع الأدلة الوقفية الاسترشادية، حقائب التدريب، وملفات الأبحاث واللوائح بصيغة PDF.</p>
+                    </div>
+                    <a href="https://telegram.org" target="_blank" rel="noopener" class="social-link-btn">
+                        <span>انضمام لقناة تيليجرام</span>
+                        <i class="bi bi-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Social Card 6: WhatsApp Channel -->
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.6s">
+                <div class="social-card">
+                    <div>
+                        <div class="social-top">
+                            <div class="social-icon-box social-whatsapp">
+                                <i class="bi bi-whatsapp"></i>
+                            </div>
+                            <div class="social-info">
+                                <h5 class="social-name">قناة واتساب (WhatsApp)</h5>
+                                <span class="social-handle">مجتمع رافد الوقفي</span>
+                            </div>
+                        </div>
+                        <p class="social-desc">تنبيهات فورية بأهم البرامج التدريبية وفرص الرعاية والشراكات الوقفية المتاحة.</p>
+                    </div>
+                    <a href="https://wa.me/966552002057" target="_blank" rel="noopener" class="social-link-btn">
+                        <span>انضمام لمجتمع واتساب</span>
+                        <i class="bi bi-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Section 3: Interactive Contact Form & Working Hours -->
+<div class="container-xxl py-5" id="contact-form-section">
+    <div class="container">
+        {% if submitted %}
+        <div class="alert alert-success border-0 shadow-sm p-4 mb-4 wow fadeIn" style="background: rgba(12, 59, 46, 0.95); color: #ffffff; border-radius: 12px; border-right: 6px solid var(--primary) !important;">
+            <div class="d-flex align-items-center">
+                <div class="me-3" style="font-size: 28px; color: #ffd875;"><i class="fa fa-check-circle"></i></div>
+                <div>
+                    <h5 class="text-white mb-1" style="color: #ffffff !important;">شكراً لتواصلك معنا، أخي {{ sender_name }}!</h5>
+                    <p class="mb-0 text-white" style="color: rgba(255, 255, 255, 0.9) !important;">تم استلام طلبك ورسالتك بنجاح، وسيقوم مستشار رافد المختص بالتواصل معك في أقرب وقت.</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="row g-5">
+            <!-- Left Side: Interactive Contact Form -->
+            <div class="col-lg-7 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="contact-form-container">
+                    <div class="mb-4">
+                        <p class="text-primary text-uppercase fw-bold mb-1" style="letter-spacing: 1px;">نموذج التواصل السريع</p>
+                        <h3 style="font-family: var(--font-display); font-weight: 800; color: var(--forest);">أرسل رسالتك أو استفسارك الوقفي</h3>
+                        <p class="text-muted mb-0">يرجى ملء النموذج أدناه وسيقوم فريقنا بمتابعة طلبكم بعناية تامة.</p>
+                    </div>
+
+                    <form method="post" action="{% url 'contact' %}">
+                        {% csrf_token %}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">الاسم الكريم <span class="text-danger">*</span></label>
+                                <input type="text" name="name" class="form-control" placeholder="أدخل اسمك الكريم" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">رقم الجوال / واتساب <span class="text-danger">*</span></label>
+                                <input type="tel" name="phone" class="form-control" placeholder="05XXXXXXXX" style="direction: ltr; text-align: right;" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">البريد الإلكتروني</label>
+                                <input type="email" name="email" class="form-control" placeholder="example@email.com">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">نوع الطلب أو الاستفسار <span class="text-danger">*</span></label>
+                                <select name="subject" class="form-select" required>
+                                    <option value="" selected disabled>اختر تصنيف الطلب...</option>
+                                    <option value="استشارة وقفية">طلب استشارة وقفية متخصصة</option>
+                                    <option value="رعاية أو شراكة">طلب رعاية أو شراكة استراتيجية</option>
+                                    <option value="تأسيس وقف">استفسار عن تأسيس وصياغة الأوقاف</option>
+                                    <option value="خدمات النظارة">حوكمة وإدارة نظارة الأوقاف</option>
+                                    <option value="اقتراح أو ملاحظة">اقتراح أو ملاحظة عامة</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">نص الرسالة أو تفاصيل الاستفسار <span class="text-danger">*</span></label>
+                                <textarea name="message" rows="5" class="form-control" placeholder="يرجى كتابة تفاصيل موضوعكم أو استفساركم الوقفي هنا..." required></textarea>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="prefer_whatsapp" name="prefer_whatsapp" checked>
+                                    <label class="form-check-label text-muted" for="prefer_whatsapp" style="font-size: 0.9rem;">
+                                        أفضل استقبال الرد عبر تطبيق واتساب لسرعة المتابعة
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12 pt-2">
+                                <button type="submit" class="btn btn-forest-square py-3 px-5 w-100">
+                                    <i class="fa fa-paper-plane me-2"></i>
+                                    <span>إرسال الرسالة الآن</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right Side: Sidebar Info & Working Hours & Location Map -->
+            <div class="col-lg-5 wow fadeInUp" data-wow-delay="0.3s" id="location-map">
+                <div class="contact-sidebar-card d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="mb-4">
+                            <span class="luxury-badge-gold mb-2">مقر الجمعية الرسمي</span>
+                            <h3 style="color: #ffffff !important; font-family: var(--font-display); font-weight: 800;">معلومات التواصل وأوقات العمل</h3>
+                            <p class="sidebar-subhead mb-0">نفتح أبوابنا وقنواتنا الرقمية لخدمة الواقفين والمهتمين بالقطاع الوقفي في المملكة.</p>
+                        </div>
+
+                        <!-- Info 1: Working Hours -->
+                        <div class="sidebar-info-item">
+                            <div class="sidebar-info-icon">
+                                <i class="fa fa-clock"></i>
+                            </div>
+                            <div class="sidebar-info-content">
+                                <h6 style="color: #ffd875 !important;">أوقات الدوام الرسمي</h6>
+                                <p style="color: #ffffff !important;">الأحد - الخميس: 8:00 صباحاً حتى 4:00 مساءً</p>
+                                <small style="color: rgba(255, 255, 255, 0.85) !important;">الجمعة والسبت: إجازة أسبوعية (مع استمرار قنوات واتساب الرقمية)</small>
+                            </div>
+                        </div>
+
+                        <!-- Info 2: Phone Direct -->
+                        <div class="sidebar-info-item">
+                            <div class="sidebar-info-icon">
+                                <i class="fa fa-phone-alt"></i>
+                            </div>
+                            <div class="sidebar-info-content">
+                                <h6 style="color: #ffd875 !important;">الهاتف الموحد</h6>
+                                <p style="font-family: var(--font-mono); direction: ltr; text-align: right; color: #ffffff !important;">
+                                    <a href="tel:0552002057" style="color: #ffffff !important; text-decoration: none; font-weight: 700; font-size: 1.1rem;">0552002057</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Info 3: Email -->
+                        <div class="sidebar-info-item">
+                            <div class="sidebar-info-icon">
+                                <i class="fa fa-envelope"></i>
+                            </div>
+                            <div class="sidebar-info-content">
+                                <h6 style="color: #ffd875 !important;">البريد الإلكتروني</h6>
+                                <p style="font-family: var(--font-mono); color: #ffffff !important;">
+                                    <a href="mailto:info@rafed.org.sa" style="color: #ffffff !important; text-decoration: none; font-weight: 600;">info@rafed.org.sa</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Info 4: Address -->
+                        <div class="sidebar-info-item">
+                            <div class="sidebar-info-icon">
+                                <i class="fa fa-map-marker-alt"></i>
+                            </div>
+                            <div class="sidebar-info-content">
+                                <h6 style="color: #ffd875 !important;">العنوان والمقر</h6>
+                                <p style="color: #ffffff !important;">المملكة العربية السعودية<br>مدينة جدة - حي الفيحاء</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fast WhatsApp Consultation Banner inside sidebar -->
+                    <div class="sidebar-whatsapp-card mt-3">
+                        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-whatsapp fs-3 me-3" style="color: #25d366;"></i>
+                                <div>
+                                    <h6 style="color: #ffffff !important;">استشارة وقفية فورية عبر واتساب</h6>
+                                    <small style="color: rgba(255, 255, 255, 0.88) !important;">مستشار وقفي جاهز للرد</small>
+                                </div>
+                            </div>
+                            <a href="https://wa.me/966552002057" target="_blank" rel="noopener" class="btn-sidebar-chat">
+                                بدء المحادثة
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Section 4: Bottom Call-to-Action Banner (High Contrast) -->
+<div class="container-fluid py-5 contact-cta-banner">
+    <div class="container text-center py-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 wow fadeInUp" data-wow-delay="0.1s">
+                <span class="luxury-badge-gold mb-3">شراكة وأثر دائم</span>
+                <h2 class="display-6 mb-3" style="font-family: var(--font-display); font-weight: 800; color: #ffffff !important;">هل تود تأسيس وقف مبارك أو تطوير حوكمة وقفك؟</h2>
+                <p class="mb-4" style="color: rgba(255, 255, 255, 0.95) !important;">جمعية رافد للأوقاف تقدم لك خبرات نخبة من المستشارين والخبراء الشرعيين والقانونيين والماليين في مكان واحد.</p>
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <a href="https://wa.me/966552002057" target="_blank" rel="noopener" class="btn btn-gold-square px-4 py-3" style="background: var(--primary) !important; color: #ffffff !important; border: 2px solid var(--primary) !important; border-radius: 8px !important; font-weight: 700 !important;">
+                        <i class="bi bi-whatsapp me-2" style="color: #ffffff !important;"></i>
+                        <span style="color: #ffffff !important;">تواصل مباشرة عبر واتساب</span>
+                    </a>
+                    <a href="{% url 'services' %}" class="btn btn-white-outline px-4 py-3">
+                        <i class="bi bi-briefcase me-2"></i>
+                        <span>استكشف كافة خدماتنا الوقفية</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

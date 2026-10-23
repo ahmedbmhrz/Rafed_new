@@ -1,0 +1,615 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+/* Dedicated Page Header */
+.team-page-header {
+    background-color: var(--forest) !important;
+    padding: 130px 0 70px 0;
+    position: relative;
+    border-bottom: 2px solid var(--primary);
+}
+
+.team-page-header .breadcrumb-item a {
+    color: rgba(255, 255, 255, 0.8);
+    transition: color 0.3s ease;
+}
+.team-page-header .breadcrumb-item a:hover {
+    color: var(--primary);
+}
+.team-page-header .breadcrumb-item.active {
+    color: var(--primary) !important;
+    font-weight: 700;
+}
+.team-page-header .breadcrumb-item + .breadcrumb-item::before {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Category Filter Tabs */
+.team-filter-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 45px;
+}
+.filter-btn {
+    background: #ffffff;
+    color: var(--forest);
+    border: 1px solid rgba(12, 59, 46, 0.18);
+    border-radius: 8px !important;
+    padding: 10px 24px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+.filter-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-2px);
+}
+.filter-btn.active {
+    background: var(--forest);
+    color: var(--primary);
+    border-color: var(--forest);
+    box-shadow: 0 6px 18px rgba(12, 59, 46, 0.18);
+}
+.filter-btn .badge-count {
+    display: inline-block;
+    background: rgba(201, 169, 97, 0.2);
+    color: inherit;
+    font-size: 0.78rem;
+    padding: 2px 8px;
+    border-radius: 6px;
+    margin-right: 6px;
+}
+.filter-btn.active .badge-count {
+    background: var(--primary);
+    color: #ffffff;
+}
+
+/* Team Card Design */
+.team-profile-card {
+    background: #ffffff;
+    border-radius: 18px;
+    border: 1px solid rgba(201, 169, 97, 0.25);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    text-align: center;
+    padding: 30px 24px;
+}
+.team-profile-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--primary);
+    box-shadow: 0 20px 45px rgba(12, 59, 46, 0.14);
+}
+.team-avatar-wrap {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    padding: 6px;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(201, 169, 97, 0.35), 0 10px 25px rgba(12, 59, 46, 0.1);
+    position: relative;
+    transition: all 0.35s ease;
+}
+.team-profile-card:hover .team-avatar-wrap {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 5px var(--primary), 0 15px 30px rgba(12, 59, 46, 0.18);
+}
+.team-avatar-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: var(--forest);
+}
+.team-avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--forest) 0%, #155543 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    font-size: 42px;
+}
+.team-role-pill {
+    display: inline-block;
+    background: rgba(12, 59, 46, 0.08);
+    color: var(--forest);
+    border: 1px solid rgba(201, 169, 97, 0.3);
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    letter-spacing: 0.3px;
+}
+.team-name {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--forest);
+    margin-bottom: 6px;
+}
+.team-title {
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 0.92rem;
+    margin-bottom: 14px;
+}
+.team-bio {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+/* Social / Contact Icons */
+.team-social-links {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding-top: 15px;
+    border-top: 1px dashed rgba(201, 169, 97, 0.35);
+}
+.team-social-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: rgba(12, 59, 46, 0.06);
+    color: var(--forest);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+.team-social-btn:hover {
+    background: var(--forest);
+    color: var(--primary);
+    transform: translateY(-2px);
+}
+
+/* Strategic Strengths */
+.strength-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 26px 22px;
+    border: 1px solid rgba(201, 169, 97, 0.22);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.02);
+    display: flex;
+    align-items: center;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+.strength-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(12, 59, 46, 0.08);
+}
+.strength-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: rgba(12, 59, 46, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    font-size: 22px;
+    margin-left: 16px;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+.strength-card:hover .strength-icon {
+    background: var(--forest);
+    color: var(--primary);
+}
+
+/* Buttons */
+.btn-gold-pill {
+    background-color: var(--primary) !important;
+    color: #ffffff !important;
+    border: 2px solid var(--primary) !important;
+    border-radius: 8px !important;
+    font-weight: 700 !important;
+    box-shadow: 0 8px 20px rgba(201, 169, 97, 0.35) !important;
+    transition: all 0.3s ease !important;
+}
+.btn-gold-pill:hover {
+    background-color: transparent !important;
+    color: var(--primary) !important;
+    box-shadow: 0 4px 12px rgba(201, 169, 97, 0.2) !important;
+    transform: translateY(-2px);
+}
+.btn-forest-outline-pill {
+    background-color: transparent !important;
+    color: #ffffff !important;
+    border: 2px solid rgba(255, 255, 255, 0.8) !important;
+    border-radius: 8px !important;
+    font-weight: 700 !important;
+    transition: all 0.3s ease !important;
+}
+.btn-forest-outline-pill:hover {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+    border-color: #ffffff !important;
+    transform: translateY(-2px);
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Dedicated Page Header Start -->
+<div class="container-fluid team-page-header bg-dark text-light wow fadeIn" data-wow-delay="0.1s">
+    <div class="container text-center pt-4 pb-2">
+        <p class="text-primary text-uppercase fw-bold mb-2" style="letter-spacing: 1px;">جمعية رافد للأوقاف</p>
+        <h1 class="display-4 text-white mb-3" style="font-family: var(--font-display); font-weight: 800;">فريقنا ونخبة خبرائنا</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a href="/">الرئيسية</a></li>
+                <li class="breadcrumb-item text-white-50">صفحات</li>
+                <li class="breadcrumb-item active" aria-current="page">فريقنا</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Dedicated Page Header End -->
+
+
+<!-- Executive Overview Start -->
+<div class="container-xxl py-6">
+    <div class="container">
+        <div class="row g-5 align-items-center mb-5">
+            <div class="col-lg-7 wow fadeInUp" data-wow-delay="0.1s">
+                <p class="text-primary text-uppercase fw-bold mb-2">كفاءات متخصصة ورؤية تنموية</p>
+                <h2 class="display-6 mb-4" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">
+                    قيادات وكفاءات نوعية تقود التميز والابتكار في قطاع الأوقاف
+                </h2>
+                <p class="fs-5 mb-4" style="line-height: 1.85; color: #495057;">
+                    تضم <strong>جمعية رافد للأوقاف</strong> نخبة من أصحاب الفضيلة العلماء، والمستشارين القانونيين، والخبراء الإداريين والاستثماريين الذين يجمعون بين التأصيل الفقهي الرصين والفهم العميق للأنظمة واللوائح المعاصرة، لتحقيق أعلى مستويات الحوكمة والأثر الوقفي المستدام.
+                </p>
+                <div class="d-flex flex-wrap gap-3 pt-2">
+                    <a href="#teamGrid" class="btn btn-gold-pill py-3 px-4">استكشف أعضاء الفريق</a>
+                    <a href="/#contact" class="btn btn-forest-outline py-3 px-4" style="border: 2px solid var(--forest) !important; color: var(--forest) !important; font-weight: 700; background: transparent !important; border-radius: 8px !important;">طلب استشارة من خبير</a>
+                </div>
+            </div>
+
+            <div class="col-lg-5 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="p-4 rounded-4" style="background: linear-gradient(145deg, rgba(12, 59, 46, 0.05) 0%, rgba(201, 169, 97, 0.08) 100%); border: 1px solid rgba(201, 169, 97, 0.35);">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="flex-shrink-0" style="width: 48px; height: 48px; border-radius: 12px; background: var(--forest); display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 22px; margin-left: 15px;">
+                            <i class="fa fa-users-cog"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-0" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">تكامل الخبرات والاختصاصات</h5>
+                            <small class="text-muted">فريق متكامل يعمل لخدمة الواقفين والنظار</small>
+                        </div>
+                    </div>
+                    <p class="mb-0 text-muted" style="font-size: 0.95rem; line-height: 1.75;">
+                        يعمل فريقنا بتناغم تام يغطي كافة جوانب الوقف: التأسيس الشرعي، التوثيق القضائي، الحوكمة الإدارية، وتنمية العوائد الاستثمارية.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4 Team Pillars -->
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="strength-card">
+                    <div class="strength-icon">
+                        <i class="fa fa-balance-scale"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-1" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">خبرة شرعية ونظامية</h6>
+                        <small class="text-muted">تأصيل فقهي وتوثيق نظامي</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
+                <div class="strength-card">
+                    <div class="strength-icon">
+                        <i class="fa fa-sitemap"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-1" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">حوكمة مؤسسية</h6>
+                        <small class="text-muted">معايير امتثال وإفصاح صارمة</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="strength-card">
+                    <div class="strength-icon">
+                        <i class="fa fa-chart-pie"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-1" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">استثمار وتنمية</h6>
+                        <small class="text-muted">إدارة محافظ وتنوع أصول</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
+                <div class="strength-card">
+                    <div class="strength-icon">
+                        <i class="fa fa-user-shield"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-1" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">سرية وأمانة تامة</h6>
+                        <small class="text-muted">حماية وثائق وبيانات الواقفين</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Executive Overview End -->
+
+
+<!-- Team Grid Section Start -->
+<div class="container-xxl py-6 bg-light" id="teamGrid">
+    <div class="container">
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 650px;">
+            <p class="text-primary text-uppercase fw-bold mb-2">كفاءات رافد</p>
+            <h2 class="display-6 mb-3" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">
+                الهيكل القيادي والاستشاري للجمعية
+            </h2>
+            <div style="width: 50px; height: 3px; background: var(--primary); margin: 0 auto; border-radius: 3px;"></div>
+        </div>
+
+        <!-- Filter Nav Tabs -->
+        <div class="team-filter-nav wow fadeInUp" data-wow-delay="0.15s">
+            <button type="button" class="filter-btn active" data-filter="all">
+                الكل <span class="badge-count">8</span>
+            </button>
+            <button type="button" class="filter-btn" data-filter="board">
+                مجلس الإدارة <span class="badge-count">3</span>
+            </button>
+            <button type="button" class="filter-btn" data-filter="sharia">
+                الهيئة الشرعية والاستشارية <span class="badge-count">2</span>
+            </button>
+            <button type="button" class="filter-btn" data-filter="exec">
+                الإدارة التنفيذية <span class="badge-count">3</span>
+            </button>
+        </div>
+
+        <!-- Team Members Grid -->
+        <div class="row g-4" id="teamItemsContainer">
+
+            <!-- Member 01: رئيس مجلس الإدارة -->
+            <div class="col-lg-3 col-md-6 team-item-col" data-category="board">
+                <div class="team-profile-card wow fadeInUp" data-wow-delay="0.1s">
+                    <div>
+                        <div class="team-avatar-wrap">
+                            <img src="{% static 'img/rafed_image/people/68ecf41bf2f63.png' %}" alt="رئيس مجلس الإدارة" class="team-avatar-img">
+                        </div>
+                        <span class="team-role-pill">مجلس الإدارة</span>
+                        <h4 class="team-name">د. خالد بن عبدالله السريحي</h4>
+                        <div class="team-title">رئيس مجلس الإدارة</div>
+                        <p class="team-bio">
+                            خبير وباحث بارز في شؤون الأوقاف والتنمية المؤسسية، والمدير العام للمركز الدولي للأبحاث والدراسات (مداد).
+                        </p>
+                    </div>
+                    <div class="team-social-links">
+                        <a href="#" class="team-social-btn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="mailto:info@rafed.org.sa" class="team-social-btn" title="Email"><i class="fa fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Member 02: نائب رئيس مجلس الإدارة -->
+            <div class="col-lg-3 col-md-6 team-item-col" data-category="board">
+                <div class="team-profile-card wow fadeInUp" data-wow-delay="0.2s">
+                    <div>
+                        <div class="team-avatar-wrap">
+                            <img src="{% static 'img/rafed_image/people/68ecf45e8f69f.png' %}" alt="نائب رئيس مجلس الإدارة" class="team-avatar-img">
+                        </div>
+                        <span class="team-role-pill">مجلس الإدارة</span>
+                        <h4 class="team-name">د. أنس بن عبدالوهاب</h4>
+                        <div class="team-title">نائب رئيس مجلس الإدارة</div>
+                        <p class="team-bio">
+                            أكاديمي وباحث متخصص في فقه واستدامة الأوقاف، ومستشار في تطوير حوكمة الكيانات الوقفية العائلية والمؤسسية.
+                        </p>
+                    </div>
+                    <div class="team-social-links">
+                        <a href="#" class="team-social-btn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="mailto:info@rafed.org.sa" class="team-social-btn" title="Email"><i class="fa fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Member 03: رئيس الهيئة الشرعية -->
+            <div class="col-lg-3 col-md-6 team-item-col" data-category="sharia">
+                <div class="team-profile-card wow fadeInUp" data-wow-delay="0.3s">
+                    <div>
+                        <div class="team-avatar-wrap">
+                            <img src="{% static 'img/rafed_image/people/68ecf49e3c05a.png' %}" alt="رئيس الهيئة الشرعية" class="team-avatar-img">
+                        </div>
+                        <span class="team-role-pill">الهيئة الشرعية</span>
+                        <h4 class="team-name">الشيخ صالح بن عواد المغامسي</h4>
+                        <div class="team-title">المستشار الشرعي العام</div>
+                        <p class="team-bio">
+                            عالم وموجه شرعي معروف، يشرف على المرجعية الفقهية لمبادرات رافد وصياغة الأحكام وضبط شروط الواقفين.
+                        </p>
+                    </div>
+                    <div class="team-social-links">
+                        <a href="#" class="team-social-btn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="mailto:info@rafed.org.sa" class="team-social-btn" title="Email"><i class="fa fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Member 04: مستشار أكاديمي ووقفي -->
+            <div class="col-lg-3 col-md-6 team-item-col" data-category="sharia">
+                <div class="team-profile-card wow fadeInUp" data-wow-delay="0.4s">
+                    <div>
+                        <div class="team-avatar-wrap">
+                            <img src="{% static 'img/rafed_image/people/68ecf550ed5e2.png' %}" alt="مستشار شؤون الأوقاف" class="team-avatar-img">
+                        </div>
+                        <span class="team-role-pill">الهيئة الاستشارية</span>
+                        <h4 class="team-name">أ.د. سليمان بن عبدالله أبا الخيل</h4>
+                        <div class="team-title">كبير المستشارين الأكاديميين</div>
+                        <p class="team-bio">
+                            مدير جامعة الإمام محمد بن سعود الإسلامية سابقاً وعضو هيئة كبار العلماء سابقاً، يقدم التوجيه العلمي والاستراتيجي.
+                        </p>
+                    </div>
+                    <div class="team-social-links">
+                        <a href="#" class="team-social-btn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="mailto:info@rafed.org.sa" class="team-social-btn" title="Email"><i class="fa fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Member 05: المشرف المالي وعضو المجلس -->
+            <div class="col-lg-3 col-md-6 team-item-col" data-category="board">
+                <div class="team-profile-card wow fadeInUp" data-wow-delay="0.1s">
+                    <div>
+                        <div class="team-avatar-wrap">
+                            <div class="team-avatar-placeholder">
+                                <i class="fa fa-chart-line"></i>
+                            </div>
+                        </div>
+                        <span class="team-role-pill">مجلس الإدارة</span>
+                        <h4 class="team-name">أ. عبدالرحمن بن محمد الشريف</h4>
+                        <div class="team-title">المشرف المالي وعضو مجلس الإدارة</div>
+                        <p class="team-bio">
+                            خبير استثمار مصرفي وإدارة محافظ مالية، يشرف على الاستراتيجيات الاستثمارية ومحفظة وقف رافد للأصول المستدامة.
+                        </p>
+                    </div>
+                    <div class="team-social-links">
+                        <a href="#" class="team-social-btn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="mailto:info@rafed.org.sa" class="team-social-btn" title="Email"><i class="fa fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Member 06: المدير التنفيذي -->
+            <div class="col-lg-3 col-md-6 team-item-col" data-category="exec">
+                <div class="team-profile-card wow fadeInUp" data-wow-delay="0.2s">
+                    <div>
+                        <div class="team-avatar-wrap">
+                            <div class="team-avatar-placeholder">
+                                <i class="fa fa-user-tie"></i>
+                            </div>
+                        </div>
+                        <span class="team-role-pill">الإدارة التنفيذية</span>
+                        <h4 class="team-name">م. فيصل بن عبدالعزيز الغامدي</h4>
+                        <div class="team-title">الرئيس التنفيذي</div>
+                        <p class="team-bio">
+                            قائد تنفيذي ذو خبرة واسعة في إدارة المنظمات غير الربحية، والتحول الرقمي، وتشغيل برامج ومشاريع ديوانية الأوقاف.
+                        </p>
+                    </div>
+                    <div class="team-social-links">
+                        <a href="#" class="team-social-btn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="mailto:info@rafed.org.sa" class="team-social-btn" title="Email"><i class="fa fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Member 07: مدير الاستشارات والحلول الوقفية -->
+            <div class="col-lg-3 col-md-6 team-item-col" data-category="exec">
+                <div class="team-profile-card wow fadeInUp" data-wow-delay="0.3s">
+                    <div>
+                        <div class="team-avatar-wrap">
+                            <div class="team-avatar-placeholder">
+                                <i class="fa fa-gavel"></i>
+                            </div>
+                        </div>
+                        <span class="team-role-pill">الإدارة التنفيذية</span>
+                        <h4 class="team-name">المحامي د. طارق بن سعيد الزهراني</h4>
+                        <div class="team-title">مدير الاستشارات والحلول القانونية</div>
+                        <p class="team-bio">
+                            مستشار قانوني ومحامٍ معتمد متخصص في صياغة صكوك الأوقاف وتحديثها، وحل النزاعات القضائية، وتمثيل النظار.
+                        </p>
+                    </div>
+                    <div class="team-social-links">
+                        <a href="#" class="team-social-btn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="mailto:info@rafed.org.sa" class="team-social-btn" title="Email"><i class="fa fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Member 08: مدير التدريب والتأهيل الوقفي -->
+            <div class="col-lg-3 col-md-6 team-item-col" data-category="exec">
+                <div class="team-profile-card wow fadeInUp" data-wow-delay="0.4s">
+                    <div>
+                        <div class="team-avatar-wrap">
+                            <div class="team-avatar-placeholder">
+                                <i class="fa fa-chalkboard-teacher"></i>
+                            </div>
+                        </div>
+                        <span class="team-role-pill">الإدارة التنفيذية</span>
+                        <h4 class="team-name">أ. سامي بن أحمد الحربي</h4>
+                        <div class="team-title">مدير البرامج وتأهيل النظار</div>
+                        <p class="team-bio">
+                            خبير تطوير وتدريب قيادات العمل الوقفي، يشرف على تصميم الحقائب التدريبية المعتمدة ومبادرات تمكين مجالس النظارة.
+                        </p>
+                    </div>
+                    <div class="team-social-links">
+                        <a href="#" class="team-social-btn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="mailto:info@rafed.org.sa" class="team-social-btn" title="Email"><i class="fa fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Team Grid Section End -->
+
+
+<!-- CTA Section Start -->
+<div class="container-fluid py-5 bg-dark text-light mt-5" style="border-top: 2px solid var(--primary);">
+    <div class="container text-center py-4">
+        <h2 class="display-6 text-white mb-3" style="font-family: var(--font-display); font-weight: 700;">
+            ترغب في استشارة متخصصة مع أحد خبراء رافد؟
+        </h2>
+        <p class="fs-5 text-light mb-4 mx-auto" style="max-width: 650px; opacity: 0.9;">
+            فريقنا الاستشاري والشرعي جاهز لتقديم المشورة النموذجية لتأسيس أو تطوير وقفك.
+        </p>
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <a href="/#contact" class="btn btn-gold-pill py-3 px-5 fs-5">طلب استشارة وقفية الآن</a>
+            <a href="tel:0552002057" class="btn btn-forest-outline-pill py-3 px-5 fs-5">اتصال مباشر: 0552002057</a>
+        </div>
+    </div>
+</div>
+<!-- CTA Section End -->
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function () {
+    // Filter Team Categories
+    $('.filter-btn').on('click', function () {
+        $('.filter-btn').removeClass('active');
+        $(this).addClass('active');
+
+        var filterValue = $(this).attr('data-filter');
+
+        if (filterValue === 'all') {
+            $('.team-item-col').fadeIn(350);
+        } else {
+            $('.team-item-col').hide();
+            $('.team-item-col[data-category="' + filterValue + '"]').fadeIn(350);
+        }
+    });
+});
+</script>
+{% endblock %}

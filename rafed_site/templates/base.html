@@ -42,7 +42,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="{% static 'css/style.css' %}?v=26.0" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}?v=27.0" rel="stylesheet">
 
     {% block extra_css %}{% endblock %}
 </head>
@@ -95,21 +95,44 @@
                 <a href="{% url 'services' %}" class="nav-item nav-link {% if request.path == '/services/' %}active{% endif %}">خدماتنا</a>
                 <a href="{% url 'projects' %}" class="nav-item nav-link {% if request.path == '/projects/' %}active{% endif %}">مشاريعنا</a>
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">صفحات</a>
-                    <div class="dropdown-menu m-0">
-                        <a href="#" class="dropdown-item">فريقنا</a>
-                        <a href="#" class="dropdown-item">قالوا عنا</a>
+                    <a href="#" class="nav-link dropdown-toggle {% if request.path == '/team/' or request.path == '/testimonials/' %}active{% endif %}" data-bs-toggle="dropdown">صفحات</a>
+                    <div class="dropdown-menu rafed-dropdown-menu m-0 shadow-lg">
+                        <a href="{% url 'team' %}" class="dropdown-item rafed-dropdown-item {% if request.path == '/team/' %}active{% endif %}">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-item-icon">
+                                    <i class="fa fa-users"></i>
+                                </div>
+                                <div class="dropdown-item-text">
+                                    <span class="dropdown-item-title">فريقنا</span>
+                                    <small class="dropdown-item-desc">نخبة خبرائنا وكفاءاتنا</small>
+                                </div>
+                            </div>
+                            <i class="bi bi-chevron-left dropdown-arrow"></i>
+                        </a>
+                        <div class="dropdown-divider-custom"></div>
+                        <a href="{% url 'testimonials' %}" class="dropdown-item rafed-dropdown-item {% if request.path == '/testimonials/' %}active{% endif %}">
+                            <div class="d-flex align-items-center">
+                                <div class="dropdown-item-icon">
+                                    <i class="fa fa-quote-right"></i>
+                                </div>
+                                <div class="dropdown-item-text">
+                                    <span class="dropdown-item-title">قالوا عنا</span>
+                                    <small class="dropdown-item-desc">تزكيات العلماء والشركاء</small>
+                                </div>
+                            </div>
+                            <i class="bi bi-chevron-left dropdown-arrow"></i>
+                        </a>
                     </div>
                 </div>
-                <a href="#" class="nav-item nav-link">اتصل بنا</a>
+                <a href="{% url 'contact' %}" class="nav-item nav-link {% if request.path == '/contact/' %}active{% endif %}">تواصل معنا</a>
             </div>
-            <div class=" d-none d-lg-flex">
+            <div class=" d-none d-lg-flex align-items-center">
                 <div class="flex-shrink-0 btn-lg-square border border-light rounded-circle">
                     <i class="fa fa-phone text-primary"></i>
                 </div>
-                <div class="ps-3">
-                    <small class="text-primary mb-0">اتصل بنا</small>
-                    <p class="text-light fs-5 mb-0">+012 345 6789</p>
+                <div class="ps-3 text-start">
+                    <small class="text-primary mb-0 d-block">تواصل معنا</small>
+                    <a href="tel:0552002057" class="text-light fs-5 mb-0 text-decoration-none fw-bold" style="font-family: var(--font-mono); direction: ltr; display: inline-block;">0552002057</a>
                 </div>
             </div>
         </div>
@@ -127,7 +150,7 @@
                 
                 <!-- Contact Us -->
                 <div class="col-lg-4 col-md-6 text-start">
-                    <h4 class="text-white mb-3" style="font-weight: bold; padding-bottom: 5px; font-size: 20px;">إتصل بنا</h4>
+                    <h4 class="text-white mb-3" style="font-weight: bold; padding-bottom: 5px; font-size: 20px;">تواصل معنا</h4>
                     <div class="mb-2 d-flex align-items-center justify-content-start" style="font-size: 14px;">
                         <div style="min-width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 15px;"><i class="fa fa-phone-alt text-white"></i></div>
                         <span class="me-3" style="font-family: var(--font-mono); direction: ltr;">0552002057</span>
@@ -157,6 +180,9 @@
                         <a class="text-light mb-2" href="{% url 'about' %}" style="text-decoration: none; font-size: 14px; transition: 0.3s;"><i class="bi bi-chevron-left me-2" style="color: var(--forest-pale);"></i>من نحن</a>
                         <a class="text-light mb-2" href="{% url 'services' %}" style="text-decoration: none; font-size: 14px; transition: 0.3s;"><i class="bi bi-chevron-left me-2" style="color: var(--forest-pale);"></i>خدماتنا</a>
                         <a class="text-light mb-2" href="{% url 'projects' %}" style="text-decoration: none; font-size: 14px; transition: 0.3s;"><i class="bi bi-chevron-left me-2" style="color: var(--forest-pale);"></i>مشاريعنا</a>
+                        <a class="text-light mb-2" href="{% url 'team' %}" style="text-decoration: none; font-size: 14px; transition: 0.3s;"><i class="bi bi-chevron-left me-2" style="color: var(--forest-pale);"></i>فريقنا</a>
+                        <a class="text-light mb-2" href="{% url 'testimonials' %}" style="text-decoration: none; font-size: 14px; transition: 0.3s;"><i class="bi bi-chevron-left me-2" style="color: var(--forest-pale);"></i>قالوا عنا</a>
+                        <a class="text-light mb-2" href="{% url 'contact' %}" style="text-decoration: none; font-size: 14px; transition: 0.3s;"><i class="bi bi-chevron-left me-2" style="color: var(--forest-pale);"></i>تواصل معنا</a>
                     </div>
                 </div>
 
