@@ -1,13 +1,14 @@
-from .models import SiteContactSettings
+from .models import ContactPage, SiteContactSettings
 
 def site_settings(request):
     """
     Exposes unified site contact settings to all templates.
+    First checks ContactPage (edited under Pages), then falls back to SiteContactSettings.
     """
     try:
-        settings_obj = SiteContactSettings.get_settings()
+        page = ContactPage.objects.first()
+        if page:
+            return {'site_settings': page}
+        return {'site_settings': SiteContactSettings.get_settings()}
     except Exception:
-        settings_obj = None
-    return {
-        'site_settings': settings_obj
-    }
+        return {'site_settings': None}

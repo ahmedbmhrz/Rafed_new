@@ -462,12 +462,12 @@
 <!-- Dedicated Page Header Start -->
 <div class="container-fluid about-page-header bg-dark text-light wow fadeIn" data-wow-delay="0.1s">
     <div class="container text-center pt-4 pb-2">
-        <p class="text-primary text-uppercase fw-bold mb-2" style="letter-spacing: 1px;">جمعية رافد للأوقاف</p>
-        <h1 class="display-4 text-white mb-3" style="font-family: var(--font-display); font-weight: 800;">من نحن</h1>
+        <p class="text-primary text-uppercase fw-bold mb-2" style="letter-spacing: 1px;">{{ page.subheading|default:"جمعية رافد للأوقاف" }}</p>
+        <h1 class="display-4 text-white mb-3" style="font-family: var(--font-display); font-weight: 800;">{{ page.heading|default:"من نحن" }}</h1>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb justify-content-center mb-0">
                 <li class="breadcrumb-item"><a href="/">الرئيسية</a></li>
-                <li class="breadcrumb-item active" aria-current="page">من نحن</li>
+                <li class="breadcrumb-item active" aria-current="page">{{ page.heading|default:"من نحن" }}</li>
             </ol>
         </nav>
     </div>
@@ -482,15 +482,21 @@
             <!-- Single Big Image Column -->
             <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="about-single-image-wrapper">
-                    <img class="img-fluid about-single-img" src="{% static 'img/rafed_image/background/4.jpg' %}" alt="جمعية رافد للأوقاف">
+                    {% if page.story_image %}
+                        <img class="img-fluid about-single-img" src="{{ page.story_image.url }}" alt="{{ page.story_heading }}">
+                    {% elif page.story_image_static_fallback %}
+                        <img class="img-fluid about-single-img" src="{% static page.story_image_static_fallback %}" alt="{{ page.story_heading }}">
+                    {% else %}
+                        <img class="img-fluid about-single-img" src="{% static 'img/rafed_image/background/4.jpg' %}" alt="جمعية رافد للأوقاف">
+                    {% endif %}
                     <!-- Subtle Golden Badge on Image -->
                     <div class="about-img-badge">
                         <div class="badge-icon">
                             <i class="fa fa-award"></i>
                         </div>
                         <div>
-                            <span class="badge-num">+10</span>
-                            <span class="badge-txt">سنوات من الريادة الوقفية</span>
+                            <span class="badge-num">{{ page.badge_number|default:"+10" }}</span>
+                            <span class="badge-txt">{{ page.badge_text|default:"سنوات من الريادة الوقفية" }}</span>
                         </div>
                     </div>
                 </div>
@@ -499,12 +505,12 @@
             <!-- Content Column -->
             <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
                 <div class="h-100">
-                    <p class="text-primary text-uppercase fw-bold mb-2">نبذة عن الجمعية</p>
+                    <p class="text-primary text-uppercase fw-bold mb-2">{{ page.story_subheading|default:"نبذة عن الجمعية" }}</p>
                     <h2 class="display-6 mb-4" style="font-family: var(--font-display); font-weight: 700; color: var(--forest);">
-                        رواد في تأسيس وتطوير واستدامة الكيانات الوقفية
+                        {{ page.story_heading|default:"رواد في تأسيس وتطوير واستدامة الكيانات الوقفية" }}
                     </h2>
                     <p class="fs-5 mb-4" style="line-height: 1.85; color: #495057;">
-                        <strong>جمعية رافد للأوقاف</strong> هي جمعية أهلية متخصصة ومصرح لها رسمياً، تُعنى بتقديم منظومة استشارية وتطويرية متكاملة لتأسيس وتنمية واستدامة الكيانات الوقفية، وتمكين الراغبين في الوقف ومنسوبي القطاع الوقفي من إدارة أوقافهم بأعلى معايير الحوكمة والامتثال الشرعي والنظامي.
+                        {{ page.story_text|linebreaksbr|default:"جمعية رافد للأوقاف هي جمعية أهلية متخصصة ومصرح لها رسمياً، تُعنى بتقديم منظومة استشارية وتطويرية متكاملة لتأسيس وتنمية واستدامة الكيانات الوقفية." }}
                     </p>
 
                     <!-- Accreditations & Licensing Badges (Equal Sized) -->
@@ -513,8 +519,8 @@
                             <div class="license-badge">
                                 <i class="fa fa-certificate"></i>
                                 <div>
-                                    <h6 class="mb-1" style="font-weight: 700; color: var(--forest);">ترخيص رسمي معتمد</h6>
-                                    <small class="text-muted" style="font-size: 13px; line-height: 1.4; display: block;">المركز الوطني للقطاع غير الربحي (رقم 1937)</small>
+                                    <h6 class="mb-1" style="font-weight: 700; color: var(--forest);">{{ page.license_1_title|default:"ترخيص رسمي معتمد" }}</h6>
+                                    <small class="text-muted" style="font-size: 13px; line-height: 1.4; display: block;">{{ page.license_1_subtitle|default:"المركز الوطني للقطاع غير الربحي (رقم 1937)" }}</small>
                                 </div>
                             </div>
                         </div>
@@ -522,8 +528,8 @@
                             <div class="license-badge">
                                 <i class="fa fa-landmark"></i>
                                 <div>
-                                    <h6 class="mb-1" style="font-weight: 700; color: var(--forest);">إشراف فني متخصص</h6>
-                                    <small class="text-muted" style="font-size: 13px; line-height: 1.4; display: block;">تحت إشراف الهيئة العامة للأوقاف</small>
+                                    <h6 class="mb-1" style="font-weight: 700; color: var(--forest);">{{ page.license_2_title|default:"إشراف فني متخصص" }}</h6>
+                                    <small class="text-muted" style="font-size: 13px; line-height: 1.4; display: block;">{{ page.license_2_subtitle|default:"تحت إشراف الهيئة العامة للأوقاف" }}</small>
                                 </div>
                             </div>
                         </div>
@@ -531,7 +537,7 @@
 
                     <div class="pt-4">
                         <a href="#vision-mission" class="btn btn-gold-pill py-3 px-4 ms-2">استكشف رؤيتنا ورسالتنا</a>
-                        <a href="/#contact" class="btn btn-forest-outline-pill py-3 px-4">تواصل معنا</a>
+                        <a href="/contact/" class="btn btn-forest-outline-pill py-3 px-4">تواصل معنا</a>
                     </div>
                 </div>
             </div>
@@ -561,19 +567,19 @@
                     <div class="panel-watermark-zakhrafa"></div>
                     <div class="position-relative" style="z-index: 2;">
                         <div class="d-flex align-items-center mb-3">
-                            <span class="panel-kicker">بوصلة المستقبل</span>
+                            <span class="panel-kicker">{{ page.vision_kicker|default:"بوصلة المستقبل" }}</span>
                             <div class="panel-kicker-line"></div>
                         </div>
                         <h3 class="text-white display-6 mb-3 panel-heading">
-                            رؤيتنا
+                            {{ page.vision_title|default:"رؤيتنا" }}
                         </h3>
                         <div class="quote-symbol">❝</div>
                         <p class="vision-statement-text">
-                            الريادة والتميز في تأسيس وتطوير واستدامة الأوقاف، لتكون رافداً تنموياً رائداً يسهم في نهضة المجتمع واستقرار أصوله الوقفية.
+                            {{ page.vision_text|default:"الريادة والتميز في تأسيس وتطوير واستدامة الأوقاف، لتكون رافداً تنموياً رائداً يسهم في نهضة المجتمع واستقرار أصوله الوقفية." }}
                         </p>
                         <div class="d-flex align-items-center mt-4 pt-3 border-top border-white-10">
                             <i class="fa fa-compass text-primary ms-3 fs-5"></i>
-                            <span class="text-light-50 small">مرتكز استراتيجي لصناعة الأثر الوقفي المستدام عبر الأجيال</span>
+                            <span class="text-light-50 small">{{ page.vision_footer|default:"مرتكز استراتيجي لصناعة الأثر الوقفي المستدام عبر الأجيال" }}</span>
                         </div>
                     </div>
                 </div>
@@ -584,19 +590,19 @@
                 <div class="mission-feature-panel h-100 d-flex flex-column justify-content-between">
                     <div>
                         <div class="d-flex align-items-center mb-3">
-                            <span class="panel-kicker-forest">رسالتنا التنموية</span>
+                            <span class="panel-kicker-forest">{{ page.mission_kicker|default:"رسالتنا التنموية" }}</span>
                             <div class="panel-kicker-line-gold"></div>
                         </div>
                         <h3 class="display-6 mb-3 panel-heading text-forest">
-                            رسالتنا
+                            {{ page.mission_title|default:"رسالتنا" }}
                         </h3>
                         <p class="mission-statement-text">
-                            تقديم خدمات استشارية ومؤسسية نوعية للمانحين والواقفين والنظار، وتمكينهم من صياغة وتأسيس وإدارة كيانات وقفية نموذجية تحقق أعلى درجات الأثر والاستدامة، بالاعتماد على كفاءات وطنية متخصصة وحوكمة دقيقة.
+                            {{ page.mission_text|default:"تقديم خدمات استشارية ومؤسسية نوعية للمانحين والواقفين والنظار، وتمكينهم من صياغة وتأسيس وإدارة كيانات وقفية نموذجية تحقق أعلى درجات الأثر والاستدامة." }}
                         </p>
                     </div>
                     <div class="mission-footer-badge">
                         <i class="fa fa-check-circle text-primary ms-2"></i>
-                        <span>تمكين مؤسسي متكامل للواقفين والنظار</span>
+                        <span>{{ page.mission_footer|default:"تمكين مؤسسي متكامل للواقفين والنظار" }}</span>
                     </div>
                 </div>
             </div>
@@ -620,60 +626,19 @@
         </div>
 
         <div class="row g-4 justify-content-center">
-            <!-- Value 1 -->
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                <div class="value-item-card h-100">
-                    <div class="value-icon-wrapper">
-                        <i class="fa fa-balance-scale"></i>
+            {% if values %}
+                {% for val in values %}
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="value-item-card h-100">
+                        <div class="value-icon-wrapper">
+                            <i class="fa {{ val.icon|default:'fa-balance-scale' }}"></i>
+                        </div>
+                        <h5 class="value-title">{{ val.title }}</h5>
+                        <p class="value-desc">{{ val.description }}</p>
                     </div>
-                    <h5 class="value-title">الأمانة والشفافية</h5>
-                    <p class="value-desc">الالتزام الصارم بأعلى معايير الإفصاح والنزاهة والمسؤولية في كافة الإجراءات والخدمات الوقفية.</p>
                 </div>
-            </div>
-
-            <!-- Value 2 -->
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
-                <div class="value-item-card h-100">
-                    <div class="value-icon-wrapper">
-                        <i class="fa fa-seedling"></i>
-                    </div>
-                    <h5 class="value-title">الاستدامة والنمو</h5>
-                    <p class="value-desc">بناء أوقاف نموذجية ذات أصول متجددة ومستقرة تحقق أثراً تنموياً دائماً يعيش للأجيال القادمة.</p>
-                </div>
-            </div>
-
-            <!-- Value 3 -->
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                <div class="value-item-card h-100">
-                    <div class="value-icon-wrapper">
-                        <i class="fa fa-award"></i>
-                    </div>
-                    <h5 class="value-title">التميز المؤسسي</h5>
-                    <p class="value-desc">تبني أفضل الممارسات الإدارية والحوكمة الرشيدة المتوافقة مع أحدث المعايير الوطنية المعتمدة.</p>
-                </div>
-            </div>
-
-            <!-- Value 4 -->
-            <div class="col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
-                <div class="value-item-card h-100">
-                    <div class="value-icon-wrapper">
-                        <i class="fa fa-hand-holding-heart"></i>
-                    </div>
-                    <h5 class="value-title">الأثر المجتمعي</h5>
-                    <p class="value-desc">توجيه الجهود والعوائد نحو تلبية الاحتياجات التنموية الأكثر نفعاً وإحداث فارق ملموس في حياة المستفيدين.</p>
-                </div>
-            </div>
-
-            <!-- Value 5 -->
-            <div class="col-lg-6 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
-                <div class="value-item-card h-100">
-                    <div class="value-icon-wrapper">
-                        <i class="fa fa-hands-helping"></i>
-                    </div>
-                    <h5 class="value-title">الشراكة والتكامل</h5>
-                    <p class="value-desc">التعاون الفعّال مع المنظومة الوقفية والجهات التنظيمية والمانحين لتوحيد الرؤى وبناء أثر نوعي متكامل.</p>
-                </div>
-            </div>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 </div>
@@ -694,45 +659,18 @@
         </div>
 
         <div class="row g-4">
-            <!-- Goal 01 -->
-            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                <div class="goal-milestone-card h-100">
-                    <div class="goal-serial-number">01</div>
-                    <div class="goal-header-line"></div>
-                    <h5 class="goal-title">ترسيخ ثقافة الوقف</h5>
-                    <p class="goal-text">نشر الوعي بمفهوم الوقف التنموي المعاصر، وتشجيع الأفراد والمؤسسات والشركات على المبادرة بإنشاء الأوقاف.</p>
+            {% if goals %}
+                {% for goal in goals %}
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="goal-milestone-card h-100">
+                        <div class="goal-serial-number">{{ goal.serial_number }}</div>
+                        <div class="goal-header-line"></div>
+                        <h5 class="goal-title">{{ goal.title }}</h5>
+                        <p class="goal-text">{{ goal.text }}</p>
+                    </div>
                 </div>
-            </div>
-
-            <!-- Goal 02 -->
-            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
-                <div class="goal-milestone-card h-100">
-                    <div class="goal-serial-number">02</div>
-                    <div class="goal-header-line"></div>
-                    <h5 class="goal-title">تأسيس كيانات نموذجية</h5>
-                    <p class="goal-text">صياغة اللوائح وبناء هياكل وقفية متوافقة مع المتطلبات الشرعية والأنظمة واللوائح الرسمية المعتمدة.</p>
-                </div>
-            </div>
-
-            <!-- Goal 03 -->
-            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                <div class="goal-milestone-card h-100">
-                    <div class="goal-serial-number">03</div>
-                    <div class="goal-header-line"></div>
-                    <h5 class="goal-title">تأهيل وتمكين النظار</h5>
-                    <p class="goal-text">تقديم برامج استشارية وتدريبية متخصصة لتطوير كفاءات مجالس النظارة وفرق الإدارة الوقفية ورفع جاهزيتهم.</p>
-                </div>
-            </div>
-
-            <!-- Goal 04 -->
-            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
-                <div class="goal-milestone-card h-100">
-                    <div class="goal-serial-number">04</div>
-                    <div class="goal-header-line"></div>
-                    <h5 class="goal-title">الحوكمة والاستدامة</h5>
-                    <p class="goal-text">تطبيق أعلى مؤشرات الامتثال المالي والإداري ورفع كفاءة الإنفاق الوقفي لتعظيم العائد واستدامة الأصول.</p>
-                </div>
-            </div>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 </div>
@@ -745,12 +683,12 @@
         <div class="vision-banner text-light wow fadeInUp" data-wow-delay="0.2s">
             <div class="row align-items-center g-4">
                 <div class="col-lg-8">
-                    <span class="badge rounded-pill bg-primary px-3 py-2 mb-3 text-white fw-bold" style="font-size: 14px;">مستهدفات وطنية</span>
+                    <span class="badge rounded-pill bg-primary px-3 py-2 mb-3 text-white fw-bold" style="font-size: 14px;">{{ page.v2030_badge|default:"مستهدفات وطنية" }}</span>
                     <h3 class="text-white mb-3" style="font-family: var(--font-display); font-weight: 700;">
-                        مواءمة استراتيجية مع رؤية المملكة 2030
+                        {{ page.v2030_heading|default:"مواءمة استراتيجية مع رؤية المملكة 2030" }}
                     </h3>
                     <p class="fs-5 mb-0" style="line-height: 1.8; color: rgba(255, 255, 255, 0.9);">
-                        تضع جمعية رافد مستهدفات رؤية المملكة 2030 في صميم خططها، مساهمةً في رفع مساهمة القطاع غير الربحي في الناتج المحلي الإجمالي من 1% إلى 5%، وتعزيز الأثر الاقتصادي والاجتماعي للأوقاف لضمان استمرار نفعها لأجيال قادمة.
+                        {{ page.v2030_text|default:"تضع جمعية رافد مستهدفات رؤية المملكة 2030 في صميم خططها، مساهمةً في رفع مساهمة القطاع غير الربحي في الناتج المحلي الإجمالي." }}
                     </p>
                 </div>
                 <div class="col-lg-4 text-center">
@@ -775,42 +713,19 @@
         </div>
 
         <div class="row g-4 text-center">
-            <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.1s">
-                <div class="stat-card-item h-100">
-                    <div class="stat-card-icon">
-                        <i class="fa fa-certificate"></i>
+            {% if stats %}
+                {% for st in stats %}
+                <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.1s">
+                    <div class="stat-card-item h-100">
+                        <div class="stat-card-icon">
+                            <i class="fa {{ st.icon|default:'fa-certificate' }}"></i>
+                        </div>
+                        <div class="stat-card-num" data-toggle="counter-up">{{ st.number }}</div>
+                        <p class="stat-card-label">{{ st.label }}</p>
                     </div>
-                    <div class="stat-card-num" data-toggle="counter-up">10</div>
-                    <p class="stat-card-label">سنوات خبرة تراكمية</p>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.3s">
-                <div class="stat-card-item h-100">
-                    <div class="stat-card-icon">
-                        <i class="fa fa-building"></i>
-                    </div>
-                    <div class="stat-card-num" data-toggle="counter-up">50</div>
-                    <p class="stat-card-label">كيان ومشروع وقفي</p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.5s">
-                <div class="stat-card-item h-100">
-                    <div class="stat-card-icon">
-                        <i class="fa fa-users"></i>
-                    </div>
-                    <div class="stat-card-num" data-toggle="counter-up">10000</div>
-                    <p class="stat-card-label">مستفيد ومستفيدة</p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 wow fadeIn" data-wow-delay="0.7s">
-                <div class="stat-card-item h-100">
-                    <div class="stat-card-icon">
-                        <i class="fa fa-shield-alt"></i>
-                    </div>
-                    <div class="stat-card-num">100%</div>
-                    <p class="stat-card-label">حوكمة وامتثال</p>
-                </div>
-            </div>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 </div>
@@ -821,12 +736,12 @@
 <div class="container-fluid py-5 bg-dark text-light mt-5" style="border-top: 2px solid var(--primary);">
     <div class="container text-center py-4">
         <h2 class="display-6 text-white mb-3" style="font-family: var(--font-display); font-weight: 700;">
-            هل ترغب في تأسيس أو تطوير وقفك؟
+            {{ page.cta_heading|default:"هل ترغب في تأسيس أو تطوير وقفك؟" }}
         </h2>
         <p class="fs-5 text-light mb-4 mx-auto" style="max-width: 650px; opacity: 0.9;">
-            فريق مستشاري رافد جاهز لتقديم المشورة الشرعية والنظامية والإدارية لضمان استدامة أوقافكم ونمائها.
+            {{ page.cta_text|default:"فريق مستشاري رافد جاهز لتقديم المشورة الشرعية والنظامية والإدارية لضمان استدامة أوقافكم ونمائها." }}
         </p>
-        <a href="/#contact" class="btn btn-gold-pill py-3 px-5 fs-5">تواصل مع مستشارينا الآن</a>
+        <a href="{{ page.cta_btn_url|default:'/contact/' }}" class="btn btn-gold-pill py-3 px-5 fs-5">{{ page.cta_btn_text|default:"تواصل مع مستشارينا الآن" }}</a>
     </div>
 </div>
 <!-- CTA Section End -->

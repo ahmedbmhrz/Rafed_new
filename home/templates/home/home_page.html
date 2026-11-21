@@ -93,7 +93,7 @@
                           <div class="tab-content" id="pills-tabContent">
                             <!-- About -->
                             <div class="tab-pane fade show active" id="pills-about" role="tabpanel">
-                              <p class="fs-5 text-dark mb-4" style="line-height: 1.8;">جمعية تعنى بتأسيس وتطوير واستدامة الكيانات الوقفية وتقديم خدمات متنوعة للراغبين في الوقف ومنسوبي الأوقاف. مرخصة إدارياً من المركز الوطني لتنمية القطاع غير الربحي رقم ١٩٣٧ وبإشراف من الهيئة العامة للأوقاف.</p>
+                              <p class="fs-5 text-dark mb-4" style="line-height: 1.8;">{{ page.about_tab_text|default:"جمعية تعنى بتأسيس وتطوير واستدامة الكيانات الوقفية وتقديم خدمات متنوعة للراغبين في الوقف ومنسوبي الأوقاف. مرخصة إدارياً من المركز الوطني لتنمية القطاع غير الربحي رقم ١٩٣٧ وبإشراف من الهيئة العامة للأوقاف." }}</p>
                             </div>
                             
                             <!-- Vision & Mission -->
@@ -103,8 +103,8 @@
                                       <div class="d-flex align-items-start p-4 bg-light rounded shadow-sm border" style="background-color: #ffffff !important;">
                                           <i class="fa fa-eye fa-2x text-primary me-3 ms-3 mt-1"></i>
                                           <div>
-                                              <h5 class="mb-2">الرؤية</h5>
-                                              <p class="mb-0">أوقاف متنامية ذات أثر مجتمعي بأدوات مبتكرة.</p>
+                                              <h5 class="mb-2">{{ page.vision_title|default:"الرؤية" }}</h5>
+                                              <p class="mb-0">{{ page.vision_text|default:"أوقاف متنامية ذات أثر مجتمعي بأدوات مبتكرة." }}</p>
                                           </div>
                                       </div>
                                   </div>
@@ -112,8 +112,8 @@
                                       <div class="d-flex align-items-start p-4 bg-light rounded shadow-sm border" style="background-color: #ffffff !important;">
                                           <i class="fa fa-bullseye fa-2x text-primary me-3 ms-3 mt-1"></i>
                                           <div>
-                                              <h5 class="mb-2">الرسالة</h5>
-                                              <p class="mb-0">حلول إبداعية يقدمها خبراء متخصصون لتأسيس وتمكين الأوقاف سعياً لاستدامتها وتعظيم أثرها بمنطقة مكة المكرمة.</p>
+                                              <h5 class="mb-2">{{ page.mission_title|default:"الرسالة" }}</h5>
+                                              <p class="mb-0">{{ page.mission_text|default:"حلول إبداعية يقدمها خبراء متخصصون لتأسيس وتمكين الأوقاف سعياً لاستدامتها وتعظيم أثرها بمنطقة مكة المكرمة." }}</p>
                                           </div>
                                       </div>
                                   </div>
@@ -368,31 +368,23 @@
                 <!-- Left Side: Carousel (col-lg-9) -->
                 <div class="col-lg-9 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="owl-carousel partner-carousel px-4">
-                        <!-- Partner 1 -->
-                        <div class="partner-item text-center">
-                            <img class="img-fluid mx-auto mb-3" src="{% static 'img/rafed_image/partners/675acf3938b1f.png' %}" alt="" style="height: 90px; width: auto; object-fit: contain;">
-                            <h6 style="color: var(--forest); font-size: 14px; font-weight: bold; white-space: nowrap;">الهيئة العامة للأوقاف</h6>
-                        </div>
-                        <!-- Partner 2 -->
-                        <div class="partner-item text-center">
-                            <img class="img-fluid mx-auto mb-3" src="{% static 'img/rafed_image/partners/675acf7988383.png' %}" alt="" style="height: 90px; width: auto; object-fit: contain;">
-                            <h6 style="color: var(--forest); font-size: 14px; font-weight: bold; white-space: nowrap;">جمعية الشقائق</h6>
-                        </div>
-                        <!-- Partner 3 -->
-                        <div class="partner-item text-center">
-                            <img class="img-fluid mx-auto mb-3" src="{% static 'img/rafed_image/partners/675acfa128973.png' %}" alt="" style="height: 90px; width: auto; object-fit: contain;">
-                            <h6 style="color: var(--forest); font-size: 14px; font-weight: bold; white-space: nowrap;">شركة التحول التقني</h6>
-                        </div>
-                        <!-- Partner 4 -->
-                        <div class="partner-item text-center">
-                            <img class="img-fluid mx-auto mb-3" src="{% static 'img/rafed_image/partners/675acfc2140c4.png' %}" alt="" style="height: 90px; width: auto; object-fit: contain;">
-                            <h6 style="color: var(--forest); font-size: 14px; font-weight: bold; white-space: nowrap;">السبيعي الخيرية</h6>
-                        </div>
-                        <!-- Partner 5 -->
-                        <div class="partner-item text-center">
-                            <img class="img-fluid mx-auto mb-3" src="{% static 'img/rafed_image/partners/675acfd1d1b20.png' %}" alt="" style="height: 90px; width: auto; object-fit: contain;">
-                            <h6 style="color: var(--forest); font-size: 14px; font-weight: bold; white-space: nowrap;">مؤسسة سليمان الراجحي</h6>
-                        </div>
+                        {% if partners %}
+                            {% for part in partners %}
+                            <div class="partner-item text-center">
+                                {% if part.logo %}
+                                    <img class="img-fluid mx-auto mb-3" src="{{ part.logo.url }}" alt="{{ part.name }}" style="height: 90px; width: auto; object-fit: contain;">
+                                {% elif part.logo_static_fallback %}
+                                    <img class="img-fluid mx-auto mb-3" src="{% static part.logo_static_fallback %}" alt="{{ part.name }}" style="height: 90px; width: auto; object-fit: contain;">
+                                {% endif %}
+                                <h6 style="color: var(--forest); font-size: 14px; font-weight: bold; white-space: nowrap;">{{ part.name }}</h6>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="partner-item text-center">
+                                <img class="img-fluid mx-auto mb-3" src="{% static 'img/rafed_image/partners/675acf3938b1f.png' %}" alt="" style="height: 90px; width: auto; object-fit: contain;">
+                                <h6 style="color: var(--forest); font-size: 14px; font-weight: bold; white-space: nowrap;">الهيئة العامة للأوقاف</h6>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
 
