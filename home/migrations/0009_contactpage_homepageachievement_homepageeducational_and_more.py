@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='ContactPage',
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to=settings.WAGTAIL_PAGE_MODEL)),
+                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to=getattr(settings, 'WAGTAIL_PAGE_MODEL', 'wagtailcore.Page'))),
                 ('subheading', models.CharField(default='قنوات الاتصال المباشر', max_length=100, verbose_name='العنوان الفرعي')),
                 ('heading', models.CharField(default='نسعد بخدمتكم وتلقي استفساراتكم', max_length=200, verbose_name='العنوان الرئيسي')),
                 ('phone', models.CharField(default='0552002057', max_length=50, verbose_name='رقم الهاتف الموحد')),
@@ -108,7 +108,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='ProjectsPage',
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to=settings.WAGTAIL_PAGE_MODEL)),
+                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to=getattr(settings, 'WAGTAIL_PAGE_MODEL', 'wagtailcore.Page'))),
                 ('subheading', models.CharField(default='مشاريعنا الوقفية', max_length=100, verbose_name='العنوان الفرعي')),
                 ('heading', models.CharField(default='مشاريع ومبادرات جمعية رافد للأوقاف', max_length=200, verbose_name='العنوان الرئيسي')),
                 ('intro_text', models.TextField(default='نعمل على تطوير وتنفيذ حزمة من المشاريع والمبادرات الوقفية الاستراتيجية التي تعزز الاستدامة المالية وتعمق الأثر المجتمعي.', verbose_name='مقدمة الصفحة')),
@@ -142,7 +142,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='TeamPage',
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to=settings.WAGTAIL_PAGE_MODEL)),
+                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to=getattr(settings, 'WAGTAIL_PAGE_MODEL', 'wagtailcore.Page'))),
                 ('subheading', models.CharField(default='كفاءات رافد', max_length=100, verbose_name='العنوان الفرعي')),
                 ('heading', models.CharField(default='الهيكل القيادي والاستشاري للجمعية', max_length=200, verbose_name='العنوان الرئيسي')),
             ],
@@ -175,7 +175,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='TestimonialsPage',
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to=settings.WAGTAIL_PAGE_MODEL)),
+                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to=getattr(settings, 'WAGTAIL_PAGE_MODEL', 'wagtailcore.Page'))),
                 ('subheading', models.CharField(default='ثقة وأثر مستدام', max_length=100, verbose_name='العنوان الفرعي')),
                 ('heading', models.CharField(default='تزكيات العلماء والخبراء وشركاء الأثر', max_length=200, verbose_name='العنوان الرئيسي')),
             ],
@@ -206,7 +206,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='VideosPage',
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to=settings.WAGTAIL_PAGE_MODEL)),
+                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to=getattr(settings, 'WAGTAIL_PAGE_MODEL', 'wagtailcore.Page'))),
                 ('subheading', models.CharField(default='المكتبة المرئية', max_length=100, verbose_name='العنوان الفرعي')),
                 ('heading', models.CharField(default='شاهد وتعرف على وثائقيات ومبادرات رافد للأوقاف', max_length=200, verbose_name='العنوان الرئيسي')),
             ],

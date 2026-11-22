@@ -145,6 +145,60 @@ class HomePagePartner(Orderable):
         verbose_name_plural = "شركاء النجاح"
 
 
+class HomePageTestimonial(Orderable):
+    page = ParentalKey('HomePage', on_delete=models.CASCADE, related_name='testimonials')
+    author_name = models.CharField(max_length=150, verbose_name="صاحب التزكية / الاسم")
+    author_role = models.CharField(max_length=200, verbose_name="الصفة أو المنصب")
+    quote = models.TextField(verbose_name="نص التزكية أو الشهادة")
+    image = models.ImageField(upload_to="testimonials/", blank=True, null=True, verbose_name="الصورة الشخصية")
+    image_static_fallback = models.CharField(max_length=255, blank=True, default="", verbose_name="مسار صورة بديلة من static")
+    is_active = models.BooleanField(default=True, verbose_name="ظاهر في الصفحة الرئيسية")
+
+    panels = [
+        FieldPanel('author_name'),
+        FieldPanel('author_role'),
+        FieldPanel('quote'),
+        FieldPanel('image'),
+        FieldPanel('image_static_fallback'),
+        FieldPanel('is_active'),
+    ]
+
+    @property
+    def author_title(self):
+        return self.author_role
+
+    class Meta:
+        verbose_name = "تزكية في الصفحة الرئيسية"
+        verbose_name_plural = "تزكيات الصفحة الرئيسية (قالوا عنا)"
+
+
+class HomePageSlide(Orderable):
+    page = ParentalKey('HomePage', on_delete=models.CASCADE, related_name='hero_slides')
+    image = models.ImageField(upload_to="hero/", blank=True, null=True, verbose_name="صورة الشريحة (Slider Image)")
+    image_static_fallback = models.CharField(max_length=255, blank=True, default="", verbose_name="مسار صورة بديلة من static")
+    subheading = models.CharField(max_length=150, blank=True, default="جمعية رافد للأوقاف", verbose_name="العنوان التمهيدي / الفرعي")
+    heading = models.CharField(max_length=200, blank=True, default="نؤسس ونطور الأوقاف بتميز", verbose_name="العنوان الرئيسي")
+    text = models.TextField(blank=True, default="نسعى لتحقيق الاستدامة وتنمية الكيانات الوقفية وفق أفضل الممارسات المؤسسية.", verbose_name="النص التوضيحي")
+    button_text = models.CharField(max_length=100, blank=True, default="اقرأ المزيد", verbose_name="نص الزر")
+    button_url = models.CharField(max_length=255, blank=True, default="/about/", verbose_name="رابط الزر")
+    is_active = models.BooleanField(default=True, verbose_name="شريحة مفعلة")
+
+    panels = [
+        FieldPanel('image'),
+        FieldPanel('image_static_fallback'),
+        FieldPanel('subheading'),
+        FieldPanel('heading'),
+        FieldPanel('text'),
+        FieldPanel('button_text'),
+        FieldPanel('button_url'),
+        FieldPanel('is_active'),
+    ]
+
+    class Meta:
+        verbose_name = "شريحة في السلايدر الرئيسي"
+        verbose_name_plural = "شرائح السلايدر الرئيسي (Hero Slider)"
+
+
 class HomePage(Page):
     hero_subheading = models.CharField(max_length=100, default="جمعية رافد للأوقاف", verbose_name="العنوان الفرعي")
     hero_heading = models.CharField(max_length=100, default="نؤسس ونطور الأوقاف", verbose_name="العنوان الرئيسي")
@@ -161,12 +215,18 @@ class HomePage(Page):
     mission_title = models.CharField(max_length=100, default="رسالتنا", verbose_name="عنوان الرسالة")
     mission_text = models.TextField(default="حلول إبداعية يقدمها خبراء متخصصون لتأسيس وتمكين الأوقاف سعياً لاستدامتها وتعظيم أثرها بمنطقة مكة المكرمة.", verbose_name="نص الرسالة")
 
+    # قالوا عنا (Testimonials on Homepage)
+    testimonials_eyebrow = models.CharField(max_length=100, default="قالوا عنا", verbose_name="العنوان التمهيدي لقسم قالوا عنا")
+    testimonials_heading = models.CharField(max_length=150, default="سعداء دائماً بخدمتكم", verbose_name="العنوان الرئيسي لقسم قالوا عنا")
+    testimonials_text = models.CharField(max_length=255, default="كلمات نعتز بها من أصحاب الفضيلة والخبراء والشركاء في مسيرة الأوقاف", verbose_name="النص التوضيحي لقسم قالوا عنا")
+
     content_panels = Page.content_panels + [
+        InlinePanel('hero_slides', heading="🖼️ شرائح السلايدر الرئيسي (Hero Slider Images & Content)", label="شريحة"),
         MultiFieldPanel([
             FieldPanel('hero_subheading'),
             FieldPanel('hero_heading'),
             FieldPanel('hero_text'),
-        ], heading="القسم الرئيسي (Hero)"),
+        ], heading="القسم الرئيسي - نصوص احتياطية (Hero Fallback)"),
         MultiFieldPanel([
             FieldPanel('about_tab_text'),
             FieldPanel('vision_title'),
@@ -179,10 +239,17 @@ class HomePage(Page):
         InlinePanel('educational_items', heading="🎨 تصاميم تثقيفية عن الأوقاف", label="تصميم تثقيفي"),
         InlinePanel('video_items', heading="🎬 ألبوم الفيديو في الصفحة الرئيسية", label="فيديو"),
         InlinePanel('partners', heading="🤝 شركاؤنا في النجاح", label="شريك نجاح"),
+        MultiFieldPanel([
+            FieldPanel('testimonials_eyebrow'),
+            FieldPanel('testimonials_heading'),
+            FieldPanel('testimonials_text'),
+        ], heading="💬 نصوص ترويسة قسم قالوا عنا"),
+        InlinePanel('testimonials', heading="💬 تزكيات قسم قالوا عنا في الرئيسية", label="تزكية"),
     ]
 
     def get_context(self, request):
         context = super().get_context(request)
+        context['hero_slides'] = self.hero_slides.filter(is_active=True)
         context['achievements'] = self.achievements.filter(is_active=True)
         context['news_items'] = self.news_items.filter(is_active=True)
         context['educational_items'] = self.educational_items.filter(is_active=True)
@@ -193,8 +260,12 @@ class HomePage(Page):
         proj_page = ProjectsPage.objects.first()
         context['projects'] = proj_page.projects.filter(is_featured=True) if proj_page else []
 
-        testi_page = TestimonialsPage.objects.first()
-        context['testimonials'] = testi_page.testimonials.filter(is_featured=True) if testi_page else []
+        home_testimonials = self.testimonials.filter(is_active=True)
+        if home_testimonials.exists():
+            context['testimonials'] = home_testimonials
+        else:
+            testi_page = TestimonialsPage.objects.first()
+            context['testimonials'] = testi_page.testimonials.filter(is_featured=True) if testi_page else []
 
         contact_page = ContactPage.objects.first()
         context['site_settings'] = contact_page or SiteContactSettings.get_settings()
@@ -651,24 +722,38 @@ class TeamPage(Page):
 # ==============================================================================
 
 class TestimonialsPageItem(Orderable):
+    CATEGORY_CHOICES = [
+        ('scholars', 'العلماء والأكاديميون'),
+        ('nazir', 'النظار والواقفون'),
+        ('partners', 'الجهات الشريكة'),
+    ]
+
     page = ParentalKey('TestimonialsPage', on_delete=models.CASCADE, related_name='testimonials')
     author_name = models.CharField(max_length=150, verbose_name="صاحب التزكية / الاسم")
     author_title = models.CharField(max_length=150, verbose_name="اللقب أو الصفة (مثل: رئيس محكمة، أستاذ فقه، خبير وقفي)")
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='scholars', verbose_name="تصنيف التزكية")
     organization = models.CharField(max_length=200, blank=True, default="", verbose_name="الجهة أو المؤسسة (اختياري)")
     quote = models.TextField(verbose_name="نص التزكية أو الشهادة")
     image = models.ImageField(upload_to="testimonials/", blank=True, null=True, verbose_name="الصورة الشخصية (اختياري)")
+    image_static_fallback = models.CharField(max_length=255, blank=True, default="", verbose_name="مسار صورة بديلة من static")
     rating = models.PositiveIntegerField(default=5, verbose_name="التقييم من 5")
     is_featured = models.BooleanField(default=True, verbose_name="ظاهر في الصفحة")
 
     panels = [
         FieldPanel('author_name'),
         FieldPanel('author_title'),
+        FieldPanel('category'),
         FieldPanel('organization'),
         FieldPanel('quote'),
         FieldPanel('image'),
+        FieldPanel('image_static_fallback'),
         FieldPanel('rating'),
         FieldPanel('is_featured'),
     ]
+
+    @property
+    def author_role(self):
+        return self.author_title
 
     class Meta:
         verbose_name = "تزكية أو رأي"

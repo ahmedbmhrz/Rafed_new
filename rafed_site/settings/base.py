@@ -166,4 +166,7 @@ WAGTAILSEARCH_BACKENDS = {
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 WAGTAILADMIN_BASE_URL = "http://example.com"
 
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+WAGTAIL_PAGE_MODEL = "wagtailcore.Page"
+
 SILENCED_SYSTEM_CHECKS = ['fields.E180']

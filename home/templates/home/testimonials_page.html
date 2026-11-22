@@ -363,16 +363,16 @@
         <!-- Filter Nav Tabs -->
         <div class="testimonials-filter-nav wow fadeInUp" data-wow-delay="0.15s">
             <button type="button" class="filter-btn active" data-filter="all">
-                الكل <span class="badge-count">6</span>
+                الكل <span class="badge-count" id="count-all">0</span>
             </button>
             <button type="button" class="filter-btn" data-filter="scholars">
-                العلماء والأكاديميون <span class="badge-count">4</span>
+                العلماء والأكاديميون <span class="badge-count" id="count-scholars">0</span>
             </button>
             <button type="button" class="filter-btn" data-filter="nazir">
-                النظار والواقفون <span class="badge-count">1</span>
+                النظار والواقفون <span class="badge-count" id="count-nazir">0</span>
             </button>
             <button type="button" class="filter-btn" data-filter="partners">
-                الجهات الشريكة <span class="badge-count">1</span>
+                الجهات الشريكة <span class="badge-count" id="count-partners">0</span>
             </button>
         </div>
 
@@ -380,14 +380,26 @@
         <div class="row g-4" id="testiItemsContainer">
             {% if testimonials %}
                 {% for item in testimonials %}
-                <div class="col-lg-6 testi-item-col" data-category="scholars">
+                <div class="col-lg-6 testi-item-col" data-category="{{ item.category|default:'scholars' }}">
                     <div class="testimonial-box-card wow fadeInUp" data-wow-delay="0.1s">
                         <div class="quote-watermark"><i class="fa fa-quote-right"></i></div>
                         <div>
                             <div class="testi-header-info">
-                                <div class="testi-person-placeholder">
-                                    <i class="fa fa-user-tie"></i>
-                                </div>
+                                {% if item.image %}
+                                    <img src="{{ item.image.url }}" alt="{{ item.author_name }}" class="testi-person-img">
+                                {% elif item.image_static_fallback %}
+                                    <img src="{% static item.image_static_fallback %}" alt="{{ item.author_name }}" class="testi-person-img">
+                                {% else %}
+                                    <div class="testi-person-placeholder">
+                                        {% if item.category == 'nazir' %}
+                                            <i class="fa fa-landmark"></i>
+                                        {% elif item.category == 'partners' %}
+                                            <i class="fa fa-handshake"></i>
+                                        {% else %}
+                                            <i class="fa fa-user-tie"></i>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
                                 <div>
                                     <h4 class="testi-person-name">{{ item.author_name }}</h4>
                                     <div class="testi-person-role">{{ item.author_title }}</div>
@@ -401,152 +413,14 @@
                             </p>
                         </div>
                         <div class="testi-card-footer">
-                            <span class="testi-stars">★★★★★ تزكية معتمدة</span>
+                            <span class="testi-stars">{% for i in "12345" %}{% if forloop.counter <= item.rating %}★{% else %}☆{% endif %}{% endfor %} تزكية معتمدة</span>
                             <span>{{ item.organization|default:'تزكية رسمية' }}</span>
                         </div>
                     </div>
                 </div>
                 {% endfor %}
             {% endif %}
-        </div>
-    </div>
-</div>
-
-            <!-- Testimonial 02: د. أنس بن عبدالوهاب -->
-            <div class="col-lg-6 testi-item-col" data-category="scholars">
-                <div class="testimonial-box-card wow fadeInUp" data-wow-delay="0.2s">
-                    <div class="quote-watermark"><i class="fa fa-quote-right"></i></div>
-                    <div>
-                        <div class="testi-header-info">
-                            <img src="{% static 'img/rafed_image/people/68ecf45e8f69f.png' %}" alt="د. أنس بن عبدالوهاب" class="testi-person-img">
-                            <div>
-                                <h4 class="testi-person-name">د. أنس بن عبدالوهاب</h4>
-                                <div class="testi-person-role">أكاديمي وباحث متخصص في شؤون الأوقاف</div>
-                                <span class="testi-tag-badge">ملتقى ديوانية رافد بمكة</span>
-                            </div>
-                        </div>
-
-                        <p class="testi-quote-text">
-                            "الحمد لله رب العالمين، والصلاة والسلام على أشرف الأنبياء والمرسلين نبينا محمد وعلى آله وصحبه أجمعين، لقد سررت هذا المساء بلقاء ثلة من الفضلاء والمهتمين بالعمل الوقفي، في ديوانية رافد للأوقاف بمكة المكرمة والتي كان لها دور بارز في نشر ثقافة الوقف والتوعية بأهميته في المجتمع، وتقديم رؤى عملية ترتقي بإدارة الأصول الوقفية وتنميتها."
-                        </p>
-                    </div>
-
-                    <div class="testi-card-footer">
-                        <span class="testi-stars">★★★★★ تزكية معتمدة</span>
-                        <span>مكة المكرمة</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Testimonial 03: الشيخ صالح بن عواد المغامسي -->
-            <div class="col-lg-6 testi-item-col" data-category="scholars">
-                <div class="testimonial-box-card wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="quote-watermark"><i class="fa fa-quote-right"></i></div>
-                    <div>
-                        <div class="testi-header-info">
-                            <img src="{% static 'img/rafed_image/people/68ecf49e3c05a.png' %}" alt="الشيخ صالح بن عواد المغامسي" class="testi-person-img">
-                            <div>
-                                <h4 class="testi-person-name">الشيخ صالح بن عواد المغامسي</h4>
-                                <div class="testi-person-role">إمام وخطيب مسجد قباء سابقاً</div>
-                                <span class="testi-tag-badge">تزكية شرعية واجتماعية</span>
-                            </div>
-                        </div>
-
-                        <p class="testi-quote-text">
-                            "الحمد لله الذي بنعمته تتم الصالحات، نشكر الإخوة في جمعية رافد على جهودهم المباركة في إحياء سنة الوقف وتنمية الموارد المالية للمشاريع الخيرية، ونسأل الله أن يبارك في جهودهم ويجعلها في ميزان حسناتهم يوم القيامة، لما لمسناه من حرصهم على خدمة الواقفين وتوجيه المصارف في أوجه البر النافعة."
-                        </p>
-                    </div>
-
-                    <div class="testi-card-footer">
-                        <span class="testi-stars">★★★★★ تزكية معتمدة</span>
-                        <span>تزكية موثقة</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Testimonial 04: أ.د. سليمان بن عبدالله أبا الخيل -->
-            <div class="col-lg-6 testi-item-col" data-category="scholars">
-                <div class="testimonial-box-card wow fadeInUp" data-wow-delay="0.4s">
-                    <div class="quote-watermark"><i class="fa fa-quote-right"></i></div>
-                    <div>
-                        <div class="testi-header-info">
-                            <img src="{% static 'img/rafed_image/people/68ecf550ed5e2.png' %}" alt="أ.د. سليمان بن عبدالله أبا الخيل" class="testi-person-img">
-                            <div>
-                                <h4 class="testi-person-name">أ.د. سليمان بن عبدالله أبا الخيل</h4>
-                                <div class="testi-person-role">مدير جامعة الإمام سابقاً وعضو هيئة كبار العلماء سابقاً</div>
-                                <span class="testi-tag-badge">زيارة واطلاع على المنجزات</span>
-                            </div>
-                        </div>
-
-                        <p class="testi-quote-text">
-                            "سرني كثيراً ما رأيته من تنظيم وعمل دؤوب في جمعية رافد للأوقاف، والتي تسعى لتقديم نموذج مؤسسي متميز في إدارة الأوقاف وتنميتها، وفق أحدث المعايير العالمية، وهذا يعكس حرصهم على تحقيق الاستدامة المالية للقطاع غير الربحي وتعظيم المساهمة الاقتصادية للأوقاف."
-                        </p>
-                    </div>
-
-                    <div class="testi-card-footer">
-                        <span class="testi-stars">★★★★★ تزكية معتمدة</span>
-                        <span>زيارة رسمية</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Testimonial 05: شهادة ناظر وقف استثماري -->
-            <div class="col-lg-6 testi-item-col" data-category="nazir">
-                <div class="testimonial-box-card wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="quote-watermark"><i class="fa fa-quote-right"></i></div>
-                    <div>
-                        <div class="testi-header-info">
-                            <div class="testi-person-placeholder">
-                                <i class="fa fa-landmark"></i>
-                            </div>
-                            <div>
-                                <h4 class="testi-person-name">الشيخ منصور بن عبدالعزيز الراجحي</h4>
-                                <div class="testi-person-role">رئيس مجلس نظارة وقف استثماري عائلي</div>
-                                <span class="testi-tag-badge">صياغة وتوثيق صك وقفي</span>
-                            </div>
-                        </div>
-
-                        <p class="testi-quote-text">
-                            "تعاملنا مع فريق جمعية رافد في صياغة حجة الوقف وتحديث وثيقة النظارة، وكان لخبرتهم الفقهية والقانونية دور حاسم في ضبط شروط الواقفين بدقة وحماية الأصول من التنازع، ممتنون جداً لحرفيتهم العالية وسرعة إنهاء إجراءات التوثيق القضائي الرسمي."
-                        </p>
-                    </div>
-
-                    <div class="testi-card-footer">
-                        <span class="testi-stars">★★★★★ تزكية معتمدة</span>
-                        <span>وقف عائلي استثماري</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Testimonial 06: شهادة مؤسسة مانحة -->
-            <div class="col-lg-6 testi-item-col" data-category="partners">
-                <div class="testimonial-box-card wow fadeInUp" data-wow-delay="0.2s">
-                    <div class="quote-watermark"><i class="fa fa-quote-right"></i></div>
-                    <div>
-                        <div class="testi-header-info">
-                            <div class="testi-person-placeholder">
-                                <i class="fa fa-handshake"></i>
-                            </div>
-                            <div>
-                                <h4 class="testi-person-name">م. سلطان بن فهد الحربي</h4>
-                                <div class="testi-person-role">الرئيس التنفيذي لمؤسسة مانحة شريكة</div>
-                                <span class="testi-tag-badge">شراكة تأهيل النظار</span>
-                            </div>
-                        </div>
-
-                        <p class="testi-quote-text">
-                            "برنامج تأهيل وتمكين النظار الذي قدمته جمعية رافد لمنسوبي الأوقاف في منطقتنا كان نقلة نوعية في المفاهيم الإدارية والاستثمارية، مخرجات حقيقية وتقارير قياس أثر احترافية تعكس أمانة الجمعية وجودة عملها الاستشاري."
-                        </p>
-                    </div>
-
-                    <div class="testi-card-footer">
-                        <span class="testi-stars">★★★★★ تزكية معتمدة</span>
-                        <span>شراكة مؤسسية مانحة</span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+        </div><!-- end row#testiItemsContainer -->
     </div>
 </div>
 <!-- Testimonials Grid Section End -->
@@ -573,6 +447,17 @@
 {% block extra_js %}
 <script>
 $(document).ready(function () {
+    // Dynamic counts based on rendered items
+    var totalCount = $('.testi-item-col').length;
+    var scholarsCount = $('.testi-item-col[data-category="scholars"]').length;
+    var nazirCount = $('.testi-item-col[data-category="nazir"]').length;
+    var partnersCount = $('.testi-item-col[data-category="partners"]').length;
+
+    $('#count-all').text(totalCount);
+    $('#count-scholars').text(scholarsCount);
+    $('#count-nazir').text(nazirCount);
+    $('#count-partners').text(partnersCount);
+
     // Filter Testimonials Categories
     $('.filter-btn').on('click', function () {
         $('.filter-btn').removeClass('active');

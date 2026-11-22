@@ -5,51 +5,47 @@
 <!-- Carousel Start -->
     <div class="container-fluid p-0 wow fadeIn" data-wow-delay="0.1s">
         <div class="owl-carousel header-carousel position-relative">
-            <div class="owl-carousel-item position-relative">
-                <img class="img-fluid" src="{% static 'img/rafed_image/background/3687745542.jpg' %}" alt="">
-                <div class="owl-carousel-inner">
-                    <div class="container">
-                        <div class="row justify-content-start">
-                            <div class="col-lg-8">
-                                <p class="text-primary text-uppercase fw-bold mb-2">{{ page.hero_subheading }}</p>
-                                <h1 class="display-1 text-light mb-4 animated slideInDown">{{ page.hero_heading }}</h1>
-                                <p class="text-light fs-5 mb-4 pb-3">{{ page.hero_text }}</p>
-                                <a href="" class="btn btn-primary py-3 px-5" style="border-radius: 8px !important;">اقرأ المزيد</a>
+            {% if hero_slides %}
+                {% for slide in hero_slides %}
+                <div class="owl-carousel-item position-relative">
+                    {% if slide.image %}
+                        <img class="img-fluid" src="{{ slide.image.url }}" alt="{{ slide.heading|default:page.hero_heading }}">
+                    {% elif slide.image_static_fallback %}
+                        <img class="img-fluid" src="{% static slide.image_static_fallback %}" alt="{{ slide.heading|default:page.hero_heading }}">
+                    {% else %}
+                        <img class="img-fluid" src="{% static 'img/rafed_image/background/3687745542.jpg' %}" alt="">
+                    {% endif %}
+                    <div class="owl-carousel-inner">
+                        <div class="container">
+                            <div class="row justify-content-start">
+                                <div class="col-lg-8">
+                                    <p class="text-primary text-uppercase fw-bold mb-2">{{ slide.subheading|default:page.hero_subheading }}</p>
+                                    <h1 class="display-1 text-light mb-4 animated slideInDown">{{ slide.heading|default:page.hero_heading }}</h1>
+                                    <p class="text-light fs-5 mb-4 pb-3">{{ slide.text|default:page.hero_text }}</p>
+                                    <a href="{{ slide.button_url|default:'/about/' }}" class="btn btn-primary py-3 px-5" style="border-radius: 8px !important;">{{ slide.button_text|default:'اقرأ المزيد' }}</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="owl-carousel-item position-relative">
-                <img class="img-fluid" src="{% static 'img/rafed_image/background/4.jpg' %}" alt="">
-                <div class="owl-carousel-inner">
-                    <div class="container">
-                        <div class="row justify-content-start">
-                            <div class="col-lg-8">
-                                <p class="text-primary text-uppercase fw-bold mb-2">{{ page.hero_subheading }}</p>
-                                <h1 class="display-1 text-light mb-4 animated slideInDown">{{ page.hero_heading }}</h1>
-                                <p class="text-light fs-5 mb-4 pb-3">{{ page.hero_text }}</p>
-                                <a href="" class="btn btn-primary py-3 px-5" style="border-radius: 8px !important;">اقرأ المزيد</a>
+                {% endfor %}
+            {% else %}
+                <div class="owl-carousel-item position-relative">
+                    <img class="img-fluid" src="{% static 'img/rafed_image/background/3687745542.jpg' %}" alt="">
+                    <div class="owl-carousel-inner">
+                        <div class="container">
+                            <div class="row justify-content-start">
+                                <div class="col-lg-8">
+                                    <p class="text-primary text-uppercase fw-bold mb-2">{{ page.hero_subheading }}</p>
+                                    <h1 class="display-1 text-light mb-4 animated slideInDown">{{ page.hero_heading }}</h1>
+                                    <p class="text-light fs-5 mb-4 pb-3">{{ page.hero_text }}</p>
+                                    <a href="/about/" class="btn btn-primary py-3 px-5" style="border-radius: 8px !important;">اقرأ المزيد</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="owl-carousel-item position-relative">
-                <img class="img-fluid" src="{% static 'img/rafed_image/background/6aa0f543b127d8.21470575.png' %}" alt="">
-                <div class="owl-carousel-inner">
-                    <div class="container">
-                        <div class="row justify-content-start">
-                            <div class="col-lg-8">
-                                <p class="text-primary text-uppercase fw-bold mb-2">{{ page.hero_subheading }}</p>
-                                <h1 class="display-1 text-light mb-4 animated slideInDown">{{ page.hero_heading }}</h1>
-                                <p class="text-light fs-5 mb-4 pb-3">{{ page.hero_text }}</p>
-                                <a href="" class="btn btn-primary py-3 px-5" style="border-radius: 8px !important;">اقرأ المزيد</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% endif %}
         </div>
     </div>
     <!-- Carousel End -->
@@ -404,85 +400,48 @@
         <div class="container">
             <!-- Title -->
             <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-                <p class="text-primary text-uppercase mb-2 eyebrow" style="font-size: 16px; font-weight: 700; letter-spacing: 2px; color: var(--gold-deep) !important;">قالوا عنا</p>
-                <h2 class="display-6 mb-3" style="color: var(--forest);">سعداء دائماً بخدمتكم</h2>
-                <p style="color: var(--ink-3); font-size: 15px;">كلمات نعتز بها من أصحاب الفضيلة والخبراء والشركاء في مسيرة الأوقاف</p>
+                <p class="text-primary text-uppercase mb-2 eyebrow" style="font-size: 16px; font-weight: 700; letter-spacing: 2px; color: var(--gold-deep) !important;">{{ page.testimonials_eyebrow|default:"قالوا عنا" }}</p>
+                <h2 class="display-6 mb-3" style="color: var(--forest);">{{ page.testimonials_heading|default:"سعداء دائماً بخدمتكم" }}</h2>
+                <p style="color: var(--ink-3); font-size: 15px;">{{ page.testimonials_text|default:"كلمات نعتز بها من أصحاب الفضيلة والخبراء والشركاء في مسيرة الأوقاف" }}</p>
             </div>
             
             <!-- Carousel -->
             <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.2s">
-                <!-- Item 1 -->
-                <div class="testimonial-card-v2">
-                    <div class="testimonial-header-v2">
-                        <img class="testimonial-avatar-v2" src="{% static 'img/rafed_image/people/68ecf41bf2f63.png' %}" alt="د. خالد عبدالله السريحي">
-                        <div>
-                            <h5 class="testimonial-author-name">د. خالد عبدالله السريحي</h5>
-                            <p class="testimonial-author-role">المدير العام للمركز الدولي للأبحاث والدراسات ( مداد )</p>
+                {% if testimonials %}
+                    {% for item in testimonials %}
+                    <div class="testimonial-card-v2">
+                        <div class="testimonial-header-v2">
+                            {% if item.image %}
+                                <img class="testimonial-avatar-v2" src="{{ item.image.url }}" alt="{{ item.author_name }}">
+                            {% elif item.image_static_fallback %}
+                                <img class="testimonial-avatar-v2" src="{% static item.image_static_fallback %}" alt="{{ item.author_name }}">
+                            {% else %}
+                                <div class="testimonial-avatar-v2 d-flex align-items-center justify-content-center" style="background: var(--forest); color: var(--gold-deep); font-size: 22px;">
+                                    <i class="fa fa-user-tie"></i>
+                                </div>
+                            {% endif %}
+                            <div>
+                                <h5 class="testimonial-author-name">{{ item.author_name }}</h5>
+                                <p class="testimonial-author-role">{{ item.author_role }}</p>
+                            </div>
+                        </div>
+                        <div class="testimonial-quote-icon">
+                            <i class="fa fa-quote-right"></i>
+                        </div>
+                        <div class="testimonial-text-wrapper">
+                            <p class="testimonial-text-v2">{{ item.quote }}</p>
                         </div>
                     </div>
-                    <div class="testimonial-quote-icon">
-                        <i class="fa fa-quote-right"></i>
-                    </div>
-                    <div class="testimonial-text-wrapper">
-                        <p class="testimonial-text-v2">بسم الله الرحمن الرحيم الحمد لله رب العالمين والصلاة والسلام على أشرف المرسلين وبعد شرفت اليوم بالمشاركة في ديوانية رافد للأوقاف من خلال تقديم موضوع استشراف المستقبل للأوقاف خلال عشر سنوات قادمة وما شاهدته من التفاعل والمشاركات والمبادرات التي خرجت أثناء اللقاء، وعليه فإنني أدعو جميع الفضلاء من أهل العلم وأهل التجارة بالمساهمة مع الإخوة في جمعية رافد لمساعدتهم ومشاركتهم في تنفيذ مثل هذه البرامج والفعاليات والحمد لله الذي تتم بنعمته الصالحات.</p>
-                    </div>
-                </div>
-                
-                <!-- Item 2 -->
-                <div class="testimonial-card-v2">
-                    <div class="testimonial-header-v2">
-                        <img class="testimonial-avatar-v2" src="{% static 'img/rafed_image/people/68ecf45e8f69f.png' %}" alt="د. أنس بن عبدالوهاب">
-                        <div>
-                            <h5 class="testimonial-author-name">د. أنس بن عبدالوهاب</h5>
-                            <p class="testimonial-author-role">أكاديمي وباحث في شؤون الأوقاف</p>
-                        </div>
-                    </div>
-                    <div class="testimonial-quote-icon">
-                        <i class="fa fa-quote-right"></i>
-                    </div>
-                    <div class="testimonial-text-wrapper">
-                        <p class="testimonial-text-v2">الحمد لله رب العالمين، والصلاة والسلام على أشرف الأنبياء والمرسلين نبينا محمد وعلى آله وصحبه أجمعين، لقد سررت هذا المساء بلقاء ثلة من الفضلاء والمهتمين بالعمل الوقفي، في ديوانية رافد للأوقاف بمكة المكرمة والتي كان لها دور بارز في نشر ثقافة الوقف والتوعية بأهميته في المجتمع.</p>
-                    </div>
-                </div>
-
-                <!-- Item 3 -->
-                <div class="testimonial-card-v2">
-                    <div class="testimonial-header-v2">
-                        <img class="testimonial-avatar-v2" src="{% static 'img/rafed_image/people/68ecf49e3c05a.png' %}" alt="الشيخ صالح بن عواد المغامسي">
-                        <div>
-                            <h5 class="testimonial-author-name">الشيخ صالح بن عواد المغامسي</h5>
-                            <p class="testimonial-author-role">إمام وخطيب مسجد قباء سابقاً</p>
-                        </div>
-                    </div>
-                    <div class="testimonial-quote-icon">
-                        <i class="fa fa-quote-right"></i>
-                    </div>
-                    <div class="testimonial-text-wrapper">
-                        <p class="testimonial-text-v2">الحمد لله الذي بنعمته تتم الصالحات، نشكر الإخوة في جمعية رافد على جهودهم المباركة في إحياء سنة الوقف وتنمية الموارد المالية للمشاريع الخيرية، ونسأل الله أن يبارك في جهودهم ويجعلها في ميزان حسناتهم يوم القيامة.</p>
-                    </div>
-                </div>
-
-                <!-- Item 4 -->
-                <div class="testimonial-card-v2">
-                    <div class="testimonial-header-v2">
-                        <img class="testimonial-avatar-v2" src="{% static 'img/rafed_image/people/68ecf550ed5e2.png' %}" alt="أ.د. سليمان بن عبدالله أبا الخيل">
-                        <div>
-                            <h5 class="testimonial-author-name">أ.د. سليمان بن عبدالله أبا الخيل</h5>
-                            <p class="testimonial-author-role">مدير جامعة الإمام محمد بن سعود الإسلامية سابقاً</p>
-                        </div>
-                    </div>
-                    <div class="testimonial-quote-icon">
-                        <i class="fa fa-quote-right"></i>
-                    </div>
-                    <div class="testimonial-text-wrapper">
-                        <p class="testimonial-text-v2">سرني كثيراً ما رأيته من تنظيم وعمل دؤوب في جمعية رافد للأوقاف، والتي تسعى لتقديم نموذج مؤسسي متميز في إدارة الأوقاف وتنميتها، وفق أحدث المعايير العالمية، وهذا يعكس حرصهم على تحقيق الاستدامة المالية للقطاع غير الربحي.</p>
-                    </div>
-                </div>
+                    {% endfor %}
+                {% endif %}
             </div>
             
             <div class="text-center mt-5 wow fadeInUp" data-wow-delay="0.3s">
-                <a href="#" class="btn rounded py-3 px-5" style="background-color: transparent !important; border: 2px solid var(--forest) !important; color: var(--forest) !important; font-weight: 700; transition: all 0.3s ease;">عرض كافة التزكيات</a>
+                <a href="{% url 'testimonials' %}" class="btn rounded py-3 px-5" style="background-color: transparent !important; border: 2px solid var(--forest) !important; color: var(--forest) !important; font-weight: 700; transition: all 0.3s ease;">عرض كافة التزكيات</a>
             </div>
+        </div>
+    </div>
+    <!-- Testimonial End -->
         </div>
     </div>
     <!-- Testimonial End -->

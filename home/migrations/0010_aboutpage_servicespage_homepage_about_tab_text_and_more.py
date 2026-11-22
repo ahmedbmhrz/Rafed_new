@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='AboutPage',
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to=settings.WAGTAIL_PAGE_MODEL)),
+                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to=getattr(settings, 'WAGTAIL_PAGE_MODEL', 'wagtailcore.Page'))),
                 ('subheading', models.CharField(default='جمعية رافد للأوقاف', max_length=100, verbose_name='العنوان الفرعي للترويسة')),
                 ('heading', models.CharField(default='من نحن', max_length=100, verbose_name='العنوان الرئيسي للترويسة')),
                 ('story_subheading', models.CharField(default='نبذة عن الجمعية', max_length=100, verbose_name='عنوان نبذة عن الجمعية')),
@@ -55,7 +55,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='ServicesPage',
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to=settings.WAGTAIL_PAGE_MODEL)),
+                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to=getattr(settings, 'WAGTAIL_PAGE_MODEL', 'wagtailcore.Page'))),
                 ('subheading', models.CharField(default='جمعية رافد للأوقاف', max_length=100, verbose_name='العنوان الفرعي للترويسة')),
                 ('heading', models.CharField(default='خدماتنا', max_length=100, verbose_name='العنوان الرئيسي للترويسة')),
                 ('overview_subheading', models.CharField(default='منظومة خدمات متكاملة', max_length=100, verbose_name='العنوان الفرعي للمقدمة')),
