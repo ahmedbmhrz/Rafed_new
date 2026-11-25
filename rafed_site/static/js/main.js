@@ -50,8 +50,8 @@
         dots: false,
         responsive: { 0: { items: 1 }, 768: { items: 1 }, 992: { items: 1 } },
         navText : [
-            '<i class="bi bi-chevron-right"></i>',
-            '<i class="bi bi-chevron-left"></i>'
+            '<span class="visually-hidden">السابق</span><i class="bi bi-chevron-right"></i>',
+            '<span class="visually-hidden">التالي</span><i class="bi bi-chevron-left"></i>'
         ]
     });
 
@@ -74,8 +74,8 @@
         dots: true,
         nav: true,
         navText : [
-            '<i class="bi bi-chevron-right"></i>',
-            '<i class="bi bi-chevron-left"></i>'
+            '<span class="visually-hidden">السابق</span><i class="bi bi-chevron-right"></i>',
+            '<span class="visually-hidden">التالي</span><i class="bi bi-chevron-left"></i>'
         ],
         responsive: {
             0:{ items:1 },
@@ -95,8 +95,8 @@
         dots: true,
         nav: true,
         navText : [
-            '<i class="bi bi-chevron-right"></i>',
-            '<i class="bi bi-chevron-left"></i>'
+            '<span class="visually-hidden">السابق</span><i class="bi bi-chevron-right"></i>',
+            '<span class="visually-hidden">التالي</span><i class="bi bi-chevron-left"></i>'
         ],
         responsive: {
             0:{ items:1 },
@@ -116,8 +116,8 @@
         dots: true,
         nav: true,
         navText : [
-            '<i class="bi bi-chevron-right"></i>',
-            '<i class="bi bi-chevron-left"></i>'
+            '<span class="visually-hidden">السابق</span><i class="bi bi-chevron-right"></i>',
+            '<span class="visually-hidden">التالي</span><i class="bi bi-chevron-left"></i>'
         ],
         responsive: {
             0:{ items:1 },
@@ -137,8 +137,8 @@
         dots: true,
         nav: true,
         navText : [
-            '<i class="bi bi-chevron-right"></i>',
-            '<i class="bi bi-chevron-left"></i>'
+            '<span class="visually-hidden">السابق</span><i class="bi bi-chevron-right"></i>',
+            '<span class="visually-hidden">التالي</span><i class="bi bi-chevron-left"></i>'
         ],
         responsive: {
             0:{ items:1 },
@@ -158,8 +158,8 @@
         dots: true,
         nav: true,
         navText : [
-            '<i class="bi bi-chevron-right"></i>',
-            '<i class="bi bi-chevron-left"></i>'
+            '<span class="visually-hidden">السابق</span><i class="bi bi-chevron-right"></i>',
+            '<span class="visually-hidden">التالي</span><i class="bi bi-chevron-left"></i>'
         ],
         responsive: {
             0:{ items:1 },
@@ -183,8 +183,8 @@
             dots: true,
             nav: true,
             navText : [
-                '<i class="bi bi-chevron-right"></i>',
-                '<i class="bi bi-chevron-left"></i>'
+                '<span class="visually-hidden">السابق</span><i class="bi bi-chevron-right"></i>',
+                '<span class="visually-hidden">التالي</span><i class="bi bi-chevron-left"></i>'
             ],
             responsive: {
                 0: { 

@@ -1,14 +1,21 @@
-from .models import ContactPage, SiteContactSettings
+from .models import ContactPage, SiteContactSettings, NavbarSettings
 
 def site_settings(request):
     """
-    Exposes unified site contact settings to all templates.
+    Exposes unified site contact settings and navbar settings to all templates.
     First checks ContactPage (edited under Pages), then falls back to SiteContactSettings.
     """
     try:
         page = ContactPage.objects.first()
-        if page:
-            return {'site_settings': page}
-        return {'site_settings': SiteContactSettings.get_settings()}
+        contact = page if page else SiteContactSettings.get_settings()
+        navbar = NavbarSettings.get_settings()
+        return {
+            'site_settings': contact,
+            'navbar_settings': navbar,
+        }
     except Exception:
-        return {'site_settings': None}
+        return {
+            'site_settings': None,
+            'navbar_settings': None,
+        }
+

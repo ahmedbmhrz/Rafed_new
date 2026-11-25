@@ -61,19 +61,41 @@
         <div class="row gx-0 align-items-center d-none d-lg-flex">
             <div class="col-lg-6 px-5 text-start">
                 <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a class="small text-light text-decoration-none" href="#">الرئيسية</a></li>
-                    <li class="breadcrumb-item"><a class="small text-light text-decoration-none" href="#">التوظيف</a></li>
-                    <li class="breadcrumb-item"><a class="small text-light text-decoration-none" href="#">الشروط</a></li>
-                    <li class="breadcrumb-item"><a class="small text-light text-decoration-none" href="#">الخصوصية</a></li>
+                    {% if navbar_settings.topbar_link1_text %}
+                    <li class="breadcrumb-item"><a class="small text-light text-decoration-none" href="{{ navbar_settings.topbar_link1_url|default:'/' }}">{{ navbar_settings.topbar_link1_text }}</a></li>
+                    {% endif %}
+                    {% if navbar_settings.topbar_link2_text %}
+                    <li class="breadcrumb-item"><a class="small text-light text-decoration-none" href="{{ navbar_settings.topbar_link2_url|default:'#' }}">{{ navbar_settings.topbar_link2_text }}</a></li>
+                    {% endif %}
+                    {% if navbar_settings.topbar_link3_text %}
+                    <li class="breadcrumb-item"><a class="small text-light text-decoration-none" href="{{ navbar_settings.topbar_link3_url|default:'#' }}">{{ navbar_settings.topbar_link3_text }}</a></li>
+                    {% endif %}
+                    {% if navbar_settings.topbar_link4_text %}
+                    <li class="breadcrumb-item"><a class="small text-light text-decoration-none" href="{{ navbar_settings.topbar_link4_url|default:'#' }}">{{ navbar_settings.topbar_link4_text }}</a></li>
+                    {% endif %}
                 </ol>
             </div>
             <div class="col-lg-6 px-5 text-end">
                 <small>تابعنا:</small>
                 <div class="h-100 d-inline-flex align-items-center">
-                    <a class="btn-lg-square text-primary text-decoration-none border-end rounded-0" href=""><i class="bi bi-facebook"></i></a>
-                    <a class="btn-lg-square text-primary text-decoration-none border-end rounded-0" href=""><i class="bi bi-twitter"></i></a>
-                    <a class="btn-lg-square text-primary text-decoration-none border-end rounded-0" href=""><i class="bi bi-linkedin"></i></a>
-                    <a class="btn-lg-square text-primary text-decoration-none pe-0" href=""><i class="bi bi-instagram"></i></a>
+                    {% if navbar_settings.facebook_url %}
+                    <a class="btn-lg-square text-primary text-decoration-none border-end rounded-0" href="{{ navbar_settings.facebook_url }}" target="_blank" rel="noopener" aria-label="فيسبوك"><i class="bi bi-facebook"></i></a>
+                    {% endif %}
+                    {% if navbar_settings.twitter_url %}
+                    <a class="btn-lg-square text-primary text-decoration-none border-end rounded-0" href="{{ navbar_settings.twitter_url }}" target="_blank" rel="noopener" aria-label="تويتر"><i class="bi bi-twitter"></i></a>
+                    {% endif %}
+                    {% if navbar_settings.linkedin_url %}
+                    <a class="btn-lg-square text-primary text-decoration-none border-end rounded-0" href="{{ navbar_settings.linkedin_url }}" target="_blank" rel="noopener" aria-label="لينكد إن"><i class="bi bi-linkedin"></i></a>
+                    {% endif %}
+                    {% if navbar_settings.instagram_url %}
+                    <a class="btn-lg-square text-primary text-decoration-none {% if navbar_settings.youtube_url or navbar_settings.whatsapp_url %}border-end{% else %}pe-0{% endif %} rounded-0" href="{{ navbar_settings.instagram_url }}" target="_blank" rel="noopener" aria-label="انستغرام"><i class="bi bi-instagram"></i></a>
+                    {% endif %}
+                    {% if navbar_settings.youtube_url %}
+                    <a class="btn-lg-square text-primary text-decoration-none {% if navbar_settings.whatsapp_url %}border-end{% else %}pe-0{% endif %} rounded-0" href="{{ navbar_settings.youtube_url }}" target="_blank" rel="noopener" aria-label="يوتيوب"><i class="bi bi-youtube"></i></a>
+                    {% endif %}
+                    {% if navbar_settings.whatsapp_url %}
+                    <a class="btn-lg-square text-primary text-decoration-none pe-0" href="{{ navbar_settings.whatsapp_url }}" target="_blank" rel="noopener" aria-label="واتساب"><i class="bi bi-whatsapp"></i></a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -83,19 +105,23 @@
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
         <a href="/" class="navbar-brand ms-4 ms-lg-0 d-flex align-items-center">
-            <img class="img-fluid navbar-logo" src="{% static 'img/rafed_image/logo/rafid-logo-mark-4000 (1).png' %}" alt="جمعية رافد للأوقاف" style="max-height: 56px; width: auto; object-fit: contain;">
+            {% if navbar_settings.logo %}
+                <img class="img-fluid navbar-logo" src="{{ navbar_settings.logo.file.url }}" alt="{{ navbar_settings.logo_alt|default:'جمعية رافد للأوقاف' }}" style="max-height: 56px; width: auto; object-fit: contain;">
+            {% else %}
+                <img class="img-fluid navbar-logo" src="{% static 'img/rafed_image/logo/rafid-logo-mark-4000 (1).png' %}" alt="{{ navbar_settings.logo_alt|default:'جمعية رافد للأوقاف' }}" style="max-height: 56px; width: auto; object-fit: contain;">
+            {% endif %}
         </a>
-        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-label="فتح القائمة">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav mx-auto p-4 p-lg-0">
-                <a href="/" class="nav-item nav-link {% if request.path == '/' %}active{% endif %}">الرئيسية</a>
-                <a href="{% url 'about' %}" class="nav-item nav-link {% if request.path == '/about/' %}active{% endif %}">من نحن</a>
-                <a href="{% url 'services' %}" class="nav-item nav-link {% if request.path == '/services/' %}active{% endif %}">خدماتنا</a>
-                <a href="{% url 'projects' %}" class="nav-item nav-link {% if request.path == '/projects/' %}active{% endif %}">مشاريعنا</a>
+                <a href="/" class="nav-item nav-link {% if request.path == '/' %}active{% endif %}">{{ navbar_settings.nav_home_label|default:'الرئيسية' }}</a>
+                <a href="{% url 'about' %}" class="nav-item nav-link {% if request.path == '/about/' %}active{% endif %}">{{ navbar_settings.nav_about_label|default:'من نحن' }}</a>
+                <a href="{% url 'services' %}" class="nav-item nav-link {% if request.path == '/services/' %}active{% endif %}">{{ navbar_settings.nav_services_label|default:'خدماتنا' }}</a>
+                <a href="{% url 'projects' %}" class="nav-item nav-link {% if request.path == '/projects/' %}active{% endif %}">{{ navbar_settings.nav_projects_label|default:'مشاريعنا' }}</a>
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle {% if request.path == '/team/' or request.path == '/testimonials/' or request.path == '/videos/' %}active{% endif %}" data-bs-toggle="dropdown">صفحات</a>
+                    <a href="#" class="nav-link dropdown-toggle {% if request.path == '/team/' or request.path == '/testimonials/' or request.path == '/videos/' %}active{% endif %}" data-bs-toggle="dropdown">{{ navbar_settings.nav_pages_label|default:'صفحات' }}</a>
                     <div class="dropdown-menu rafed-dropdown-menu m-0 shadow-lg">
                         <a href="{% url 'team' %}" class="dropdown-item rafed-dropdown-item {% if request.path == '/team/' %}active{% endif %}">
                             <div class="d-flex align-items-center">
@@ -103,8 +129,8 @@
                                     <i class="fa fa-users"></i>
                                 </div>
                                 <div class="dropdown-item-text">
-                                    <span class="dropdown-item-title">فريقنا</span>
-                                    <small class="dropdown-item-desc">نخبة خبرائنا وكفاءاتنا</small>
+                                    <span class="dropdown-item-title">{{ navbar_settings.nav_team_label|default:'فريقنا' }}</span>
+                                    <small class="dropdown-item-desc">{{ navbar_settings.nav_team_desc|default:'نخبة خبرائنا وكفاءاتنا' }}</small>
                                 </div>
                             </div>
                             <i class="bi bi-chevron-left dropdown-arrow"></i>
@@ -116,8 +142,8 @@
                                     <i class="fa fa-quote-right"></i>
                                 </div>
                                 <div class="dropdown-item-text">
-                                    <span class="dropdown-item-title">قالوا عنا</span>
-                                    <small class="dropdown-item-desc">تزكيات العلماء والشركاء</small>
+                                    <span class="dropdown-item-title">{{ navbar_settings.nav_testimonials_label|default:'قالوا عنا' }}</span>
+                                    <small class="dropdown-item-desc">{{ navbar_settings.nav_testimonials_desc|default:'تزكيات العلماء والشركاء' }}</small>
                                 </div>
                             </div>
                             <i class="bi bi-chevron-left dropdown-arrow"></i>
@@ -129,23 +155,23 @@
                                     <i class="fa fa-play-circle"></i>
                                 </div>
                                 <div class="dropdown-item-text">
-                                    <span class="dropdown-item-title">ألبوم الفيديو</span>
-                                    <small class="dropdown-item-desc">وثائقيات وندوات مرئية</small>
+                                    <span class="dropdown-item-title">{{ navbar_settings.nav_videos_label|default:'ألبوم الفيديو' }}</span>
+                                    <small class="dropdown-item-desc">{{ navbar_settings.nav_videos_desc|default:'وثائقيات وندوات مرئية' }}</small>
                                 </div>
                             </div>
                             <i class="bi bi-chevron-left dropdown-arrow"></i>
                         </a>
                     </div>
                 </div>
-                <a href="{% url 'contact' %}" class="nav-item nav-link {% if request.path == '/contact/' %}active{% endif %}">تواصل معنا</a>
+                <a href="{% url 'contact' %}" class="nav-item nav-link {% if request.path == '/contact/' %}active{% endif %}">{{ navbar_settings.nav_contact_label|default:'تواصل معنا' }}</a>
             </div>
             <div class=" d-none d-lg-flex align-items-center">
                 <div class="flex-shrink-0 btn-lg-square border border-light rounded-circle">
                     <i class="fa fa-phone text-primary"></i>
                 </div>
                 <div class="ps-3 text-start">
-                    <small class="text-primary mb-0 d-block">تواصل معنا</small>
-                    <a href="tel:{{ site_settings.phone|default:'0552002057' }}" class="text-light fs-5 mb-0 text-decoration-none fw-bold" style="font-family: var(--font-mono); direction: ltr; display: inline-block;">0552002057</a>
+                    <small class="text-primary mb-0 d-block">{{ navbar_settings.phone_label|default:'تواصل معنا' }}</small>
+                    <a href="tel:{{ navbar_settings.phone_call_url|default:navbar_settings.phone_number|default:'0552002057' }}" class="text-light fs-5 mb-0 text-decoration-none fw-bold" style="font-family: var(--font-mono); direction: ltr; display: inline-block;">{{ navbar_settings.phone_number|default:'0552002057' }}</a>
                 </div>
             </div>
         </div>
@@ -179,9 +205,9 @@
                     
                     <h5 class="text-white mb-3 mt-4" style="font-size: 15px;">تجدنا على</h5>
                     <div class="d-flex justify-content-start">
-                        <a class="btn btn-square rounded me-2 d-flex align-items-center justify-content-center" href="#" style="background: #ff0000; color: white; border: none; width: 32px; height: 32px;"><i class="bi bi-youtube"></i></a>
-                        <a class="btn btn-square rounded me-2 d-flex align-items-center justify-content-center" href="#" style="background: #405de6; color: white; border: none; width: 32px; height: 32px;"><i class="bi bi-instagram"></i></a>
-                        <a class="btn btn-square rounded d-flex align-items-center justify-content-center" href="#" style="background: #1da1f2; color: white; border: none; width: 32px; height: 32px;"><i class="bi bi-twitter"></i></a>
+                        <a class="btn btn-square rounded me-2 d-flex align-items-center justify-content-center" href="#" aria-label="يوتيوب" style="background: #ff0000; color: white; border: none; width: 32px; height: 32px;"><i class="bi bi-youtube"></i></a>
+                        <a class="btn btn-square rounded me-2 d-flex align-items-center justify-content-center" href="#" aria-label="انستغرام" style="background: #405de6; color: white; border: none; width: 32px; height: 32px;"><i class="bi bi-instagram"></i></a>
+                        <a class="btn btn-square rounded d-flex align-items-center justify-content-center" href="#" aria-label="تويتر" style="background: #1da1f2; color: white; border: none; width: 32px; height: 32px;"><i class="bi bi-twitter"></i></a>
                     </div>
                 </div>
 
@@ -224,7 +250,7 @@
     
 
     <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top" aria-label="الرجوع للأعلى"><i class="bi bi-arrow-up"></i></a>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -236,7 +262,7 @@
     <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
 
     <!-- Template Javascript -->
-    <script src="{% static 'js/main.js' %}?v=14.0"></script>
+    <script src="{% static 'js/main.js' %}?v=15.0"></script>
 
     {% block extra_js %}{% endblock %}
 </body>

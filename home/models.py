@@ -243,8 +243,7 @@ class HomePage(Page):
             FieldPanel('testimonials_eyebrow'),
             FieldPanel('testimonials_heading'),
             FieldPanel('testimonials_text'),
-        ], heading="💬 نصوص ترويسة قسم قالوا عنا"),
-        InlinePanel('testimonials', heading="💬 تزكيات قسم قالوا عنا في الرئيسية", label="تزكية"),
+        ], heading="💬 نصوص ترويسة قسم قالوا عنا (تزكيات هذا القسم متزامنة تلقائياً مع صفحة قالوا عنا / سجل التزكيات)"),
     ]
 
     def get_context(self, request):
@@ -260,12 +259,9 @@ class HomePage(Page):
         proj_page = ProjectsPage.objects.first()
         context['projects'] = proj_page.projects.filter(is_featured=True) if proj_page else []
 
-        home_testimonials = self.testimonials.filter(is_active=True)
-        if home_testimonials.exists():
-            context['testimonials'] = home_testimonials
-        else:
-            testi_page = TestimonialsPage.objects.first()
-            context['testimonials'] = testi_page.testimonials.filter(is_featured=True) if testi_page else []
+        # Testimonials on homepage: directly synchronized with TestimonialsPage (سجل التزكيات)
+        testi_page = TestimonialsPage.objects.first()
+        context['testimonials'] = testi_page.testimonials.filter(is_featured=True) if testi_page else []
 
         contact_page = ContactPage.objects.first()
         context['site_settings'] = contact_page or SiteContactSettings.get_settings()
@@ -956,3 +952,121 @@ class SiteContactSettings(models.Model):
             return contact_page
         obj, _ = cls.objects.get_or_create(id=1)
         return obj
+
+
+# ==============================================================================
+# 10. NAVBAR & TOPBAR SETTINGS (إعدادات النافبار والقائمة العلوية)
+# ==============================================================================
+
+@register_snippet
+class NavbarSettings(models.Model):
+    # --- 1. الشعار والهوية ---
+    logo = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name="شعار الجمعية في القائمة (Logo)"
+    )
+    logo_alt = models.CharField(max_length=150, default="جمعية رافد للأوقاف", verbose_name="النص البديل للشعار (Alt text)")
+
+    # --- 2. زر ورقم الاتصال في النافبار ---
+    phone_label = models.CharField(max_length=100, default="تواصل معنا", verbose_name="نص زر الاتصال")
+    phone_number = models.CharField(max_length=50, default="0552002057", verbose_name="رقم الهاتف الظاهر")
+    phone_call_url = models.CharField(max_length=50, default="0552002057", verbose_name="رقم الاتصال المباشر (tel:)")
+
+    # --- 3. روابط التواصل الاجتماعي في الشريط العلوي ---
+    twitter_url = models.URLField(blank=True, default="https://twitter.com/rafid_sa", verbose_name="رابط إكس (تويتر)")
+    linkedin_url = models.URLField(blank=True, default="https://linkedin.com", verbose_name="رابط لينكد إن")
+    instagram_url = models.URLField(blank=True, default="https://instagram.com/rafid_sa", verbose_name="رابط إنستغرام")
+    facebook_url = models.URLField(blank=True, default="", verbose_name="رابط فيسبوك")
+    youtube_url = models.URLField(blank=True, default="", verbose_name="رابط يوتيوب")
+    whatsapp_url = models.CharField(max_length=200, blank=True, default="https://wa.me/966552002057", verbose_name="رابط واتساب")
+
+    # --- 4. الروابط السريعة يمين الشريط العلوي ---
+    topbar_link1_text = models.CharField(max_length=100, default="الرئيسية", verbose_name="نص الرابط 1")
+    topbar_link1_url = models.CharField(max_length=255, default="/", verbose_name="مسار / رابط الرابط 1")
+    topbar_link2_text = models.CharField(max_length=100, default="التوظيف", verbose_name="نص الرابط 2")
+    topbar_link2_url = models.CharField(max_length=255, default="#", verbose_name="مسار / رابط الرابط 2")
+    topbar_link3_text = models.CharField(max_length=100, default="الشروط", verbose_name="نص الرابط 3")
+    topbar_link3_url = models.CharField(max_length=255, default="#", verbose_name="مسار / رابط الرابط 3")
+    topbar_link4_text = models.CharField(max_length=100, default="الخصوصية", verbose_name="نص الرابط 4")
+    topbar_link4_url = models.CharField(max_length=255, default="#", verbose_name="مسار / رابط الرابط 4")
+
+    # --- 5. مسميات عناصر القائمة الرئيسية ---
+    nav_home_label = models.CharField(max_length=100, default="الرئيسية", verbose_name="نص رابط الرئيسية")
+    nav_about_label = models.CharField(max_length=100, default="من نحن", verbose_name="نص رابط من نحن")
+    nav_services_label = models.CharField(max_length=100, default="خدماتنا", verbose_name="نص رابط خدماتنا")
+    nav_projects_label = models.CharField(max_length=100, default="مشاريعنا", verbose_name="نص رابط مشاريعنا")
+    nav_pages_label = models.CharField(max_length=100, default="صفحات", verbose_name="نص القائمة المنسدلة (صفحات)")
+    nav_team_label = models.CharField(max_length=100, default="فريقنا", verbose_name="نص رابط فريقنا")
+    nav_team_desc = models.CharField(max_length=150, default="نخبة خبرائنا وكفاءاتنا", verbose_name="وصف رابط فريقنا")
+    nav_testimonials_label = models.CharField(max_length=100, default="قالوا عنا", verbose_name="نص رابط قالوا عنا")
+    nav_testimonials_desc = models.CharField(max_length=150, default="تزكيات العلماء والشركاء", verbose_name="وصف رابط قالوا عنا")
+    nav_videos_label = models.CharField(max_length=100, default="ألبوم الفيديو", verbose_name="نص رابط ألبوم الفيديو")
+    nav_videos_desc = models.CharField(max_length=150, default="وثائقيات وندوات مرئية", verbose_name="وصف رابط ألبوم الفيديو")
+    nav_contact_label = models.CharField(max_length=100, default="تواصل معنا", verbose_name="نص رابط تواصل معنا")
+
+    panels = [
+        MultiFieldPanel([
+            FieldPanel('logo'),
+            FieldPanel('logo_alt'),
+        ], heading="🖼️ شعار الجمعية في القائمة العلوية"),
+
+        MultiFieldPanel([
+            FieldPanel('phone_label'),
+            FieldPanel('phone_number'),
+            FieldPanel('phone_call_url'),
+        ], heading="📞 زر الاتصال المباشر ورقم الهاتف في النافبار"),
+
+        MultiFieldPanel([
+            FieldPanel('twitter_url'),
+            FieldPanel('linkedin_url'),
+            FieldPanel('instagram_url'),
+            FieldPanel('facebook_url'),
+            FieldPanel('youtube_url'),
+            FieldPanel('whatsapp_url'),
+        ], heading="🌐 روابط التواصل الاجتماعي (الشريط العلوي)"),
+
+        MultiFieldPanel([
+            FieldPanel('topbar_link1_text'),
+            FieldPanel('topbar_link1_url'),
+            FieldPanel('topbar_link2_text'),
+            FieldPanel('topbar_link2_url'),
+            FieldPanel('topbar_link3_text'),
+            FieldPanel('topbar_link3_url'),
+            FieldPanel('topbar_link4_text'),
+            FieldPanel('topbar_link4_url'),
+        ], heading="🔗 الروابط السريعة (يمين الشريط العلوي)"),
+
+        MultiFieldPanel([
+            FieldPanel('nav_home_label'),
+            FieldPanel('nav_about_label'),
+            FieldPanel('nav_services_label'),
+            FieldPanel('nav_projects_label'),
+            FieldPanel('nav_pages_label'),
+            FieldPanel('nav_team_label'),
+            FieldPanel('nav_team_desc'),
+            FieldPanel('nav_testimonials_label'),
+            FieldPanel('nav_testimonials_desc'),
+            FieldPanel('nav_videos_label'),
+            FieldPanel('nav_videos_desc'),
+            FieldPanel('nav_contact_label'),
+        ], heading="📑 عناوين عناصر القائمة الرئيسية (النافبار)"),
+    ]
+
+    class Meta:
+        verbose_name = "معلومات النافبار والقائمة العلوية"
+        verbose_name_plural = "🔝 معلومات النافبار والقائمة العلوية"
+
+    def __str__(self):
+        return "إعدادات النافبار والقائمة العلوية"
+
+    @classmethod
+    def get_settings(cls):
+        obj = cls.objects.first()
+        if not obj:
+            obj = cls.objects.create()
+        return obj
+

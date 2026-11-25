@@ -6,7 +6,8 @@ from wagtail.admin.ui.sidebar import PageExplorerMenuItem as PageExplorerMenuIte
 from wagtail.models import Page
 from home.models import (
     HomePage, AboutPage, ServicesPage, ProjectsPage, 
-    TeamPage, TestimonialsPage, VideosPage, ContactPage
+    TeamPage, TestimonialsPage, VideosPage, ContactPage,
+    NavbarSettings
 )
 
 
@@ -122,3 +123,35 @@ def register_videos_page_item():
 @hooks.register("register_pages_edit_menu_item")
 def register_contact_page_item():
     return DynamicPageEditMenuItem("page_contact", "تواصل معنا", ContactPage, "mail", 80)
+
+
+# ==============================================================================
+# 3. DIRECT ACCESS TO NAVBAR & HEADER SETTINGS IN ADMIN SIDEBAR
+# ==============================================================================
+
+class NavbarSettingsMenuItem(MenuItem):
+    def __init__(self):
+        self._url = "#"
+        super().__init__(
+            "القائمة العلوية والنافبار",
+            "#",
+            name="navbar_settings",
+            icon_name="site",
+            order=115,
+        )
+
+    @property
+    def url(self):
+        obj = NavbarSettings.get_settings()
+        return reverse("wagtailsnippets_home_navbarsettings:edit", args=[obj.id])
+
+    @url.setter
+    def url(self, value):
+        self._url = value
+
+
+
+@hooks.register("register_admin_menu_item")
+def register_navbar_settings_menu():
+    return NavbarSettingsMenuItem()
+

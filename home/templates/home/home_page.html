@@ -13,7 +13,7 @@
                     {% elif slide.image_static_fallback %}
                         <img class="img-fluid" src="{% static slide.image_static_fallback %}" alt="{{ slide.heading|default:page.hero_heading }}">
                     {% else %}
-                        <img class="img-fluid" src="{% static 'img/rafed_image/background/3687745542.jpg' %}" alt="">
+                        <img class="img-fluid" src="{% static 'img/rafed_image/background/3687745542.jpg' %}" alt="{{ slide.heading|default:'جمعية رافد للأوقاف' }}">
                     {% endif %}
                     <div class="owl-carousel-inner">
                         <div class="container">
@@ -31,7 +31,7 @@
                 {% endfor %}
             {% else %}
                 <div class="owl-carousel-item position-relative">
-                    <img class="img-fluid" src="{% static 'img/rafed_image/background/3687745542.jpg' %}" alt="">
+                    <img class="img-fluid" src="{% static 'img/rafed_image/background/3687745542.jpg' %}" alt="{{ page.hero_heading }}">
                     <div class="owl-carousel-inner">
                         <div class="container">
                             <div class="row justify-content-start">
@@ -58,17 +58,17 @@
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="row img-twice position-relative h-100">
                         <div class="col-6">
-                            <img class="img-fluid rounded" src="{% static 'img/rafed_image/background/4.jpg' %}" alt="">
+                            <img class="img-fluid rounded" src="{% static 'img/rafed_image/background/4.jpg' %}" alt="أوقاف رافد">
                         </div>
                         <div class="col-6 align-self-end">
-                            <img class="img-fluid rounded" src="{% static 'img/rafed_image/background/3687745542.jpg' %}" alt="">
+                            <img class="img-fluid rounded" src="{% static 'img/rafed_image/background/3687745542.jpg' %}" alt="فريق جمعية رافد للأوقاف">
                         </div>
                     </div>
                 </div>
                                   <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
                       <div class="h-100">
                           <p class="text-primary text-uppercase mb-2">تعرف علينا</p>
-                          <h1 class="display-6 mb-4">جمعية رافد للأوقاف</h1>
+                          <h2 class="display-6 mb-4">جمعية رافد للأوقاف</h2>
                           
                           <!-- Custom Tabs -->
                           <ul class="nav nav-pills mb-4 custom-nav-pills" id="pills-tab" role="tablist">
@@ -160,7 +160,7 @@
         <div class="container">
             <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
                 <p class="text-primary text-uppercase mb-2">تعرف على إنجازات الجمعية</p>
-                <h1 class="display-6 mb-4">إنجازاتنا</h1>
+                <h2 class="display-6 mb-4">إنجازاتنا</h2>
             </div>
             <div class="row g-3 justify-content-center">
                 {% if achievements %}
@@ -198,7 +198,7 @@
                         {% elif n.image_static_fallback %}
                             <img src="{% static n.image_static_fallback %}" alt="{{ n.title }}">
                         {% else %}
-                            <img src="{% static 'img/rafed_image/background/6aa0f543b127d8.21470575.png' %}" alt="{{ n.title }}">
+                            <img src="{% static 'img/rafed_image/background/6aa0f543b127d8.21470575.png' %}" alt="{{ n.title|default:'أخبار الجمعية' }}">
                         {% endif %}
                         <div class="news-content">
                             <h5>{{ n.title }}</h5>
@@ -232,7 +232,7 @@
                             {% elif edu.image_static_fallback %}
                                 <img src="{% static edu.image_static_fallback %}" alt="{{ edu.title }}" style="width: 100%; height: 220px; object-fit: cover;">
                             {% else %}
-                                <img src="{% static 'img/rafed_image/background/6aa0f543b127d8.21470575.png' %}" alt="{{ edu.title }}" style="width: 100%; height: 220px; object-fit: cover;">
+                                <img src="{% static 'img/rafed_image/background/6aa0f543b127d8.21470575.png' %}" alt="{{ edu.title|default:'تصميم تثقيفي' }}" style="width: 100%; height: 220px; object-fit: cover;">
                             {% endif %}
                             <div style="position: absolute; top: 15px; left: 15px; background: var(--ds-gold); color: var(--paper); padding: 5px 12px; border-radius: 20px; font-size: 13px; font-weight: 700; font-family: var(--font-mono); box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
                                 <i class="fa fa-images me-1"></i> {{ edu.badge_text }}
@@ -270,7 +270,7 @@
                             {% elif vid.image_static_fallback %}
                                 <img src="{% static vid.image_static_fallback %}" alt="{{ vid.title }}" style="width: 100%; height: 200px; object-fit: cover;">
                             {% else %}
-                                <img src="{% static 'img/rafed_image/background/4.jpg' %}" alt="{{ vid.title }}" style="width: 100%; height: 200px; object-fit: cover;">
+                                <img src="{% static 'img/rafed_image/background/4.jpg' %}" alt="{{ vid.title|default:'فيديو وقفي' }}" style="width: 100%; height: 200px; object-fit: cover;">
                             {% endif %}
                             <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.25); transition: 0.3s;"></div>
                             {% if vid.duration %}
@@ -306,7 +306,7 @@
             <div class="modal-content" style="background: #081d17; border: 1px solid var(--primary); border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
                 <div class="modal-header border-0 py-3 px-4 d-flex justify-content-between align-items-center" style="background: var(--forest);">
                     <h5 class="modal-title text-white mb-0" id="videoModalLabel" style="font-size: 1.05rem; font-family: var(--font-display);">مشاهدة الفيديو</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="filter: brightness(0) invert(1);"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="إغلاق" style="filter: brightness(0) invert(1);"></button>
                 </div>
                 <div class="modal-body p-0">
                     <div class="ratio ratio-16x9">
@@ -377,7 +377,7 @@
                             {% endfor %}
                         {% else %}
                             <div class="partner-item text-center">
-                                <img class="img-fluid mx-auto mb-3" src="{% static 'img/rafed_image/partners/675acf3938b1f.png' %}" alt="" style="height: 90px; width: auto; object-fit: contain;">
+                                <img class="img-fluid mx-auto mb-3" src="{% static 'img/rafed_image/partners/675acf3938b1f.png' %}" alt="الهيئة العامة للأوقاف" style="height: 90px; width: auto; object-fit: contain;">
                                 <h6 style="color: var(--forest); font-size: 14px; font-weight: bold; white-space: nowrap;">الهيئة العامة للأوقاف</h6>
                             </div>
                         {% endif %}
@@ -439,9 +439,6 @@
             <div class="text-center mt-5 wow fadeInUp" data-wow-delay="0.3s">
                 <a href="{% url 'testimonials' %}" class="btn rounded py-3 px-5" style="background-color: transparent !important; border: 2px solid var(--forest) !important; color: var(--forest) !important; font-weight: 700; transition: all 0.3s ease;">عرض كافة التزكيات</a>
             </div>
-        </div>
-    </div>
-    <!-- Testimonial End -->
         </div>
     </div>
     <!-- Testimonial End -->
