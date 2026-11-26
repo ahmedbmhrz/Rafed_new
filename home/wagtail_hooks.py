@@ -7,7 +7,7 @@ from wagtail.models import Page
 from home.models import (
     HomePage, AboutPage, ServicesPage, ProjectsPage, 
     TeamPage, TestimonialsPage, VideosPage, ContactPage,
-    NavbarSettings
+    NavbarSettings, CareersPage
 )
 
 
@@ -119,6 +119,10 @@ def register_testimonials_page_item():
 @hooks.register("register_pages_edit_menu_item")
 def register_videos_page_item():
     return DynamicPageEditMenuItem("page_videos", "ألبوم الفيديو", VideosPage, "media", 70)
+
+@hooks.register("register_pages_edit_menu_item")
+def register_careers_page_item():
+    return DynamicPageEditMenuItem("page_careers", "التوظيف والكفاءات", CareersPage, "user", 75)
 
 @hooks.register("register_pages_edit_menu_item")
 def register_contact_page_item():

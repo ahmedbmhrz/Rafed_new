@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import (
     HomePage, AboutPage, ServicesPage, ProjectsPage, TeamPage, TestimonialsPage, VideosPage, ContactPage,
-    ContactInquiry, SiteContactSettings
+    CareersPage, ContactInquiry, SiteContactSettings
 )
 
 def about_view(request):
@@ -100,3 +100,19 @@ def contact_view(request):
         context["sender_name"] = name or "الكريم"
 
     return render(request, "home/contact_page.html", context)
+
+
+def careers_view(request):
+    """
+    Dedicated 'Careers' (التوظيف والفرص المهنية) page.
+    Loads dynamic jobs and benefits from CareersPage model.
+    """
+    page = CareersPage.objects.first()
+    jobs = page.jobs.filter(is_active=True) if page else []
+    benefits = page.benefits.filter(is_active=True) if page else []
+    return render(request, "home/careers_page.html", {
+        "page": page,
+        "jobs": jobs,
+        "benefits": benefits,
+    })
+

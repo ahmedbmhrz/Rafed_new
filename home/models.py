@@ -988,7 +988,7 @@ class NavbarSettings(models.Model):
     topbar_link1_text = models.CharField(max_length=100, default="الرئيسية", verbose_name="نص الرابط 1")
     topbar_link1_url = models.CharField(max_length=255, default="/", verbose_name="مسار / رابط الرابط 1")
     topbar_link2_text = models.CharField(max_length=100, default="التوظيف", verbose_name="نص الرابط 2")
-    topbar_link2_url = models.CharField(max_length=255, default="#", verbose_name="مسار / رابط الرابط 2")
+    topbar_link2_url = models.CharField(max_length=255, default="/careers/", verbose_name="مسار / رابط الرابط 2")
     topbar_link3_text = models.CharField(max_length=100, default="الشروط", verbose_name="نص الرابط 3")
     topbar_link3_url = models.CharField(max_length=255, default="#", verbose_name="مسار / رابط الرابط 3")
     topbar_link4_text = models.CharField(max_length=100, default="الخصوصية", verbose_name="نص الرابط 4")
@@ -1069,4 +1069,143 @@ class NavbarSettings(models.Model):
         if not obj:
             obj = cls.objects.create()
         return obj
+
+
+# ==============================================================================
+# 11. CAREERS PAGE (صفحة التوظيف والفرص المهنية)
+# ==============================================================================
+
+class CareersPageBenefit(Orderable):
+    page = ParentalKey('CareersPage', on_delete=models.CASCADE, related_name='benefits')
+    icon = models.CharField(max_length=80, default="fa-users-cog", verbose_name="أيقونة FontAwesome")
+    title = models.CharField(max_length=150, verbose_name="عنوان الميزة أو القيمة")
+    description = models.TextField(verbose_name="وصف الميزة")
+    is_active = models.BooleanField(default=True, verbose_name="ظاهر في الصفحة")
+
+    panels = [
+        FieldPanel('icon'),
+        FieldPanel('title'),
+        FieldPanel('description'),
+        FieldPanel('is_active'),
+    ]
+
+    class Meta:
+        verbose_name = "ميزة بيئة العمل"
+        verbose_name_plural = "مزايا وثقافة بيئة العمل"
+
+
+class CareersPageJob(Orderable):
+    JOB_TYPE_CHOICES = [
+        ('full_time', 'دوام كامل (حضوري)'),
+        ('hybrid', 'دوام هجين (حضوري وعن بعد)'),
+        ('remote', 'عمل عن بعد'),
+        ('part_time', 'دوام جزئي / استشاري'),
+        ('volunteer', 'تطوع مهني تخصصي'),
+    ]
+
+    EXPERIENCE_CHOICES = [
+        ('fresh', 'حديث تخرج / سنة فأقل'),
+        ('1_3', '1 - 3 سنوات'),
+        ('3_5', '3 - 5 سنوات'),
+        ('5_plus', 'أكثر من 5 سنوات (خبرة متقدمة)'),
+        ('executive', 'خبرة قيادية / استشارية (7+ سنوات)'),
+    ]
+
+    page = ParentalKey('CareersPage', on_delete=models.CASCADE, related_name='jobs')
+    title = models.CharField(max_length=150, verbose_name="المسمى الوظيفي")
+    department = models.CharField(max_length=150, default="إدارة الاستشارات والحلول الوقفية", verbose_name="الإدارة / القسم")
+    job_type = models.CharField(max_length=50, choices=JOB_TYPE_CHOICES, default='full_time', verbose_name="طبيعة العمل")
+    location = models.CharField(max_length=100, default="جدة - المقر الرئيسي", verbose_name="المقر وموقع العمل")
+    experience_level = models.CharField(max_length=50, choices=EXPERIENCE_CHOICES, default='1_3', verbose_name="مستوى الخبرة المطلوب")
+    
+    brief = models.CharField(max_length=255, blank=True, default="", verbose_name="نبذة موجزة عن الوظيفة")
+    responsibilities = models.TextField(blank=True, default="", verbose_name="المهام والمسؤوليات الرئيسية (نقطة في كل سطر)")
+    requirements = models.TextField(blank=True, default="", verbose_name="الشروط والمؤهلات المطلوبة (نقطة في كل سطر)")
+    
+    apply_url = models.URLField(blank=True, default="", verbose_name="رابط التقديم الخارجي (Google Form أو بوابة التوظيف)")
+    apply_email = models.EmailField(blank=True, default="hr@rafed.org.sa", verbose_name="البريد الإلكتروني للتقديم")
+    deadline = models.CharField(max_length=100, blank=True, default="", verbose_name="آخر موعد للتقديم (اختياري)")
+    is_active = models.BooleanField(default=True, verbose_name="الوظيفة متاحة حالياً (مفتوحة)")
+
+    panels = [
+        FieldPanel('title'),
+        FieldPanel('department'),
+        FieldPanel('job_type'),
+        FieldPanel('location'),
+        FieldPanel('experience_level'),
+        FieldPanel('brief'),
+        FieldPanel('responsibilities'),
+        FieldPanel('requirements'),
+        FieldPanel('apply_url'),
+        FieldPanel('apply_email'),
+        FieldPanel('deadline'),
+        FieldPanel('is_active'),
+    ]
+
+    class Meta:
+        verbose_name = "فرصة وظيفية"
+        verbose_name_plural = "الوظائف والفرص المتاحة"
+
+
+class CareersPage(Page):
+    subheading = models.CharField(max_length=100, default="بوابة الكفاءات والفرص المهنية", verbose_name="العنوان الفرعي للترويسة")
+    heading = models.CharField(max_length=150, default="انضم إلى فريق رافد للأوقاف", verbose_name="العنوان الرئيسي للترويسة")
+    
+    intro_title = models.CharField(max_length=200, default="نصنع الأثر الوقفي بعقول وخبرات ملهمة", verbose_name="عنوان قسم بيئة العمل")
+    intro_text = models.TextField(
+        default="في جمعية رافد للأوقاف، نؤمن بأن رأس المال البشري هو الركيزة الأساسية للريادة الوقفية وصناعة الاستدامة. نحرص على توفير بيئة عمل احترافية ومحفزة تتيح لخبرائنا ومنسوبينا التميز والابتكار في تطوير وتأسيس الكيانات الوقفية بالمملكة وفق أفضل الممارسات المؤسسية.",
+        verbose_name="نص قسم بيئة العمل"
+    )
+
+    # Culture section badges & media
+    badge_1_text = models.CharField(max_length=100, default="معايير حوكمة عالية", verbose_name="نص الشارة الأولى")
+    badge_1_icon = models.CharField(max_length=80, default="fa-award", verbose_name="أيقونة الشارة الأولى")
+    badge_2_text = models.CharField(max_length=100, default="مسارات تطوير واعدة", verbose_name="نص الشارة الثانية")
+    badge_2_icon = models.CharField(max_length=80, default="fa-chart-line", verbose_name="أيقونة الشارة الثانية")
+    
+    intro_image = models.ImageField(upload_to="careers/", blank=True, null=True, verbose_name="صورة بيئة العمل")
+    intro_image_static_fallback = models.CharField(
+        max_length=255, blank=True, default="img/rafed_image/background/4.jpg",
+        verbose_name="مسار صورة بديلة من static"
+    )
+    location_text = models.CharField(max_length=150, default="المقر الرئيسي - جدة، المملكة العربية السعودية", verbose_name="نص الموقع أسفل الصورة")
+
+    # General / Future Applications Section
+    spontaneous_title = models.CharField(max_length=200, default="لم تجد الوظيفة المناسبة لتخصصك؟", verbose_name="عنوان التقديم العام")
+    spontaneous_text = models.TextField(
+        default="نرحب دائماً بالكفاءات الطموحة والمستشارين المتخصصين في مجالات الأوقاف والاستثمار والحوكمة. أرسل سيرتك الذاتية وسنتواصل معك فور توفر فرصة تلائم خبراتك.",
+        verbose_name="نص التقديم العام"
+    )
+    spontaneous_email = models.EmailField(default="hr@rafed.org.sa", verbose_name="البريد الإلكتروني لاستقبال السير الذاتية")
+    spontaneous_whatsapp = models.CharField(max_length=50, default="966552002057", verbose_name="رقم واتساب للتواصل (أرقام فقط)")
+    spontaneous_form_url = models.URLField(blank=True, default="", verbose_name="رابط نموذج التقديم العام (اختياري)")
+
+    content_panels = Page.content_panels + [
+        MultiFieldPanel([
+            FieldPanel('subheading'),
+            FieldPanel('heading'),
+            FieldPanel('intro_title'),
+            FieldPanel('intro_text'),
+            FieldPanel('badge_1_text'),
+            FieldPanel('badge_1_icon'),
+            FieldPanel('badge_2_text'),
+            FieldPanel('badge_2_icon'),
+            FieldPanel('intro_image'),
+            FieldPanel('location_text'),
+        ], heading="🏷️ ترويسة الصفحة وقسم بيئة العمل"),
+
+        InlinePanel('benefits', heading="🌟 مزايا وثقافة بيئة العمل في رافد", label="ميزة أو قيمة"),
+        InlinePanel('jobs', heading="💼 الوظائف والفرص المتاحة", label="فرصة وظيفية"),
+
+        MultiFieldPanel([
+            FieldPanel('spontaneous_title'),
+            FieldPanel('spontaneous_text'),
+            FieldPanel('spontaneous_email'),
+            FieldPanel('spontaneous_whatsapp'),
+            FieldPanel('spontaneous_form_url'),
+        ], heading="📬 التقديم المباشر والسير الذاتية العامة"),
+    ]
+
+    template = "home/careers_page.html"
+
 

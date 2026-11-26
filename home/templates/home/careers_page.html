@@ -1,0 +1,411 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+/* Dedicated Page Header */
+.careers-page-header {
+    background-color: var(--forest) !important;
+    padding: 130px 0 70px 0;
+    position: relative;
+    border-bottom: 2px solid var(--primary);
+}
+
+.careers-page-header .breadcrumb-item a {
+    color: rgba(255, 255, 255, 0.8);
+    transition: color 0.3s ease;
+}
+.careers-page-header .breadcrumb-item a:hover {
+    color: var(--primary);
+}
+.careers-page-header .breadcrumb-item.active {
+    color: var(--primary) !important;
+    font-weight: 700;
+}
+.careers-page-header .breadcrumb-item + .breadcrumb-item::before {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Benefit Card */
+.benefit-card {
+    background: #ffffff;
+    border: 1px solid rgba(12, 59, 46, 0.08);
+    border-radius: 16px;
+    padding: 30px 24px;
+    transition: all 0.35s ease;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+.benefit-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--forest));
+    opacity: 0;
+    transition: opacity 0.35s ease;
+}
+.benefit-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 36px rgba(12, 59, 46, 0.08);
+    border-color: rgba(201, 169, 97, 0.4);
+}
+.benefit-card:hover::before {
+    opacity: 1;
+}
+.benefit-icon-box {
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
+    background: rgba(12, 59, 46, 0.06);
+    color: var(--forest);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    margin-bottom: 20px;
+    transition: all 0.35s ease;
+}
+.benefit-card:hover .benefit-icon-box {
+    background: var(--forest);
+    color: var(--primary);
+    transform: scale(1.08);
+}
+
+/* Job Card */
+.job-card {
+    background: #ffffff;
+    border: 1px solid rgba(12, 59, 46, 0.1);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 22px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+}
+.job-card:hover {
+    border-color: var(--primary);
+    box-shadow: 0 12px 30px rgba(12, 59, 46, 0.08);
+}
+.job-meta-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+    background: rgba(12, 59, 46, 0.05);
+    color: var(--forest);
+}
+.job-meta-badge i {
+    color: var(--primary);
+}
+.job-department-tag {
+    background: rgba(201, 169, 97, 0.15);
+    color: #8c7130;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+/* Spontaneous Box */
+.spontaneous-box {
+    background: linear-gradient(135deg, #0c3b2e 0%, #134e3e 100%);
+    border-radius: 20px;
+    padding: 50px 40px;
+    position: relative;
+    overflow: hidden;
+    color: #ffffff;
+    border: 2px solid var(--primary);
+}
+.spontaneous-box::after {
+    content: "";
+    position: absolute;
+    bottom: -50px;
+    left: -50px;
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle, rgba(201, 169, 97, 0.18) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+.btn-gold {
+    background: var(--primary);
+    color: #ffffff !important;
+    font-weight: 700;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 28px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.btn-gold:hover {
+    background: #b59247;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(201, 169, 97, 0.35);
+}
+.btn-forest-outline {
+    background: transparent;
+    color: #ffffff !important;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    font-weight: 700;
+    border-radius: 50px;
+    padding: 10px 24px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.btn-forest-outline:hover {
+    background: #ffffff;
+    color: var(--forest) !important;
+    border-color: #ffffff;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Dedicated Page Header Start -->
+<div class="container-fluid careers-page-header bg-dark text-light wow fadeIn" data-wow-delay="0.1s">
+    <div class="container text-center pt-4 pb-2">
+        <p class="text-primary text-uppercase fw-bold mb-2" style="letter-spacing: 1px;">{{ page.subheading|default:"بوابة الكفاءات والفرص المهنية" }}</p>
+        <h1 class="display-4 text-white mb-3" style="font-family: var(--font-display); font-weight: 800;">{{ page.heading|default:"انضم إلى فريق رافد للأوقاف" }}</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a href="/">الرئيسية</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ page.heading|default:"التوظيف" }}</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Dedicated Page Header End -->
+
+<!-- Culture & Benefits Section Start -->
+<div class="container-xxl py-6">
+    <div class="container">
+        <div class="row g-5 align-items-center mb-5">
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                <p class="text-primary text-uppercase fw-bold mb-2" style="letter-spacing: 1px;">بيئة العمل في رافد</p>
+                <h2 class="display-6 mb-4" style="color: var(--forest); font-weight: 800; line-height: 1.4;">{{ page.intro_title|default:"نصنع الأثر الوقفي بعقول وخبرات ملهمة" }}</h2>
+                <p class="text-muted fs-5 lh-lg mb-4">
+                    {{ page.intro_text|default:"في جمعية رافد للأوقاف، نؤمن بأن رأس المال البشري هو الركيزة الأساسية للريادة الوقفية وصناعة الاستدامة. نحرص على توفير بيئة عمل احترافية ومحفزة تتيح لخبرائنا ومنسوبينا التميز والابتكار في تطوير وتأسيس الكيانات الوقفية بالمملكة وفق أفضل الممارسات المؤسسية." }}
+                </p>
+                <div class="d-flex flex-wrap align-items-center gap-3">
+                    {% if page.badge_1_text %}
+                    <span class="badge px-4 py-2 rounded-pill shadow-sm" style="background-color: var(--forest) !important; color: #ffffff !important; font-size: 14px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;">
+                        <i class="fa {{ page.badge_1_icon|default:'fa-award' }}" style="color: var(--primary);"></i>
+                        <span>{{ page.badge_1_text }}</span>
+                    </span>
+                    {% endif %}
+                    {% if page.badge_2_text %}
+                    <span class="badge px-4 py-2 rounded-pill shadow-sm" style="background-color: rgba(201, 169, 97, 0.22) !important; color: var(--forest) !important; border: 1px solid rgba(201, 169, 97, 0.5) !important; font-size: 14px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;">
+                        <i class="fa {{ page.badge_2_icon|default:'fa-chart-line' }}" style="color: #9a7629;"></i>
+                        <span>{{ page.badge_2_text }}</span>
+                    </span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="position-relative p-4 rounded-3 text-center" style="background: rgba(12, 59, 46, 0.03); border: 1px dashed rgba(12, 59, 46, 0.15);">
+                    {% if page.intro_image %}
+                    <img class="img-fluid rounded-3 shadow-sm mb-3" src="{{ page.intro_image.url }}" alt="{{ page.intro_title }}" style="max-height: 320px; width: 100%; object-fit: cover;">
+                    {% else %}
+                    <img class="img-fluid rounded-3 shadow-sm mb-3" src="{% static page.intro_image_static_fallback|default:'img/rafed_image/background/4.jpg' %}" alt="بيئة العمل في جمعية رافد" style="max-height: 320px; width: 100%; object-fit: cover;">
+                    {% endif %}
+                    <p class="small text-muted mb-0"><i class="fa fa-map-marker-alt text-primary me-1"></i> {{ page.location_text|default:"المقر الرئيسي - جدة، المملكة العربية السعودية" }}</p>
+                </div>
+            </div>
+        </div>
+
+        {% if benefits %}
+        <div class="row g-4 mt-2">
+            {% for b in benefits %}
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.{{ forloop.counter }}s">
+                <div class="benefit-card">
+                    <div class="benefit-icon-box">
+                        <i class="fa {{ b.icon|default:'fa-users-cog' }}"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2" style="color: var(--forest); font-size: 17px;">{{ b.title }}</h5>
+                    <p class="text-muted small mb-0 lh-base">{{ b.description }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+<!-- Culture & Benefits Section End -->
+
+<!-- Open Jobs Section Start -->
+<div class="container-xxl py-5 bg-light position-relative">
+    <div class="container">
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+            <p class="text-primary text-uppercase fw-bold mb-2">الفرص المتاحة</p>
+            <h2 class="display-6 mb-3" style="color: var(--forest); font-weight: 800;">الوظائف الشاغرة حالياً</h2>
+            <p class="text-muted">استعرض الفرص المتاحة وكن جزءاً من مسيرة الريادة في استدامة الأوقاف وتنميتها</p>
+        </div>
+
+        {% if jobs %}
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    {% for job in jobs %}
+                    <div class="job-card wow fadeInUp" data-wow-delay="0.{{ forloop.counter }}s">
+                        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
+                            <div>
+                                <span class="job-department-tag mb-2">{{ job.department }}</span>
+                                <h4 class="fw-bold mb-1" style="color: var(--forest);">{{ job.title }}</h4>
+                            </div>
+                            <div>
+                                {% if job.apply_url %}
+                                <a href="{{ job.apply_url }}" target="_blank" rel="noopener" class="btn btn-gold">
+                                    <i class="fa fa-paper-plane"></i> قدّم الآن
+                                </a>
+                                {% elif job.apply_email %}
+                                <a href="mailto:{{ job.apply_email }}?subject=التقديم على وظيفة: {{ job.title }}" class="btn btn-gold">
+                                    <i class="fa fa-envelope"></i> إرسال السيرة الذاتية
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Meta badges -->
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+                            <span class="job-meta-badge"><i class="fa fa-clock"></i> {{ job.get_job_type_display }}</span>
+                            <span class="job-meta-badge"><i class="fa fa-map-marker-alt"></i> {{ job.location }}</span>
+                            <span class="job-meta-badge"><i class="fa fa-user-tie"></i> خبرة {{ job.get_experience_level_display }}</span>
+                            {% if job.deadline %}
+                            <span class="job-meta-badge"><i class="fa fa-calendar-alt"></i> التقديم متاح حتى: {{ job.deadline }}</span>
+                            {% endif %}
+                        </div>
+
+                        {% if job.brief %}
+                        <p class="text-muted mb-3">{{ job.brief }}</p>
+                        {% endif %}
+
+                        <!-- Accordion or details collapse if responsibilities or requirements exist -->
+                        {% if job.responsibilities or job.requirements %}
+                        <div class="accordion accordion-flush mt-3" id="accordionJob{{ forloop.counter }}">
+                            <div class="accordion-item" style="background: transparent; border: none;">
+                                <h2 class="accordion-header" id="headingJob{{ forloop.counter }}">
+                                    <button class="accordion-button collapsed px-0 py-2 text-primary fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseJob{{ forloop.counter }}" aria-expanded="false" aria-controls="collapseJob{{ forloop.counter }}" style="background: transparent; box-shadow: none; font-size: 14px;">
+                                        <i class="fa fa-list-ul me-2"></i> استعراض تفاصيل المهام والشروط
+                                    </button>
+                                </h2>
+                                <div id="collapseJob{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="headingJob{{ forloop.counter }}" data-bs-parent="#accordionJob{{ forloop.counter }}">
+                                    <div class="accordion-body px-0 pt-3">
+                                        <div class="row g-4">
+                                            {% if job.responsibilities %}
+                                            <div class="col-md-6">
+                                                <h6 class="fw-bold mb-2" style="color: var(--forest);"><i class="fa fa-tasks text-primary me-1"></i> المهام والمسؤوليات:</h6>
+                                                <ul class="list-unstyled mb-0 small text-muted lh-lg">
+                                                    {% for line in job.responsibilities.splitlines %}
+                                                        {% if line.strip %}
+                                                        <li class="d-flex align-items-baseline mb-1">
+                                                            <i class="fa fa-check-circle text-primary me-2" style="font-size: 12px;"></i>
+                                                            <span>{{ line }}</span>
+                                                        </li>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                            {% endif %}
+
+                                            {% if job.requirements %}
+                                            <div class="col-md-6">
+                                                <h6 class="fw-bold mb-2" style="color: var(--forest);"><i class="fa fa-user-check text-primary me-1"></i> الشروط والمؤهلات:</h6>
+                                                <ul class="list-unstyled mb-0 small text-muted lh-lg">
+                                                    {% for line in job.requirements.splitlines %}
+                                                        {% if line.strip %}
+                                                        <li class="d-flex align-items-baseline mb-1">
+                                                            <i class="fa fa-check-circle text-primary me-2" style="font-size: 12px;"></i>
+                                                            <span>{{ line }}</span>
+                                                        </li>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            <!-- No Jobs Currently Fallback -->
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="bg-white rounded-4 p-5 text-center shadow-sm border">
+                        <div class="mb-3">
+                            <i class="fa fa-briefcase fa-3x" style="color: var(--primary); opacity: 0.85;"></i>
+                        </div>
+                        <h4 class="fw-bold mb-2" style="color: var(--forest);">لا توجد شواغر معلنة في الوقت الحالي</h4>
+                        <p class="text-muted mb-4 fs-6">
+                            نحن نعمل باستمرار على توسيع فريقنا واستقطاب الكفاءات الاستشارية والمهنية. يمكنك التقديم المباشر أدناه وسنتواصل معك فور توفر فرصة تطابق ملفك المهني.
+                        </p>
+                        <a href="#spontaneousSection" class="btn btn-gold">
+                            <i class="fa fa-file-upload"></i> تسجيل سيرتك الذاتية للفرص المستقبلية
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+<!-- Open Jobs Section End -->
+
+<!-- Spontaneous Application Section Start -->
+<div class="container-xxl py-6" id="spontaneousSection">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="spontaneous-box wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="row g-4 align-items-center">
+                        <div class="col-lg-7">
+                            <div class="d-flex align-items-center gap-2 mb-2">
+                                <i class="fa fa-sparkles text-primary fs-5"></i>
+                                <span class="text-uppercase fw-bold text-primary" style="letter-spacing: 1px;">التقديم المباشر</span>
+                            </div>
+                            <h3 class="display-6 text-white fw-bold mb-3" style="font-size: 28px;">
+                                {{ page.spontaneous_title|default:"لم تجد الوظيفة المناسبة لتخصصك؟" }}
+                            </h3>
+                            <p class="text-white-50 mb-0 lh-lg">
+                                {{ page.spontaneous_text|default:"نرحب دائماً بالكفاءات الطموحة والمستشارين المتخصصين في مجالات الأوقاف والاستثمار والحوكمة. أرسل سيرتك الذاتية وسنتواصل معك فور توفر فرصة تلائم خبراتك." }}
+                            </p>
+                        </div>
+                        <div class="col-lg-5 text-lg-end text-center">
+                            <div class="d-flex flex-column gap-3 justify-content-center align-items-lg-end align-items-center">
+                                {% if page.spontaneous_form_url %}
+                                <a href="{{ page.spontaneous_form_url }}" target="_blank" rel="noopener" class="btn btn-gold w-100 justify-content-center">
+                                    <i class="fa fa-external-link-alt"></i> تعبئة نموذج التقديم العام
+                                </a>
+                                {% endif %}
+                                <a href="mailto:{{ page.spontaneous_email|default:'hr@rafed.org.sa' }}?subject=تقديم سيرة ذاتية عامة - جمعية رافد للأوقاف" class="btn btn-gold w-100 justify-content-center">
+                                    <i class="fa fa-envelope"></i> إرسال عبر البريد الإلكتروني
+                                </a>
+                                {% if page.spontaneous_whatsapp %}
+                                <a href="https://wa.me/{{ page.spontaneous_whatsapp }}?text=السلام%20عليكم،%20أود%20الاستفسار%20عن%20فرص%20التوظيف%20في%20جمعية%20رافد%20للأوقاف" target="_blank" rel="noopener" class="btn btn-forest-outline w-100 justify-content-center">
+                                    <i class="bi bi-whatsapp"></i> تواصل مع الموارد البشرية
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Spontaneous Application Section End -->
+{% endblock %}
