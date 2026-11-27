@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import (
     HomePage, AboutPage, ServicesPage, ProjectsPage, TeamPage, TestimonialsPage, VideosPage, ContactPage,
-    CareersPage, ContactInquiry, SiteContactSettings
+    CareersPage, TermsPage, ContactInquiry, SiteContactSettings
 )
 
 def about_view(request):
@@ -115,4 +115,18 @@ def careers_view(request):
         "jobs": jobs,
         "benefits": benefits,
     })
+
+
+def terms_view(request):
+    """
+    Dedicated 'Terms and Conditions' (الشروط والأحكام) page.
+    Loads dynamic sections from TermsPage model.
+    """
+    page = TermsPage.objects.first()
+    sections = page.sections.filter(is_active=True) if page else []
+    return render(request, "home/terms_page.html", {
+        "page": page,
+        "sections": sections,
+    })
+
 

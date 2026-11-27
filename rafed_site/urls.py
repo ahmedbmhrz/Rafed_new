@@ -22,6 +22,7 @@ urlpatterns = [
     path("contact/", home_views.contact_view, name="contact"),
     path("videos/", home_views.videos_view, name="videos"),
     path("careers/", home_views.careers_view, name="careers"),
+    path("terms/", home_views.terms_view, name="terms"),
 ]
 
 

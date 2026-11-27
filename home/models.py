@@ -990,7 +990,7 @@ class NavbarSettings(models.Model):
     topbar_link2_text = models.CharField(max_length=100, default="التوظيف", verbose_name="نص الرابط 2")
     topbar_link2_url = models.CharField(max_length=255, default="/careers/", verbose_name="مسار / رابط الرابط 2")
     topbar_link3_text = models.CharField(max_length=100, default="الشروط", verbose_name="نص الرابط 3")
-    topbar_link3_url = models.CharField(max_length=255, default="#", verbose_name="مسار / رابط الرابط 3")
+    topbar_link3_url = models.CharField(max_length=255, default="/terms/", verbose_name="مسار / رابط الرابط 3")
     topbar_link4_text = models.CharField(max_length=100, default="الخصوصية", verbose_name="نص الرابط 4")
     topbar_link4_url = models.CharField(max_length=255, default="#", verbose_name="مسار / رابط الرابط 4")
 
@@ -1207,5 +1207,73 @@ class CareersPage(Page):
     ]
 
     template = "home/careers_page.html"
+
+
+# ==============================================================================
+# 12. TERMS & CONDITIONS PAGE (صفحة الشروط والأحكام)
+# ==============================================================================
+
+class TermsPageSection(Orderable):
+    page = ParentalKey('TermsPage', on_delete=models.CASCADE, related_name='sections')
+    section_number = models.CharField(max_length=20, default="01", verbose_name="رقم البند (مثال: 01 أو أولاً)")
+    title = models.CharField(max_length=150, verbose_name="عنوان البند أو الشرط")
+    icon = models.CharField(max_length=80, default="fa-gavel", verbose_name="أيقونة FontAwesome")
+    content = models.TextField(verbose_name="نص البند والتفاصيل القانونية والشرعية")
+    is_active = models.BooleanField(default=True, verbose_name="ظاهر في الصفحة")
+
+    panels = [
+        FieldPanel('section_number'),
+        FieldPanel('title'),
+        FieldPanel('icon'),
+        FieldPanel('content'),
+        FieldPanel('is_active'),
+    ]
+
+    class Meta:
+        verbose_name = "بند أو شرط"
+        verbose_name_plural = "بنود الشروط والأحكام"
+
+
+class TermsPage(Page):
+    subheading = models.CharField(max_length=100, default="الضوابط والأحكام القانونية", verbose_name="العنوان الفرعي للترويسة")
+    heading = models.CharField(max_length=150, default="الشروط والأحكام", verbose_name="العنوان الرئيسي للترويسة")
+    last_updated = models.CharField(max_length=100, default="رجب 1446هـ - يناير 2025م", verbose_name="تاريخ آخر تحديث")
+
+    intro_title = models.CharField(max_length=200, default="مرحباً بكم في منصة جمعية رافد للأوقاف", verbose_name="عنوان التمهيد")
+    intro_text = models.TextField(
+        default="تحكم هذه الشروط والأحكام استخدامكم لمنصة جمعية رافد للأوقاف وخدماتها الاستشارية والتطويرية. يُعد دخولكم للموقع أو الاستفادة من برامجه إقراراً وموافقة صريحة على الالتزام بجميع الأحكام الواردة أدناه، المتوافقة مع الأنظمة واللوائح السارية بالمملكة العربية السعودية وضوابط الهيئة العامة للأوقاف والمركز الوطني لتنمية القطاع غير الربحي.",
+        verbose_name="نص التمهيد العام"
+    )
+
+    # Inquiries / Legal Contact
+    legal_title = models.CharField(max_length=200, default="هل لديك استفسار حول الضوابط والشروط؟", verbose_name="عنوان التواصل القانوني")
+    legal_text = models.TextField(
+        default="يسعد فريق الحوكمة والشؤون القانونية في جمعية رافد للأوقاف بالإجابة على استفساراتكم المتعلقة بسياسات الاستخدام والشروط التعاقدية.",
+        verbose_name="نص التواصل القانوني"
+    )
+    legal_email = models.EmailField(default="legal@rafed.org.sa", verbose_name="البريد الإلكتروني للشؤون القانونية")
+    legal_phone = models.CharField(max_length=50, default="0552002057", verbose_name="هاتف التواصل المباشر")
+
+    content_panels = Page.content_panels + [
+        MultiFieldPanel([
+            FieldPanel('subheading'),
+            FieldPanel('heading'),
+            FieldPanel('last_updated'),
+            FieldPanel('intro_title'),
+            FieldPanel('intro_text'),
+        ], heading="🏷️ ترويسة الصفحة والتمهيد العام"),
+
+        InlinePanel('sections', heading="📜 بنود وأحكام الاستخدام", label="بند أو شرط"),
+
+        MultiFieldPanel([
+            FieldPanel('legal_title'),
+            FieldPanel('legal_text'),
+            FieldPanel('legal_email'),
+            FieldPanel('legal_phone'),
+        ], heading="⚖️ قسم الاستفسارات القانونية"),
+    ]
+
+    template = "home/terms_page.html"
+
 
 
