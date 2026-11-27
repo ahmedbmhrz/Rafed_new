@@ -992,7 +992,7 @@ class NavbarSettings(models.Model):
     topbar_link3_text = models.CharField(max_length=100, default="الشروط", verbose_name="نص الرابط 3")
     topbar_link3_url = models.CharField(max_length=255, default="/terms/", verbose_name="مسار / رابط الرابط 3")
     topbar_link4_text = models.CharField(max_length=100, default="الخصوصية", verbose_name="نص الرابط 4")
-    topbar_link4_url = models.CharField(max_length=255, default="#", verbose_name="مسار / رابط الرابط 4")
+    topbar_link4_url = models.CharField(max_length=255, default="/privacy/", verbose_name="مسار / رابط الرابط 4")
 
     # --- 5. مسميات عناصر القائمة الرئيسية ---
     nav_home_label = models.CharField(max_length=100, default="الرئيسية", verbose_name="نص رابط الرئيسية")
@@ -1274,6 +1274,74 @@ class TermsPage(Page):
     ]
 
     template = "home/terms_page.html"
+
+
+# ==============================================================================
+# 13. PRIVACY POLICY PAGE (صفحة سياسة الخصوصية)
+# ==============================================================================
+
+class PrivacyPageSection(Orderable):
+    page = ParentalKey('PrivacyPage', on_delete=models.CASCADE, related_name='sections')
+    section_number = models.CharField(max_length=20, default="01", verbose_name="رقم البند (مثال: 01 أو أولاً)")
+    title = models.CharField(max_length=150, verbose_name="عنوان البند أو السياسة")
+    icon = models.CharField(max_length=80, default="fa-user-shield", verbose_name="أيقونة FontAwesome")
+    content = models.TextField(verbose_name="نص البند وتفاصيل سياسة الخصوصية")
+    is_active = models.BooleanField(default=True, verbose_name="ظاهر في الصفحة")
+
+    panels = [
+        FieldPanel('section_number'),
+        FieldPanel('title'),
+        FieldPanel('icon'),
+        FieldPanel('content'),
+        FieldPanel('is_active'),
+    ]
+
+    class Meta:
+        verbose_name = "بند سياسة الخصوصية"
+        verbose_name_plural = "بنود سياسة الخصوصية"
+
+
+class PrivacyPage(Page):
+    subheading = models.CharField(max_length=100, default="حماية وسرية البيانات", verbose_name="العنوان الفرعي للترويسة")
+    heading = models.CharField(max_length=150, default="سياسة الخصوصية", verbose_name="العنوان الرئيسي للترويسة")
+    last_updated = models.CharField(max_length=100, default="رجب 1446هـ - يناير 2025م", verbose_name="تاريخ آخر تحديث")
+
+    intro_title = models.CharField(max_length=200, default="التزامنا بحماية بياناتكم وخصوصيتكم", verbose_name="عنوان التمهيد")
+    intro_text = models.TextField(
+        default="تولي جمعية رافد للأوقاف أقصى درجات الأهمية لحماية خصوصية وسرية بيانات المستفيدين والواقفين والزوار. توضح هذه السياسة كيفية جمع البيانات الشخصية والوقفية واستخدامها وحمايتها بما يتوافق تماماً مع نظام حماية البيانات الشخصية الصادر بالمرسوم الملكي رقم (م/19) ولائحته التنفيذية بالمملكة العربية السعودية وضوابط الجهات الإشرافية.",
+        verbose_name="نص التمهيد العام"
+    )
+
+    # Privacy Officer Contact
+    officer_title = models.CharField(max_length=200, default="مسؤول حماية البيانات والخصوصية (DPO)", verbose_name="عنوان مسؤول الخصوصية")
+    officer_text = models.TextField(
+        default="لممارسة حقوقكم النظامية (الوصول، التصحيح، الإتلاف، أو سحب الموافقة) أو لأي استفسار حول معالجة بياناتكم، يمكنكم التواصل مباشرة مع إدارة الامتثال وحماية البيانات بالجمعية.",
+        verbose_name="نص مسؤول الخصوصية"
+    )
+    officer_email = models.EmailField(default="privacy@rafed.org.sa", verbose_name="البريد الإلكتروني للخصوصية")
+    officer_phone = models.CharField(max_length=50, default="0552002057", verbose_name="هاتف التواصل المباشر")
+
+    content_panels = Page.content_panels + [
+        MultiFieldPanel([
+            FieldPanel('subheading'),
+            FieldPanel('heading'),
+            FieldPanel('last_updated'),
+            FieldPanel('intro_title'),
+            FieldPanel('intro_text'),
+        ], heading="🏷️ ترويسة الصفحة والتمهيد العام"),
+
+        InlinePanel('sections', heading="🛡️ بنود وسياسات حماية البيانات", label="بند أو سياسة"),
+
+        MultiFieldPanel([
+            FieldPanel('officer_title'),
+            FieldPanel('officer_text'),
+            FieldPanel('officer_email'),
+            FieldPanel('officer_phone'),
+        ], heading="🔐 قسم مسؤول حماية البيانات والخصوصية"),
+    ]
+
+    template = "home/privacy_page.html"
+
 
 
 

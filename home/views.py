@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import (
     HomePage, AboutPage, ServicesPage, ProjectsPage, TeamPage, TestimonialsPage, VideosPage, ContactPage,
-    CareersPage, TermsPage, ContactInquiry, SiteContactSettings
+    CareersPage, TermsPage, PrivacyPage, ContactInquiry, SiteContactSettings
 )
 
 def about_view(request):
@@ -128,5 +128,19 @@ def terms_view(request):
         "page": page,
         "sections": sections,
     })
+
+
+def privacy_view(request):
+    """
+    Dedicated 'Privacy Policy' (سياسة الخصوصية) page.
+    Loads dynamic sections from PrivacyPage model.
+    """
+    page = PrivacyPage.objects.first()
+    sections = page.sections.filter(is_active=True) if page else []
+    return render(request, "home/privacy_page.html", {
+        "page": page,
+        "sections": sections,
+    })
+
 
 

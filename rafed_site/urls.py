@@ -23,6 +23,7 @@ urlpatterns = [
     path("videos/", home_views.videos_view, name="videos"),
     path("careers/", home_views.careers_view, name="careers"),
     path("terms/", home_views.terms_view, name="terms"),
+    path("privacy/", home_views.privacy_view, name="privacy"),
 ]
 
 

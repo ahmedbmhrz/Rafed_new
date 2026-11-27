@@ -1,0 +1,329 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+/* Dedicated Page Header */
+.privacy-page-header {
+    background-color: var(--forest) !important;
+    padding: 130px 0 70px 0;
+    position: relative;
+    border-bottom: 2px solid var(--primary);
+}
+
+.privacy-page-header .breadcrumb-item a {
+    color: rgba(255, 255, 255, 0.8);
+    transition: color 0.3s ease;
+}
+.privacy-page-header .breadcrumb-item a:hover {
+    color: var(--primary);
+}
+.privacy-page-header .breadcrumb-item.active {
+    color: var(--primary) !important;
+    font-weight: 700;
+}
+.privacy-page-header .breadcrumb-item + .breadcrumb-item::before {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Intro Card */
+.privacy-intro-card {
+    background: #ffffff;
+    border: 1px solid rgba(12, 59, 46, 0.1);
+    border-right: 5px solid var(--primary);
+    border-radius: 16px;
+    padding: 35px 30px;
+    box-shadow: 0 10px 30px rgba(12, 59, 46, 0.04);
+}
+
+/* Sticky Sidebar Navigation (Strictly Contained) */
+.privacy-sidebar {
+    position: sticky;
+    top: 110px;
+    background: #ffffff;
+    border: 1px solid rgba(12, 59, 46, 0.1);
+    border-radius: 16px;
+    padding: 22px 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+}
+.privacy-sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+    overflow: hidden;
+}
+.privacy-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    color: #2b3940;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    width: 100%;
+    box-sizing: border-box;
+    border-right: 3px solid transparent;
+    overflow: hidden;
+}
+.privacy-nav-link .clause-title-text {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.privacy-nav-link .clause-num-badge {
+    flex-shrink: 0;
+    transition: all 0.2s ease-in-out;
+}
+.privacy-nav-link:hover, .privacy-nav-link:focus {
+    background-color: rgba(12, 59, 46, 0.05);
+    color: var(--forest);
+    border-right-color: var(--primary);
+}
+.privacy-nav-link:hover .clause-num-badge {
+    background-color: var(--forest);
+    color: var(--primary);
+}
+
+/* Clause Section Card */
+.clause-card {
+    scroll-margin-top: 125px;
+    background: #ffffff;
+    border: 1px solid rgba(12, 59, 46, 0.08);
+    border-radius: 16px;
+    padding: 35px 30px;
+    margin-bottom: 25px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+.clause-card:hover {
+    border-color: rgba(201, 169, 97, 0.5);
+    box-shadow: 0 12px 30px rgba(12, 59, 46, 0.06);
+}
+.clause-num-badge {
+    background: rgba(201, 169, 97, 0.18);
+    color: #8c7130;
+    font-size: 13px;
+    font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 6px;
+    display: inline-block;
+}
+.clause-icon-box {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(12, 59, 46, 0.06);
+    color: var(--forest);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+.clause-body {
+    color: #4a5568;
+    line-height: 1.95;
+    font-size: 15px;
+}
+.clause-body p {
+    margin-bottom: 1rem;
+}
+.clause-body p:last-child {
+    margin-bottom: 0;
+}
+
+/* Privacy Officer Box */
+.privacy-officer-box {
+    background: linear-gradient(135deg, #0c3b2e 0%, #154e3f 100%);
+    border: 2px solid var(--primary);
+    border-radius: 20px;
+    padding: 40px;
+    color: #ffffff;
+    position: relative;
+    overflow: hidden;
+}
+.btn-gold {
+    background: var(--primary);
+    color: #ffffff !important;
+    font-weight: 700;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 28px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.btn-gold:hover {
+    background: #b59247;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(201, 169, 97, 0.35);
+}
+.btn-forest-outline {
+    background: transparent;
+    color: #ffffff !important;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    font-weight: 700;
+    border-radius: 50px;
+    padding: 10px 24px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.btn-forest-outline:hover {
+    background: #ffffff;
+    color: var(--forest) !important;
+    border-color: #ffffff;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Dedicated Page Header Start -->
+<div class="container-fluid privacy-page-header bg-dark text-light wow fadeIn" data-wow-delay="0.1s">
+    <div class="container text-center pt-4 pb-2">
+        <p class="text-primary text-uppercase fw-bold mb-2" style="letter-spacing: 1px;">{{ page.subheading|default:"حماية وسرية البيانات" }}</p>
+        <h1 class="display-4 text-white mb-3" style="font-family: var(--font-display); font-weight: 800;">{{ page.heading|default:"سياسة الخصوصية" }}</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb justify-content-center mb-3">
+                <li class="breadcrumb-item"><a href="/">الرئيسية</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ page.heading|default:"سياسة الخصوصية" }}</li>
+            </ol>
+        </nav>
+        {% if page.last_updated %}
+        <span class="badge px-3 py-2 rounded-pill" style="background: rgba(255, 255, 255, 0.12); color: rgba(255, 255, 255, 0.9); font-size: 13px; font-weight: 600;">
+            <i class="fa fa-history text-primary me-1"></i> {{ page.last_updated }}
+        </span>
+        {% endif %}
+    </div>
+</div>
+<!-- Dedicated Page Header End -->
+
+<!-- Main Content Area Start -->
+<div class="container-xxl py-6">
+    <div class="container">
+        
+        <!-- Intro Preamble Card -->
+        <div class="privacy-intro-card mb-5 wow fadeInUp" data-wow-delay="0.1s">
+            <div class="d-flex align-items-center gap-3 mb-3">
+                <div class="clause-icon-box" style="background: var(--forest); color: var(--primary);">
+                    <i class="fa fa-user-shield"></i>
+                </div>
+                <div>
+                    <h3 class="fw-bold mb-1" style="color: var(--forest); font-size: 22px;">{{ page.intro_title|default:"التزامنا بحماية بياناتكم وخصوصيتكم" }}</h3>
+                    <small class="text-muted">نظام حماية البيانات الشخصية بالمملكة العربية السعودية (PDPL)</small>
+                </div>
+            </div>
+            <p class="text-muted fs-6 lh-lg mb-4">
+                {{ page.intro_text|default:"تولي جمعية رافد للأوقاف أقصى درجات الأهمية لحماية خصوصية وسرية بيانات المستفيدين والواقفين والزوار. توضح هذه السياسة كيفية جمع البيانات الشخصية والوقفية واستخدامها وحمايتها بما يتوافق تماماً مع نظام حماية البيانات الشخصية الصادر بالمرسوم الملكي رقم (م/19) ولائحته التنفيذية بالمملكة العربية السعودية وضوابط الجهات الإشرافية." }}
+            </p>
+            <div class="d-flex flex-wrap gap-2">
+                <span class="badge px-3 py-2 rounded-pill" style="background: rgba(12, 59, 46, 0.08); color: var(--forest); font-weight: 600; font-size: 13px;">
+                    <i class="fa fa-shield-alt text-primary me-1"></i> متوافق مع نظام حماية البيانات الشخصية (PDPL)
+                </span>
+                <span class="badge px-3 py-2 rounded-pill" style="background: rgba(12, 59, 46, 0.08); color: var(--forest); font-weight: 600; font-size: 13px;">
+                    <i class="fa fa-lock text-primary me-1"></i> تشفير ومعايير أمن سيبراني متقدمة
+                </span>
+                <span class="badge px-3 py-2 rounded-pill" style="background: rgba(201, 169, 97, 0.18); color: #8c7130; font-weight: 600; font-size: 13px;">
+                    <i class="fa fa-file-contract me-1"></i> سرية تامة للمعلومات والوثائق الوقفية
+                </span>
+            </div>
+        </div>
+
+        <!-- Layout: Sidebar TOC + Clauses -->
+        <div class="row g-4">
+            
+            <!-- Sticky Quick Navigation on Desktop -->
+            {% if sections %}
+            <div class="col-lg-4 d-none d-lg-block">
+                <div class="privacy-sidebar">
+                    <h5 class="fw-bold mb-3 pb-2 border-bottom" style="color: var(--forest); font-size: 16px;">
+                        <i class="fa fa-list-ol text-primary me-2"></i> فهرس سياسة الخصوصية
+                    </h5>
+                    <nav class="privacy-sidebar-nav">
+                        {% for s in sections %}
+                        <a class="privacy-nav-link" href="#clause-{{ forloop.counter }}">
+                            <span class="clause-num-badge" style="font-size: 11px; padding: 2px 8px;">{{ s.section_number|default:forloop.counter }}</span>
+                            <span class="clause-title-text">{{ s.title }}</span>
+                        </a>
+                        {% endfor %}
+                        <a class="privacy-nav-link mt-2 pt-2 border-top" href="#officerSection">
+                            <i class="fa fa-shield-alt" style="color: var(--primary); font-size: 14px;"></i>
+                            <span class="clause-title-text">مسؤول حماية البيانات</span>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Clauses List Column -->
+            <div class="{% if sections %}col-lg-8{% else %}col-12{% endif %}">
+                {% if sections %}
+                    {% for s in sections %}
+                    <div class="clause-card wow fadeInUp" data-wow-delay="0.{{ forloop.counter }}s" id="clause-{{ forloop.counter }}">
+                        <div class="d-flex align-items-center justify-content-between gap-3 mb-3 pb-3 border-bottom">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="clause-icon-box">
+                                    <i class="fa {{ s.icon|default:'fa-user-shield' }}"></i>
+                                </div>
+                                <div>
+                                    <span class="clause-num-badge mb-1">البند {{ s.section_number|default:forloop.counter }}</span>
+                                    <h4 class="fw-bold mb-0" style="color: var(--forest); font-size: 20px;">{{ s.title }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clause-body">
+                            {{ s.content|linebreaks }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="bg-white rounded-4 p-5 text-center shadow-sm border">
+                        <i class="fa fa-lock fa-3x text-primary mb-3"></i>
+                        <h4 class="fw-bold" style="color: var(--forest);">يتم تحديث وثيقة سياسة الخصوصية حالياً</h4>
+                        <p class="text-muted">يمكنكم التواصل معنا مباشرة لأي استفسار متعلق بحماية البيانات.</p>
+                    </div>
+                {% endif %}
+
+                <!-- Data Protection Officer Support Box -->
+                <div class="privacy-officer-box mt-4 wow fadeInUp" data-wow-delay="0.2s" id="officerSection">
+                    <div class="row align-items-center g-4">
+                        <div class="col-md-7">
+                            <span class="badge px-3 py-1 rounded-pill mb-2" style="background: rgba(201, 169, 97, 0.25); color: var(--primary); font-size: 13px;">
+                                <i class="fa fa-user-lock me-1"></i> مكتب إدارة البيانات (NDMO)
+                            </span>
+                            <h4 class="text-white fw-bold mb-2">{{ page.officer_title|default:"مسؤول حماية البيانات والخصوصية (DPO)" }}</h4>
+                            <p class="text-white-50 mb-0 small lh-lg">
+                                {{ page.officer_text|default:"لممارسة حقوقكم النظامية (الوصول، التصحيح، الإتلاف، أو سحب الموافقة) أو لأي استفسار حول معالجة بياناتكم، يمكنكم التواصل مباشرة مع إدارة الامتثال وحماية البيانات بالجمعية." }}
+                            </p>
+                        </div>
+                        <div class="col-md-5 text-md-end text-center">
+                            <div class="d-flex flex-column gap-2">
+                                <a href="mailto:{{ page.officer_email|default:'privacy@rafed.org.sa' }}?subject=طلب متعلق بحماية البيانات والخصوصية - جمعية رافد" class="btn btn-gold justify-content-center">
+                                    <i class="fa fa-envelope"></i> راسل مسؤول الخصوصية
+                                </a>
+                                <a href="tel:{{ page.officer_phone|default:'0552002057' }}" class="btn btn-forest-outline justify-content-center">
+                                    <i class="fa fa-phone"></i> اتصل بنا: {{ page.officer_phone|default:'0552002057' }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<!-- Main Content Area End -->
+{% endblock %}
